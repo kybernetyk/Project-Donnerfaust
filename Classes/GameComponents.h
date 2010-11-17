@@ -93,7 +93,6 @@ namespace game
 		int col;
 		int type;
 		int connection_state;
-		
 		int _prev_connection_state;
 		
 		GameBoardElement ()

@@ -23,7 +23,7 @@ namespace game
 		mba->x = 0.0;
 		mba->duration = 0.6;
 	
-		idle->next_action = mba;
+		idle->on_complete_action = mba;
 		
 		return (Action*)idle;
 	}

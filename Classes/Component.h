@@ -329,7 +329,9 @@ namespace mx3
 		float duration;						//the action's duration
 		float _timestamp;					//internal framecounter				
 		
-		Action *next_action;				//the action that should be ran after this one. NULL indicates no action
+		Action *on_complete_action;				//the action that should be ran after this one. NULL indicates no action
+
+
 		
 		bool may_be_aborted;				//may this action be aborted/replaced by another one?
 		
@@ -337,7 +339,7 @@ namespace mx3
 		{
 			_id = COMPONENT_ID;
 			action_type = ACTIONTYPE_NONE;
-			next_action = NULL;
+			on_complete_action = NULL;
 			_timestamp = duration = 0.0;
 			may_be_aborted = true;
 		}

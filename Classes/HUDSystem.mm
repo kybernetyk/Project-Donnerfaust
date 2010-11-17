@@ -56,7 +56,7 @@ namespace game
 			else
 				mb->x = -(max-i)*2;
 			
-			prev_actn->next_action = mb;
+			prev_actn->on_complete_action = mb;
 			prev_actn = mb;
 		}
 		
@@ -89,7 +89,7 @@ namespace game
 		mb3->y = 320/2+20;
 		mb3->duration = 0.0;
 		//mb2->next_action = mb3;
-		actn->next_action = mb3;
+		actn->on_complete_action = mb3;
 
 		return actn;
 	}

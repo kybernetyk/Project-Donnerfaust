@@ -23,14 +23,14 @@ namespace mx3
 		Entity *current_entity = e;
 	//	Action *current_action = _entityManager->getComponent<Action>(current_entity);
 		
-		Action *next_action = current_action->next_action;
+		Action *on_complete_action = current_action->on_complete_action;
 		
-		if (next_action)
+		if (on_complete_action)
 		{
 		//	printf("adding next action ...");
 
 			_entityManager->removeComponent <Action> (current_entity);
-			_entityManager->addComponent(current_entity, next_action);
+			_entityManager->addComponent(current_entity, on_complete_action);
 		//	_entityManager->dumpEntity(current_entity);
 		}
 		else

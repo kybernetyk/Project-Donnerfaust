@@ -31,13 +31,13 @@ namespace game
 		
 		CreateEntityAction *blam_sound_action = new CreateEntityAction();
 		blam_sound_action->components_to_add.push_back(sfx);
-		mta->next_action = blam_sound_action;
+		mta->on_complete_action = blam_sound_action;
 		
 		
 		//3. remove the enemy entity
 		AddComponentAction *aca = new AddComponentAction();
 		aca->component_to_add = new MarkOfDeath();
-		blam_sound_action->next_action = aca;
+		blam_sound_action->on_complete_action = aca;
 		
 
 		
@@ -73,7 +73,7 @@ namespace game
 			
 			AddComponentAction *modaction = new AddComponentAction();
 			modaction->component_to_add = new MarkOfDeath();
-			_mt->next_action = modaction;
+			_mt->on_complete_action = modaction;
 			
 			_entityManager->addComponent(gold_sign, _mt);
 		}

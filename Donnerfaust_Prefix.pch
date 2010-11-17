@@ -1,0 +1,15 @@
+//
+// Prefix header for all source files of the 'SpaceHike' target in the 'SpaceHike' project
+//
+
+#define __RUNTIME_INFORMATION__
+#define ABORT_GUARDS
+//#define ORIENTATION_LANDSCAPE
+#define ORIENTATION_PORTRAIT
+
+#include <stdint.h>
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#endif
+

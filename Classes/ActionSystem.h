@@ -22,13 +22,24 @@ namespace mx3
 		
 		
 	protected:
-
+		float _current_delta;
+		
+		void handle_move_to_action (MoveToAction *action);
+		void handle_move_by_action (MoveByAction *action);
+		void handle_parallel_action (ParallelAction *action);
+		void handle_add_component_action (AddComponentAction *action);
 		
 		void setupNextActionOrStop (Entity *e,Action *current_action);
 		
 		EntityManager *_entityManager;
 		
 		std::vector<Entity*> _entities;
+		
+		
+		Entity *_current_entity;
+		Position *_current_pos;
+		Action *_current_action;
+		
 	};
 
 

@@ -15,17 +15,24 @@ namespace game
 	Action *fall_one_row_action ()
 	{
 		Action *idle = new Action();
-		idle->duration = 0.3;
-	//	mba->next_action = idle;
-		
+		idle->duration = 1.0;
+
 		MoveByAction *mba = new MoveByAction();
 		mba->y = -32.0;
 		mba->x = 0.0;
-		mba->duration = 0.6;
-	
+		mba->duration = 0.3;
 		idle->on_complete_action = mba;
+	
+		MoveByAction *mba2 = new MoveByAction();
+		mba2->x = 128;
+		mba2->duration = 10.0;
 		
-		return (Action*)idle;
+		
+		ParallelAction *container_action = new ParallelAction();
+		container_action->action_one = idle;
+		//container_action->action_two = mba2;
+		
+		return (Action*)container_action;
 	}
 	
 	GameBoardSystem::GameBoardSystem (EntityManager *entityManager)

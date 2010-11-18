@@ -65,6 +65,7 @@ namespace game
 		make_blob(BLOB_COLOR_RED, 4, 7);
 		make_blob(BLOB_COLOR_RED, 3, 3);		
 		make_blob(BLOB_COLOR_RED, 4, 3);
+		
 	}
 
 	void Scene::end ()

@@ -320,6 +320,7 @@ namespace mx3
 	#define ACTIONTYPE_MOVE_BY 2
 	#define ACTIONTYPE_ADD_COMPONENT 3
 	#define ACTIONTYPE_CREATE_ENTITY 4
+	#define ACTIONTYPE_PARALLEL 5
 
 	struct Action : public Component
 	{
@@ -332,7 +333,7 @@ namespace mx3
 		Action *on_complete_action;				//the action that should be ran after this one. NULL indicates no action
 
 
-		
+		bool finished;
 		bool may_be_aborted;				//may this action be aborted/replaced by another one?
 		
 		Action()
@@ -342,10 +343,13 @@ namespace mx3
 			on_complete_action = NULL;
 			_timestamp = duration = 0.0;
 			may_be_aborted = true;
+			finished = false;
 		}
 		
 		DEBUGINFO ("Empty Action with duration: %f and timestamp: %f", duration, _timestamp)
 	};
+	
+	
 	struct MoveToAction : public Action
 	{
 		static ComponentID COMPONENT_ID;

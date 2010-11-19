@@ -13,12 +13,8 @@
 
 namespace mx3 
 {
-	
-		
-
 	class TexturedQuad;
 	class IRenderable;
-
 
 	class RenderSystem
 	{

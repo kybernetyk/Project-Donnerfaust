@@ -32,13 +32,6 @@ namespace game
 		return idle;
 	}
 	
-	Action *move_col_action (float num_of_cols)
-	{
-		MoveByAction *mba = new MoveByAction();
-		mba->x = num_of_cols * 32.0;
-		mba->duration = 0.1;
-		return (Action*)mba;
-	}
 	
 	GameBoardSystem::GameBoardSystem (EntityManager *entityManager)
 	{
@@ -118,6 +111,7 @@ namespace game
 				{
 					current_gbo->row --;
 					g_pActionSystem->addActionToEntity (current_entity, fall_one_row_action());
+					//g_pActionSystem->addActionToEntity (current_entity, move_col_action(1));
 				}
 				else
 				{

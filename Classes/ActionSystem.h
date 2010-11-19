@@ -41,6 +41,7 @@ namespace mx3
 		
 		Entity *_current_entity;
 		ActionContainer *_current_container;
+		Position *_current_position;	//most actions will be movement anyway. so we should fetch this component only once per entity
 		
 	};
 	

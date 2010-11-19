@@ -26,15 +26,19 @@ namespace mx3
 		ActionContainer *container = _entityManager->getComponent<ActionContainer>(entity);
 		if (!container)
 			container = _entityManager->addComponent<ActionContainer>(entity);
-		
-		for (int i = 0; i < 32; i++)
+		bool did_insert = false;
+		for (int i = 0; i < NUM_OF_ACTIONS_PER_CONTAINER; i++)
 		{
 			if (!container->actions[i])
 			{
 				container->actions[i] = action;
+				did_insert = true;
 				break;
 			}
 		}
+		
+		if (!did_insert)
+			abort();
 		
 	}
 	
@@ -55,37 +59,42 @@ namespace mx3
 	
 	void ActionSystem::handle_move_to_action (MoveToAction *action)
 	{
-		Position *current_pos = _entityManager->getComponent<Position>(_current_entity);
+#ifdef ABORT_GUARDS
+		if (!_current_position)
+			abort();
+#endif
 		
 		if (action->_ups_x >= INFINITY)
 		{
-			float dx = action->x - current_pos->x;
+			float dx = action->x - _current_position->x;
 			action->_ups_x = dx / action->duration;
 		}
 		
 		if (action->_ups_y >= INFINITY)
 		{
-			float dy = action->y - current_pos->y;
+			float dy = action->y - _current_position->y;
 			action->_ups_y = dy / action->duration;
 		}
 		
-		current_pos->x += action->_ups_x * _delta;
-		current_pos->y += action->_ups_y * _delta;
+		_current_position->x += action->_ups_x * _delta;
+		_current_position->y += action->_ups_y * _delta;
 		
 	}
 	
 	void ActionSystem::handle_move_by_action (MoveByAction *action)
 	{
-		Position *current_pos = _entityManager->getComponent<Position>(_current_entity);
-
+#ifdef ABORT_GUARDS
+		if (!_current_position)
+			abort();
+#endif
 		
 		if (action->_dx >= INFINITY)
-			action->_dx = current_pos->x + action->x;
+			action->_dx = _current_position->x + action->x;
 		if (action->_dy >= INFINITY)
-			action->_dy = current_pos->y + action->y;
+			action->_dy = _current_position->y + action->y;
 		
-		current_pos->x += (action->x/action->duration)*_delta;
-		current_pos->y += (action->y/action->duration)*_delta;
+		_current_position->x += (action->x/action->duration)*_delta;
+		_current_position->y += (action->y/action->duration)*_delta;
 		
 		
 	}
@@ -143,7 +152,7 @@ namespace mx3
 		Action **actions = _current_container->actions;
 		
 		Action *current_action = NULL;
-		for (int i = 0; i < 32; i++)
+		for (int i = 0; i < NUM_OF_ACTIONS_PER_CONTAINER; i++)
 		{
 			current_action = actions[i];
 			if (!current_action)
@@ -168,23 +177,24 @@ namespace mx3
 
 				case ACTIONTYPE_NONE:
 				default:
-					handle_default_action(current_action);
+					//handle_default_action(current_action);
 					break;
 			}
 			
 
-			
+			//let's see what to do after the action is finished
 			if (current_action->finished)
 			{
 				Action *on_complete_action = current_action->on_complete_action;
 				
+				//run another action
 				if (on_complete_action)
 				{
 					delete current_action;
 					current_action = NULL;
 					_current_container->actions[i] = on_complete_action;
 				}
-				else
+				else //do nothing
 				{
 					delete current_action;
 					current_action = NULL;
@@ -213,7 +223,8 @@ namespace mx3
 			_current_entity = *it;
 			++it;
 			
-			_current_container = _entityManager->getComponent<ActionContainer>(_current_entity);
+			_current_container = _entityManager->getComponent <ActionContainer> (_current_entity);
+			_current_position = _entityManager->getComponent <Position> (_current_entity);
 
 #ifdef ABORT_GUARDS
 			if (!_current_container)

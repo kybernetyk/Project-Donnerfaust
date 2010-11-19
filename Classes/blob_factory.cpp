@@ -13,10 +13,10 @@
 #include "EntityManager.h"
 #include "Component.h"
 #include "GameComponents.h"
+#include "ActionSystem.h"
 
 using namespace mx3;
 using namespace game;
-
 
 Entity *make_blob (int color, int col,int row)
 {
@@ -33,14 +33,17 @@ Entity *make_blob (int color, int col,int row)
 	pos->x = col * 32.0 + BOARD_X_OFFSET;
 	pos->y = row * 32.0 + BOARD_Y_OFFSET;
 
-	FallingState *fs = em->addComponent<FallingState>(e);
-	WaitingForFall *wff = em->addComponent<WaitingForFall>(e);
-	
+	em->addComponent<FallingState>(e);
+	em->addComponent<WaitingForFall>(e);
+
 	
 	AtlasSprite *as = em->addComponent<AtlasSprite>(e);
 	as->atlas_quad = g_RenderableManager.accquireTexturedAtlasQuad("red_blob_anims.png");
 	as->src = rect_make(13*32, 0, 32, 32);
 	as->z = 3;
+	
+	
+	
 	/*
 	FrameAnimation *fa = em->addComponent<FrameAnimation>(e);
 	fa->destroy_on_finish = false;

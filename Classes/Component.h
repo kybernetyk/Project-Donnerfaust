@@ -430,16 +430,18 @@ namespace mx3
 	#pragma mark -
 	#pragma mark aktschn
 	
+#define NUM_OF_ACTIONS_PER_CONTAINER 16
+	
 	struct ActionContainer : public Component
 	{
 		static ComponentID COMPONENT_ID;	//component id for the component's manager internal use
 		
-		Action *actions[32];
+		Action *actions[NUM_OF_ACTIONS_PER_CONTAINER];
 		
 		ActionContainer()
 		{	
 			_id = COMPONENT_ID;
-			memset(actions,0x00,32*sizeof(Action*));
+			memset(actions,0x00,NUM_OF_ACTIONS_PER_CONTAINER*sizeof(Action*));
 		}
 		
 		

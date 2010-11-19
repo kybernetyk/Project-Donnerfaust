@@ -24,5 +24,7 @@ namespace game
 	ComponentID RestingState::COMPONENT_ID = 21;
 	
 	ComponentID Collidable::COMPONENT_ID = 22;
+	
+	ComponentID WaitingForFall::COMPONENT_ID = 23;
 
 }

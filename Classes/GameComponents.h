@@ -64,7 +64,7 @@ namespace game
 		}			
 		DEBUGINFO("Landing State")
 	};
-
+	
 	struct RestingState : public Component
 	{
 		static ComponentID COMPONENT_ID;
@@ -78,7 +78,21 @@ namespace game
 		}			
 		DEBUGINFO("Resting state")
 	};
-	
+
+	struct WaitingForFall : public Component
+	{
+		static ComponentID COMPONENT_ID;
+		
+		bool handled;
+		
+		WaitingForFall ()
+		{
+			_id = COMPONENT_ID;
+			handled = false;
+		}			
+		DEBUGINFO("WaitingForFall")
+		
+	};
 				  
 #define CONNECTION_NONE 0
 #define CONNECTION_UP 1

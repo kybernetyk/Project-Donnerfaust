@@ -1,46 +1,50 @@
 /*
  *  ActionSystem.h
- *  ComponentV3
+ *  Donnerfaust
  *
- *  Created by jrk on 8/11/10.
+ *  Created by jrk on 18/11/10.
  *  Copyright 2010 flux forge. All rights reserved.
  *
  */
+
 #pragma once
+
 
 #include <vector>
 #include "EntityManager.h"
 namespace mx3 
 {
-	
-		
 	class ActionSystem
 	{
 	public:
 		ActionSystem (EntityManager *entityManager);
 		void update (float delta);	
 		
+		void addActionToEntity (Entity *entity, Action *action);
 		
-	protected:
-		float _current_delta;
-		
+		void handle_action_container ();
+
+		void handle_default_action (Action *action);		
 		void handle_move_to_action (MoveToAction *action);
 		void handle_move_by_action (MoveByAction *action);
-		void handle_parallel_action (ParallelAction *action);
+		void handle_create_entity_action (CreateEntityAction *action);
 		void handle_add_component_action (AddComponentAction *action);
 		
-		void setupNextActionOrStop (Entity *e,Action *current_action);
+		void step_action (Action *action);
 		
+		
+		
+	protected:
 		EntityManager *_entityManager;
-		
-		std::vector<Entity*> _entities;
-		
+		std::vector <Entity *> _entities;		
+		float _delta;
 		
 		Entity *_current_entity;
-		Position *_current_pos;
-		Action *_current_action;
+		ActionContainer *_current_container;
 		
 	};
-
-
+	
+	
 }
+
+extern mx3::ActionSystem *g_pActionSystem;

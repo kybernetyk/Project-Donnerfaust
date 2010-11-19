@@ -22,13 +22,6 @@ namespace game
 		void update (float delta);
 		
 	protected:
-		void handle_player_enemy_collision ();
-		void check_player_for_levelup ();
-		
-		void restoreGameStateFromFile();
-		void saveGameStateToFile();
-		void shareLevelOnFarmville();
-		
 		Action *enemy_death_action_chain (Position *enemy_pos, Enemy *enemy_information);
 		
 		std::vector<Entity*> _enemies;

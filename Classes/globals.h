@@ -10,6 +10,7 @@
 #include "TextureManager.h"
 #include "RenderableManager.h"
 
+
 namespace game 
 {
 	typedef struct GameState
@@ -47,3 +48,4 @@ extern double g_FPS;
 	
 extern mx3::TextureManager g_TextureManager;
 extern mx3::RenderableManager g_RenderableManager;
+

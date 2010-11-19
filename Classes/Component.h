@@ -312,6 +312,8 @@ namespace mx3
 		DEBUGINFO ("Renderable: %s, z=%f", text.c_str(),z)
 	};
 
+	
+	
 	#pragma mark -
 	#pragma mark action
 
@@ -320,11 +322,9 @@ namespace mx3
 	#define ACTIONTYPE_MOVE_BY 2
 	#define ACTIONTYPE_ADD_COMPONENT 3
 	#define ACTIONTYPE_CREATE_ENTITY 4
-	#define ACTIONTYPE_PARALLEL 5
 
-	struct Action : public Component
+	struct Action
 	{
-		static ComponentID COMPONENT_ID;	//component id for the component's manager internal use
 		unsigned int action_type;			//action type for the action system's internal use
 
 		float duration;						//the action's duration
@@ -338,7 +338,6 @@ namespace mx3
 		
 		Action()
 		{
-			_id = COMPONENT_ID;
 			action_type = ACTIONTYPE_NONE;
 			on_complete_action = NULL;
 			_timestamp = duration = 0.0;
@@ -346,13 +345,18 @@ namespace mx3
 			finished = false;
 		}
 		
+		virtual ~Action ()
+		{
+			
+		}
+		
+		
 		DEBUGINFO ("Empty Action with duration: %f and timestamp: %f", duration, _timestamp)
 	};
 	
 	
 	struct MoveToAction : public Action
 	{
-		static ComponentID COMPONENT_ID;
 		float x,y;			//absolute position to reach after duration
 		
 		float _ups_x;		//units per second - internal speed value
@@ -362,7 +366,6 @@ namespace mx3
 		{
 			Action::Action();
 
-			_id = COMPONENT_ID;
 			_ups_x = INFINITY;
 			_ups_y = INFINITY;
 			
@@ -374,7 +377,6 @@ namespace mx3
 	};
 	struct MoveByAction : public Action
 	{
-		static ComponentID COMPONENT_ID;
 
 		float x,y;	//relative distance to go during duration
 		
@@ -385,7 +387,6 @@ namespace mx3
 		{
 			Action::Action();
 			
-			_id = COMPONENT_ID;
 			_dx = _dy = INFINITY;			//mark with INFINITY to dirty so the action system can see that this value needs an init
 			x = y = 0.0;
 			action_type = ACTIONTYPE_MOVE_BY;
@@ -395,7 +396,6 @@ namespace mx3
 	};
 	struct AddComponentAction : public Action
 	{
-		static ComponentID COMPONENT_ID;
 
 		Component *component_to_add;		//this will add the existing component pointed to
 		
@@ -403,7 +403,7 @@ namespace mx3
 		AddComponentAction()
 		{
 			Action::Action();
-			_id = COMPONENT_ID;
+
 
 			component_to_add = NULL;
 			
@@ -415,14 +415,11 @@ namespace mx3
 
 	struct CreateEntityAction : public Action
 	{
-		static ComponentID COMPONENT_ID;
-
 		std::vector <Component *> components_to_add;
 			
 		CreateEntityAction()
 		{
 			Action::Action();
-			_id = COMPONENT_ID;
 			
 			action_type = ACTIONTYPE_CREATE_ENTITY;
 		}
@@ -430,6 +427,25 @@ namespace mx3
 		DEBUGINFO ("CreateEntityAction. duration: %f timestamp: %f",duration,_timestamp)
 	};
 
+	#pragma mark -
+	#pragma mark aktschn
+	
+	struct ActionContainer : public Component
+	{
+		static ComponentID COMPONENT_ID;	//component id for the component's manager internal use
+		
+		Action *actions[32];
+		
+		ActionContainer()
+		{	
+			_id = COMPONENT_ID;
+			memset(actions,0x00,32*sizeof(Action*));
+		}
+		
+		
+	};
+	
+	
 }
 #include "GameComponents.h"
 

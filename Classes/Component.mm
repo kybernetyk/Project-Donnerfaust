@@ -27,15 +27,17 @@ namespace mx3
 
 	ComponentID Attachment::COMPONENT_ID = 6;
 
-	ComponentID Action::COMPONENT_ID = 7;
+/*	ComponentID Action::COMPONENT_ID = 7;
+	ComponentID ParallelAction::COMPONENT_ID = 7;
 	ComponentID MoveToAction::COMPONENT_ID = 8;
 	ComponentID MoveByAction::COMPONENT_ID = 9;
 	ComponentID AddComponentAction::COMPONENT_ID = 10;
-	ComponentID CreateEntityAction::COMPONENT_ID = 11;
+	ComponentID CreateEntityAction::COMPONENT_ID = 11;*/
+		
+	ComponentID SoundEffect::COMPONENT_ID = 7;
 
-	ComponentID SoundEffect::COMPONENT_ID = 12;
+	ComponentID FrameAnimation::COMPONENT_ID = 8;
 
-	ComponentID FrameAnimation::COMPONENT_ID = 13;
-
+	ComponentID ActionContainer::COMPONENT_ID = 9;
 
 }

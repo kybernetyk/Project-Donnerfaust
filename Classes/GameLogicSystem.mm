@@ -11,6 +11,7 @@
 #include "Texture2D.h"
 #include "SoundSystem.h"
 #include "globals.h"
+#include "ActionSystem.h"
 namespace game 
 {
 
@@ -75,7 +76,8 @@ namespace game
 			modaction->component_to_add = new MarkOfDeath();
 			_mt->on_complete_action = modaction;
 			
-			_entityManager->addComponent(gold_sign, _mt);
+		//	_entityManager->addComponent(gold_sign, _mt);
+			g_pActionSystem->addActionToEntity (gold_sign, _mt);
 		}
 		
 		
@@ -114,101 +116,8 @@ namespace game
 	GameLogicSystem::GameLogicSystem (EntityManager *entityManager)
 	{
 		_entityManager = entityManager;
-		
-		restoreGameStateFromFile();
 	}
 
-	void GameLogicSystem::restoreGameStateFromFile ()
-	{
-		[[[UIApplication sharedApplication] delegate] loadGameState];
-	}
-
-	void GameLogicSystem::saveGameStateToFile ()
-	{
-		[[[UIApplication sharedApplication] delegate] saveGameState];
-	}
-
-	void GameLogicSystem::shareLevelOnFarmville ()
-	{
-		[[[UIApplication sharedApplication] delegate] shareLevelOnFarmville];
-	}
-
-	void GameLogicSystem::check_player_for_levelup ()
-	{
-		if (g_GameState.experience > g_GameState.experience_needed_to_levelup)
-		{
-			g_GameState.level ++;
-			g_GameState.experience -= g_GameState.experience_needed_to_levelup;
-			g_GameState.experience_needed_to_levelup = g_GameState.level*g_GameState.level*g_GameState.level+100;
-			
-			saveGameStateToFile();
-			
-			shareLevelOnFarmville();
-		}
-	}
-
-	void GameLogicSystem::handle_player_enemy_collision ()
-	{
-		Entity *player = NULL;
-		Position *player_pos = NULL;
-		
-		std::vector<Entity*>::const_iterator it = _players.begin();
-		
-		
-		//lol how many players can we have? :D
-		while (it != _players.end())
-		{
-			player = *it;
-			player_pos = _entityManager->getComponent <Position> (player);
-			
-			++it;
-		}
-		
-		if (!player)
-			return;
-		//now rape enemies
-		it = _enemies.begin();
-		
-		Entity *enemy;
-		Position *enemy_pos;
-		
-		float horn_x = player_pos->x + 190 * player_pos->scale_x;
-		float horn_y = player_pos->y + 190 * player_pos->scale_y;
-		
-		Enemy *enemy_information = NULL;
-		while (it != _enemies.end())
-		{
-			enemy = *it;
-			//_entityManager->dumpEntity(enemy);
-			enemy_pos = _entityManager->getComponent <Position> (enemy);
-			enemy_information = _entityManager->getComponent <Enemy>(enemy);
-			++it;
-			
-			if (!enemy_pos)
-				_entityManager->dumpEntity(enemy);	
-			
-			//check if the horn is in the enemy
-			if (horn_x+2 > enemy_pos->x-16 && horn_x-2 < enemy_pos->x+16 &&
-				horn_y+2 > enemy_pos->y-16 && horn_y-2 < enemy_pos->y+16 &&
-				!enemy_information->has_been_handled)
-			{
-				enemy_information->has_been_handled = true;
-				
-				//play now the tick sound			
-				Entity *sound = _entityManager->createNewEntity();
-				_entityManager->addComponent <SoundEffect> (sound);
-				sound->get<SoundEffect>()->sfx_id = SFX_TICK;
-				g_GameState.score += (10 + rand()%15);
-				g_GameState.experience += (g_GameState.level*1.3);
-			//	g_GameState.enemies_left --;
-				Action *actn = enemy_death_action_chain(enemy_pos,enemy_information);
-				
-				//add the action chain
-				_entityManager->addComponent(enemy, actn);
-
-			}
-		}
-	}
 
 
 	void GameLogicSystem::update (float delta)
@@ -219,26 +128,6 @@ namespace game
 		_entityManager->getEntitiesPossessingComponents(_players,  PlayerController::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
 		_entityManager->getEntitiesPossessingComponents(_enemies,  Enemy::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
 		_delta = delta;
-		
-		
-		g_GameState.enemies_left = _enemies.size();
-		
-		if (g_GameState.enemies_left <= 0)
-		{
-			if (g_GameState.game_state == GAMESTATE_PLAYING_LEVEL &&
-				g_GameState.next_state == GAMESTATE_PLAYING_LEVEL)
-			{
-				g_GameState.next_state = GAMESTATE_WAITING_FOR_WAVE;
-			}
-		}
-		
-		
-		if (_players.size() == 0 || _enemies.size() == 0)
-			return;
-		
-		
-		handle_player_enemy_collision();
-		check_player_for_levelup();
 		
 	}
 

@@ -16,7 +16,6 @@
 		033DCBAC128D7C9700C66D74 /* HUDSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB6B128D7C9700C66D74 /* HUDSystem.mm */; };
 		033DCBAD128D7C9700C66D74 /* CorpseRetrievalSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB6E128D7C9700C66D74 /* CorpseRetrievalSystem.cpp */; };
 		033DCBAE128D7C9700C66D74 /* GameLogicSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB71128D7C9700C66D74 /* GameLogicSystem.mm */; };
-		033DCBAF128D7C9700C66D74 /* ActionSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB76128D7C9700C66D74 /* ActionSystem.mm */; };
 		033DCBB0128D7C9700C66D74 /* AttachmentSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB79128D7C9700C66D74 /* AttachmentSystem.cpp */; };
 		033DCBB1128D7C9700C66D74 /* PlayerControlledSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB7C128D7C9700C66D74 /* PlayerControlledSystem.cpp */; };
 		033DCBB2128D7C9700C66D74 /* RenderSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB7F128D7C9700C66D74 /* RenderSystem.mm */; };
@@ -60,6 +59,7 @@
 		034F38581292DB0700F54ABA /* GameComponents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 034F38571292DB0700F54ABA /* GameComponents.mm */; };
 		0352A696128F29C70005F657 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0352A695128F29C70005F657 /* util.cpp */; };
 		0352A717129006500005F657 /* AnimationSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0352A716129006500005F657 /* AnimationSystem.cpp */; };
+		038B248E1295D627008AEA7D /* ActionSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 038B248D1295D627008AEA7D /* ActionSystem.mm */; };
 		03A847D0128ED3FA006EACB3 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A847C8128ED3FA006EACB3 /* CDAudioManager.m */; };
 		03A847D1128ED3FA006EACB3 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A847CB128ED3FA006EACB3 /* CDOpenALSupport.m */; };
 		03A847D2128ED3FA006EACB3 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A847CD128ED3FA006EACB3 /* CocosDenshion.m */; };
@@ -107,8 +107,6 @@
 		033DCB71128D7C9700C66D74 /* GameLogicSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameLogicSystem.mm; sourceTree = "<group>"; };
 		033DCB72128D7C9700C66D74 /* SystemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemConfig.h; sourceTree = "<group>"; };
 		033DCB73128D7C9700C66D74 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		033DCB75128D7C9700C66D74 /* ActionSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSystem.h; sourceTree = "<group>"; };
-		033DCB76128D7C9700C66D74 /* ActionSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ActionSystem.mm; sourceTree = "<group>"; };
 		033DCB78128D7C9700C66D74 /* AttachmentSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentSystem.h; sourceTree = "<group>"; };
 		033DCB79128D7C9700C66D74 /* AttachmentSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttachmentSystem.cpp; sourceTree = "<group>"; };
 		033DCB7B128D7C9700C66D74 /* PlayerControlledSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerControlledSystem.h; sourceTree = "<group>"; };
@@ -195,6 +193,8 @@
 		0352A695128F29C70005F657 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cpp; sourceTree = "<group>"; };
 		0352A715129006500005F657 /* AnimationSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationSystem.h; sourceTree = "<group>"; };
 		0352A716129006500005F657 /* AnimationSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationSystem.cpp; sourceTree = "<group>"; };
+		038B248C1295D627008AEA7D /* ActionSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSystem.h; sourceTree = "<group>"; };
+		038B248D1295D627008AEA7D /* ActionSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ActionSystem.mm; sourceTree = "<group>"; };
 		03A847C7128ED3FA006EACB3 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		03A847C8128ED3FA006EACB3 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		03A847C9128ED3FA006EACB3 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
@@ -312,8 +312,8 @@
 		033DCB74128D7C9700C66D74 /* Action System */ = {
 			isa = PBXGroup;
 			children = (
-				033DCB75128D7C9700C66D74 /* ActionSystem.h */,
-				033DCB76128D7C9700C66D74 /* ActionSystem.mm */,
+				038B248C1295D627008AEA7D /* ActionSystem.h */,
+				038B248D1295D627008AEA7D /* ActionSystem.mm */,
 			);
 			name = "Action System";
 			sourceTree = "<group>";
@@ -812,7 +812,6 @@
 				033DCBAC128D7C9700C66D74 /* HUDSystem.mm in Sources */,
 				033DCBAD128D7C9700C66D74 /* CorpseRetrievalSystem.cpp in Sources */,
 				033DCBAE128D7C9700C66D74 /* GameLogicSystem.mm in Sources */,
-				033DCBAF128D7C9700C66D74 /* ActionSystem.mm in Sources */,
 				033DCBB0128D7C9700C66D74 /* AttachmentSystem.cpp in Sources */,
 				033DCBB1128D7C9700C66D74 /* PlayerControlledSystem.cpp in Sources */,
 				033DCBB2128D7C9700C66D74 /* RenderSystem.mm in Sources */,
@@ -860,6 +859,7 @@
 				03208C4D12942EB0009E8AAD /* blob_factory.cpp in Sources */,
 				03208C79129430A8009E8AAD /* GameBoardSystem.cpp in Sources */,
 				03208E1212944DDA009E8AAD /* BlobAnimationSystem.cpp in Sources */,
+				038B248E1295D627008AEA7D /* ActionSystem.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

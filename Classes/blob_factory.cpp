@@ -34,7 +34,8 @@ Entity *make_blob (int color, int col,int row)
 	pos->y = row * 32.0 + BOARD_Y_OFFSET;
 
 	FallingState *fs = em->addComponent<FallingState>(e);
-
+	WaitingForFall *wff = em->addComponent<WaitingForFall>(e);
+	
 	
 	AtlasSprite *as = em->addComponent<AtlasSprite>(e);
 	as->atlas_quad = g_RenderableManager.accquireTexturedAtlasQuad("red_blob_anims.png");

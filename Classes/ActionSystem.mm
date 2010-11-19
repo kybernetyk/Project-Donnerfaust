@@ -1,371 +1,231 @@
 /*
  *  ActionSystem.cpp
- *  ComponentV3
+ *  Donnerfaust
  *
- *  Created by jrk on 8/11/10.
+ *  Created by jrk on 18/11/10.
  *  Copyright 2010 flux forge. All rights reserved.
  *
  */
 
 #include "ActionSystem.h"
+
 #include <math.h>
+mx3::ActionSystem *g_pActionSystem;
+
 namespace mx3 
 {
-	
-		
 	ActionSystem::ActionSystem (EntityManager *entityManager)
 	{
 		_entityManager = entityManager;
+		g_pActionSystem = this;
 	}
 
-	void ActionSystem::setupNextActionOrStop (Entity *e, Action *current_action)
-	{
-		Entity *current_entity = e;
-	//	Action *current_action = _entityManager->getComponent<Action>(current_entity);
-		
-		Action *on_complete_action = current_action->on_complete_action;
-		
-		if (on_complete_action)
-		{
-		//	printf("adding next action ...");
 
-			_entityManager->removeComponent <Action> (current_entity);
-			_entityManager->addComponent(current_entity, on_complete_action);
-		//	_entityManager->dumpEntity(current_entity);
-		}
-		else
+	void ActionSystem::addActionToEntity (Entity *entity, Action *action)
+	{
+		ActionContainer *container = _entityManager->getComponent<ActionContainer>(entity);
+		if (!container)
+			container = _entityManager->addComponent<ActionContainer>(entity);
+		
+		for (int i = 0; i < 32; i++)
 		{
-		//	printf("no next action. removing unhandled action ...");
-			_entityManager->removeComponent <Action> (current_entity);	
-		//	_entityManager->dumpEntity(current_entity);
+			if (!container->actions[i])
+			{
+				container->actions[i] = action;
+				break;
+			}
 		}
 		
+	}
+	
+	void ActionSystem::step_action (Action *action)
+	{
+		action->_timestamp += _delta;
+		if ( (action->duration - action->_timestamp) <= 0.0)
+		{
+			action->finished = true;
+		}
+		
+	}
+	
+	void ActionSystem::handle_default_action (Action *action)
+	{
+		//printf(".");
 	}
 	
 	void ActionSystem::handle_move_to_action (MoveToAction *action)
 	{
-		MoveToAction *mt= (MoveToAction*)action;
-		mt->_timestamp += _current_delta;
+		Position *current_pos = _entityManager->getComponent<Position>(_current_entity);
 		
-		if (mt->_ups_x >= INFINITY)
+		if (action->_ups_x >= INFINITY)
 		{
-			float dx = mt->x - _current_pos->x;
-			mt->_ups_x = dx / mt->duration;
+			float dx = action->x - current_pos->x;
+			action->_ups_x = dx / action->duration;
 		}
 		
-		if (mt->_ups_y >= INFINITY)
+		if (action->_ups_y >= INFINITY)
 		{
-			float dy = mt->y - _current_pos->y;
-			mt->_ups_y = dy / mt->duration;
+			float dy = action->y - current_pos->y;
+			action->_ups_y = dy / action->duration;
 		}
 		
-		_current_pos->x += mt->_ups_x * _current_delta;
-		_current_pos->y += mt->_ups_y * _current_delta;
+		current_pos->x += action->_ups_x * _delta;
+		current_pos->y += action->_ups_y * _delta;
 		
-		
-		if ( (mt->duration - mt->_timestamp) <= 0.0)
-		{
-			//_current_pos->x = mt->x;
-			//_current_pos->y = mt->y;
-			action->finished = true;
-		}
 	}
 	
 	void ActionSystem::handle_move_by_action (MoveByAction *action)
 	{
-		MoveByAction *mb = action;
-		mb->_timestamp += _current_delta;
+		Position *current_pos = _entityManager->getComponent<Position>(_current_entity);
+
 		
-		if (mb->_dx >= INFINITY)
-			mb->_dx = _current_pos->x + mb->x;
-		if (mb->_dy >= INFINITY)
-			mb->_dy = _current_pos->y + mb->y;
+		if (action->_dx >= INFINITY)
+			action->_dx = current_pos->x + action->x;
+		if (action->_dy >= INFINITY)
+			action->_dy = current_pos->y + action->y;
 		
-		_current_pos->x += (mb->x/mb->duration)*_current_delta;
-		_current_pos->y += (mb->y/mb->duration)*_current_delta;
+		current_pos->x += (action->x/action->duration)*_delta;
+		current_pos->y += (action->y/action->duration)*_delta;
 		
 		
-		
-		if ( (mb->duration - mb->_timestamp) <= 0.0)
-		{
-		//	_current_pos->x = mb->_dx;
-		//	_current_pos->y = mb->_dy;
-			action->finished = true;
-		}
 	}
-	
+
 	void ActionSystem::handle_add_component_action (AddComponentAction *action)
 	{
-		AddComponentAction *aca = (AddComponentAction*)action;
 		
 #ifdef ABORT_GUARDS						
-		if (!aca->component_to_add)
+		if (!action->component_to_add)
 		{
 			printf("no component pointer set!\n");
 			_entityManager->dumpEntity(_current_entity);
-			_entityManager->dumpComponent(_current_entity,aca);
+			_entityManager->dumpComponent(_current_entity,_current_container);
 			abort();
 		}
-		if (aca->component_to_add->_id == Action::COMPONENT_ID)
+		if (action->component_to_add->_id == ActionContainer::COMPONENT_ID)
 		{
-			printf("you may not add action components with the AddComponentAction!\n");
+			printf("you may not add action containers components with the AddComponentAction!\n");
 			_entityManager->dumpEntity(_current_entity);
-			_entityManager->dumpComponent(_current_entity,aca);
+			_entityManager->dumpComponent(_current_entity,_current_container);
 			abort();
 		}
 #endif
-		
-		aca->_timestamp += _current_delta;
-		if ( (aca->duration - aca->_timestamp) <= 0.0)
+
+		if (action->finished)
 		{
-			aca->finished = true;
-			_entityManager->addComponent(_current_entity, aca->component_to_add);
+			_entityManager->addComponent(_current_entity, action->component_to_add);
 		}
+		
 	}
 	
-	void ActionSystem::handle_parallel_action (ParallelAction *action)
+	void ActionSystem::handle_create_entity_action (CreateEntityAction *action)
 	{
-	//	printf("handling parallel action");
-		ParallelAction *pa = action;
 		
-		Action *actions[2];
-		actions[0] = pa->action_one;
-		actions[1] = pa->action_two;
+		if (action->finished)
+		{
+			std::vector<Component*>::const_iterator it = action->components_to_add.begin();	
+			
+			Entity *newEntity = _entityManager->createNewEntity();
+			Component *c = NULL;
+			while (it != action->components_to_add.end())
+			{
+				c = *it;
+				++it;
+				_entityManager->addComponent(newEntity, c);
+			}
+			
+		}
+		
+	}
+	
+	
+	void ActionSystem::handle_action_container ()
+	{
+		Action **actions = _current_container->actions;
 		
 		Action *current_action = NULL;
-		
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 32; i++)
 		{
-			if (!actions[i])
-				continue;
-			
 			current_action = actions[i];
+			if (!current_action)
+				continue;
 			
-			if (current_action->action_type == ACTIONTYPE_MOVE_TO)
+			step_action(current_action);
+
+			switch (current_action->action_type) 
 			{
-				handle_move_to_action((MoveToAction *)current_action);
-				continue;
+				case ACTIONTYPE_MOVE_TO:
+					handle_move_to_action((MoveToAction*)current_action);
+					break;
+				case ACTIONTYPE_MOVE_BY:
+					handle_move_by_action((MoveByAction*)current_action);
+					break;
+				case ACTIONTYPE_ADD_COMPONENT:
+					handle_add_component_action((AddComponentAction*)current_action);
+					break;
+				case ACTIONTYPE_CREATE_ENTITY:
+					handle_create_entity_action((CreateEntityAction*)current_action);
+					break;
+
+				case ACTIONTYPE_NONE:
+				default:
+					handle_default_action(current_action);
+					break;
 			}
-			if (current_action->action_type == ACTIONTYPE_MOVE_BY)
-			{
-				handle_move_by_action((MoveByAction *)current_action);
-				continue;
-			}
-			if (current_action->action_type == ACTIONTYPE_ADD_COMPONENT)
-			{
-				handle_add_component_action((AddComponentAction *)current_action);
-				continue;
-			}
+			
 
 			
-			//default
-			//default handler
-
-			if ( (current_action->duration - current_action->_timestamp) <= 0.0)
+			if (current_action->finished)
 			{
-				current_action->finished = true;
-			}
-			current_action->_timestamp += _current_delta;
-			
-		}
-		
-
-		//next action one
-		if (pa->action_one)
-		{
-			if (pa->action_one->finished)
-			{
-				if (pa->action_one->on_complete_action)
+				Action *on_complete_action = current_action->on_complete_action;
+				
+				if (on_complete_action)
 				{
-					Action *t = pa->action_one->on_complete_action;
+					delete current_action;
+					current_action = NULL;
+					_current_container->actions[i] = on_complete_action;
+				}
+				else
+				{
+					delete current_action;
+					current_action = NULL;
+					_current_container->actions[i] = NULL;
+				}
 					
-					delete pa->action_one;
-					pa->action_one = t;
-				}
-				else 
-				{
-					delete pa->action_one;
-					pa->action_one = NULL;
-				}
 			}
-		}
-		
-		//next action two
-		if (pa->action_two)
-		{
-			if (pa->action_two->finished)
-			{
-				if (pa->action_two->on_complete_action)
-				{
-					Action *t = pa->action_two->on_complete_action;
-					
-					delete pa->action_two;
-					pa->action_two = t;
-				}
-				else 
-				{
-					delete pa->action_two;
-					pa->action_two = NULL;
-				}
-			}
-		}
-		
-		
-		
-		
-		//check for overall completion		
-		if (pa->action_one && pa->action_two)
-		{
-			if (pa->action_one->finished && pa->action_two->finished)
-			{
-				action->finished = true;
-			}
-		}
-	
-		if (pa->action_one && !pa->action_two)
-		{
-			if (pa->action_one->finished)
-			{
-				action->finished = true;
-			}
-		}
-		
-		if (!pa->action_one && pa->action_two)
-		{
-			if (pa->action_two->finished)
-			{
-				action->finished = true;
-			}
-		}
-		
-		//no actions anymore? finished!
-		if (!pa->action_one && !pa->action_two)
-		{
-			action->finished = true;
+			
 		}
 	}
-
+	
 	void ActionSystem::update (float delta)
 	{
-		_current_delta = delta;
+		_delta = delta;
 		_entities.clear();
-		_entityManager->getEntitiesPossessingComponents(_entities,  Action::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
-
-		std::vector<Entity*>::const_iterator it = _entities.begin();
+		_entityManager->getEntitiesPossessingComponent (_entities, ActionContainer::COMPONENT_ID);
+		
+		std::vector <Entity *>::const_iterator it = _entities.begin();
+		
+	//	Entity *current_entity = NULL;
+	//	ActionContainer *current_container = NULL;
+		
 		
 		while (it != _entities.end())
-		{ 
+		{
 			_current_entity = *it;
-			_current_action = _entityManager->getComponent<Action>(_current_entity);
-			_current_pos = _entityManager->getComponent<Position>(_current_entity);
-
-	#ifdef ABORT_GUARDS				
-			if (!_current_action)
-			{
-				_entityManager->dumpEntity(_current_entity);
-				abort();
-			}
-	#endif
-			if (_current_action->action_type == ACTIONTYPE_PARALLEL)
-			{
-				handle_parallel_action ((ParallelAction*)_current_action);
-				
-				if (_current_action->finished)
-				{
-					printf("PARALLEL FINISHED!");
-					setupNextActionOrStop(_current_entity,_current_action);
-				}
-				++it;
-				continue;
-			}
-			
-			
-			//MOVE TO handler
-			if (_current_action->action_type == ACTIONTYPE_MOVE_TO)
-			{
-				handle_move_to_action((MoveToAction*)_current_action);
-
-				if (_current_action->finished)
-				{
-					setupNextActionOrStop(_current_entity,_current_action);
-				}
-				++it;
-				continue;
-			}
-			
-			//MOVE BY HANDLER
-			if (_current_action->action_type == ACTIONTYPE_MOVE_BY)
-			{
-				MoveByAction *mb = (MoveByAction *)_current_action;
-				
-				handle_move_by_action(mb);
-				
-				if (_current_action->finished)
-				{
-					setupNextActionOrStop(_current_entity,_current_action);
-				}
-				++it;
-				continue;
-
-			}
-			
-			
-			//ACTIONTYPE_ADD_COMPONENT handler
-			if (_current_action->action_type == ACTIONTYPE_ADD_COMPONENT)
-			{
-				AddComponentAction *aca = (AddComponentAction*)_current_action;
-				
-				handle_add_component_action(aca);
-				
-				if (_current_action->finished)
-				{
-					setupNextActionOrStop(_current_entity,_current_action);
-				}
-				++it;
-				continue;
-			}
-			
-			
-			
-			
-			
-			
-			//ACTIONTYPE_CREATE_ENTITY handler
-			if (_current_action->action_type == ACTIONTYPE_CREATE_ENTITY)
-			{
-				
-				_current_action->_timestamp += delta;			
-				if ( (_current_action->duration - _current_action->_timestamp) <= 0.0)
-				{
-					CreateEntityAction *cea = (CreateEntityAction*)_current_action;
-					std::vector<Component*>::const_iterator cit = cea->components_to_add.begin();
-					
-					Entity *newEntity = _entityManager->createNewEntity();
-					
-					Component *c = NULL;
-					while (cit != cea->components_to_add.end())
-					{
-						c = *cit;
-						_entityManager->addComponent(newEntity, c);
-						
-						++cit;
-					}
-					setupNextActionOrStop(_current_entity,_current_action);
-				}
-				++it;
-				continue;
-			}
-			
-			
-			
-			//default handler
-			if ( (_current_action->duration - _current_action->_timestamp) <= 0.0)
-			{
-				setupNextActionOrStop(_current_entity,_current_action);
-			}
-			_current_action->_timestamp += delta;
 			++it;
-		}
-	}
+			
+			_current_container = _entityManager->getComponent<ActionContainer>(_current_entity);
 
+#ifdef ABORT_GUARDS
+			if (!_current_container)
+				abort();
+#endif
+			
+			handle_action_container();
+		}
+		
+		//1. get entities with action containers
+		//2. run actions in the container on the entity
+		//3. if a action expires, check if it has a next_action. if so, make it the active action and kill the expired action
+
+	}
 }

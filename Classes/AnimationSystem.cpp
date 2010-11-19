@@ -8,6 +8,7 @@
  */
 
 #include "AnimationSystem.h"
+#include "ActionSystem.h"
 namespace mx3 
 {
 		
@@ -26,7 +27,8 @@ namespace mx3
 		
 		if (current_animation->on_complete_action)
 		{
-			_entityManager->addComponent (e,current_animation->on_complete_action);
+			//_entityManager->addComponent (e,current_animation->on_complete_action);
+			g_pActionSystem->addActionToEntity (e, current_animation->on_complete_action);
 		}
 		
 		if (next_animation)

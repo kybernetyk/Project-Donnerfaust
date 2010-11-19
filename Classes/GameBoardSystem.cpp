@@ -9,30 +9,35 @@
 
 #include "GameBoardSystem.h"
 #include "GameComponents.h"
+#include "ActionSystem.h"
 
 namespace game 
 {
 	Action *fall_one_row_action ()
 	{
 		Action *idle = new Action();
-		idle->duration = 1.0;
+		idle->duration = 1.3;
 
 		MoveByAction *mba = new MoveByAction();
 		mba->y = -32.0;
 		mba->x = 0.0;
 		mba->duration = 0.3;
 		idle->on_complete_action = mba;
+		
+		AddComponentAction *aca = new AddComponentAction();
+		aca->component_to_add = new WaitingForFall();
 	
-		MoveByAction *mba2 = new MoveByAction();
-		mba2->x = 128;
-		mba2->duration = 10.0;
+		mba->on_complete_action = aca;
 		
-		
-		ParallelAction *container_action = new ParallelAction();
-		container_action->action_one = idle;
-		//container_action->action_two = mba2;
-		
-		return (Action*)container_action;
+		return idle;
+	}
+	
+	Action *move_col_action (float num_of_cols)
+	{
+		MoveByAction *mba = new MoveByAction();
+		mba->x = num_of_cols * 32.0;
+		mba->duration = 0.1;
+		return (Action*)mba;
 	}
 	
 	GameBoardSystem::GameBoardSystem (EntityManager *entityManager)
@@ -99,20 +104,20 @@ namespace game
 		
 		Entity *current_entity = NULL;
 		GameBoardElement *current_gbo = NULL;
-		Action *current_action = NULL;
-		Position *current_position = NULL;
+		WaitingForFall *wff = NULL;
 		while (it != _entities.end())
 		{
 			current_entity = *it;
+			++it;
+
 			current_gbo = _entityManager->getComponent <GameBoardElement> (current_entity);
-			
-			current_action = _entityManager->getComponent <Action> (current_entity);
-			if (!current_action)
+			wff = _entityManager->getComponent <WaitingForFall> (current_entity);
+			if (wff)
 			{
 				if (can_fall(current_entity))
 				{
 					current_gbo->row --;
-					_entityManager->addComponent(current_entity, fall_one_row_action());
+					g_pActionSystem->addActionToEntity (current_entity, fall_one_row_action());
 				}
 				else
 				{
@@ -121,8 +126,12 @@ namespace game
 					_entityManager->addComponent <LandingState> (current_entity);
 					_entityManager->addComponent <Collidable> (current_entity);
 				}
+			
+				_entityManager->removeComponent<WaitingForFall> (current_entity);
 			}
-			++it;
+			
+			
+			
 		}
 		
 	}
@@ -199,7 +208,7 @@ namespace game
 
 		/* move falling blobs */
 		_entities.clear();
-		_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, FallingState::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
+		_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, WaitingForFall::COMPONENT_ID, FallingState::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
 		move_elements();
 
 		/* create map of resting blobs and connect them */

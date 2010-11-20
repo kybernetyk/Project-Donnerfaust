@@ -28,8 +28,7 @@ namespace game
 		move_left = InputDevice::sharedInstance()->getLeftActive();
 		move_right = InputDevice::sharedInstance()->getRightActive();
 		
-		if (!move_left && !move_right)
-			return;
+		
 		
 		std::vector<Entity*> entities;
 		
@@ -37,21 +36,32 @@ namespace game
 		std::vector<Entity*>::const_iterator it = entities.begin();
 		
 		Entity *current_entity = NULL;
+		GameBoardElement *gbe = NULL;
+		PlayerController *pc = NULL;
 		while (it != entities.end())
 		{
 			current_entity = *it;
-
-			WaitingForMove *wfm = new WaitingForMove();
-			if (move_left)
-				wfm->direction = MOVE_LEFT;
-			else
-				wfm->direction = MOVE_RIGHT;
-			
-			_entityManager->addComponent(current_entity, wfm);
-
-			
-
 			++it;
+			
+			gbe = _entityManager->getComponent <GameBoardElement>(current_entity);
+			pc = _entityManager->getComponent <PlayerController>(current_entity);
+			
+			if (pc)
+			{
+				if (pc->lifetime > -1.0)
+				{
+					pc->lifetime -= delta;
+					if (pc->lifetime <= 0.0)
+						_entityManager->removeComponent <PlayerController>(current_entity);
+				}
+				
+			}
+			
+			if (move_left)
+				gbe->state |= GBE_STATE_READY_TO_MOVE_LEFT;
+			if (move_right)
+				gbe->state |= GBE_STATE_READY_TO_MOVE_RIGHT;
+			
 		}
 	}
 

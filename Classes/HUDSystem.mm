@@ -12,6 +12,7 @@
 #include "SoundSystem.h"
 #include "Timer.h"
 #include "globals.h"
+#include "GameActionSystem.h"
 
 namespace game 
 {

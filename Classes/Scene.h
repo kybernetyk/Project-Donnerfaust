@@ -22,6 +22,7 @@
 #include "AnimationSystem.h"
 #include "GameBoardSystem.h"
 #include "BlobAnimationSystem.h"
+#include "GameActionSystem.h"
 
 using namespace mx3;
 
@@ -46,7 +47,7 @@ namespace game
 		RenderSystem *_renderSystem;
 		MovementSystem *_movementSystem;
 		AttachmentSystem *_attachmentSystem;
-		ActionSystem *_actionSystem;
+		GameActionSystem *_actionSystem;
 		CorpseRetrievalSystem *_corpseRetrievalSystem;	
 		SoundSystem *_soundSystem;
 		AnimationSystem *_animationSystem;

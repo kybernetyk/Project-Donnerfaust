@@ -16,160 +16,71 @@ namespace game
 {
 #pragma mark -
 #pragma mark game 
+
+#define BLOB_COLOR_RED 0x01
 	
-#define FALLING 0
-#define RESTING 1
-#define COLLIDING 2
+
+#define GBE_STATE_MOVING_LEFT (1 << 1)
+#define GBE_STATE_MOVING_RIGHT (1 << 2)
+#define GBE_STATE_MOVING_FALL (1 << 3)
 	
-#define BLOB_COLOR_RED 0
+#define GBE_STATE_READY_TO_MOVE_LEFT (1 << 4)
+#define GBE_STATE_READY_TO_MOVE_RIGHT (1 << 5)
+#define GBE_STATE_READY_TO_FALL (1 << 6)
 	
-	struct Collidable : public Component
-	{
-		static ComponentID COMPONENT_ID;
-		
-		bool ignore;
-		
-		Collidable ()
-		{
-			_id = COMPONENT_ID;
-			ignore = false;
-		}			
-		DEBUGINFO("Collidable")
-	};
-	
-	struct FallingState : public Component
-	{
-		static ComponentID COMPONENT_ID;
-		
-		bool handled;
-		
-		FallingState ()
-		{
-			_id = COMPONENT_ID;
-			handled = false;
-		}			
-		DEBUGINFO("Coliding state")
-	};
-
-	struct LandingState : public Component
-	{
-		static ComponentID COMPONENT_ID;
-
-		bool handled;
-
-		LandingState ()
-		{
-			_id = COMPONENT_ID;
-			handled = false;
-		}			
-		DEBUGINFO("Landing State")
-	};
-	
-	struct RestingState : public Component
-	{
-		static ComponentID COMPONENT_ID;
-
-		bool handled;
-
-		RestingState ()
-		{
-			_id = COMPONENT_ID;
-			handled = false;
-		}			
-		DEBUGINFO("Resting state")
-	};
-
-	struct WaitingForFall : public Component
-	{
-		static ComponentID COMPONENT_ID;
-		
-		bool handled;
-		
-		WaitingForFall ()
-		{
-			_id = COMPONENT_ID;
-			handled = false;
-		}			
-		DEBUGINFO("WaitingForFall")
-		
-	};
-
-#define MOVE_RIGHT 1
-#define MOVE_LEFT 2
-	
-	struct WaitingForMove : public Component
-	{
-		static ComponentID COMPONENT_ID;
-		
-		bool handled;
-		int direction;
-		
-		WaitingForMove ()
-		{
-			_id = COMPONENT_ID;
-			handled = false;
-			direction = 0;
-		}			
-		DEBUGINFO("WaitingForFall")
-		
-	};
-
-	
-#define CONNECTION_NONE 0
-#define CONNECTION_UP 1
-#define CONNECTION_RIGHT 2
-#define CONNECTION_DOWN 4
-#define CONNECTION_LEFT 8	
 	struct GameBoardElement : public Component
 	{
 		static ComponentID COMPONENT_ID;
 		
 		int row;
 		int col;
+		
+		int prev_row;
+		int prev_col;
+		
+		
 		int type;
-		int connection_state;
-		int _prev_connection_state;
+		
+		unsigned int state;
+		int prev_state;
+
+		float x_move_timer;
+		float y_move_timer;
+		
+		float x_off;
+		float y_off;
+		
+		float fall_duration;
+		float fall_idle_time;
 		
 		GameBoardElement ()
 		{
 			_id = COMPONENT_ID;
-			row = col = 0;
+			prev_row = prev_col = row = col = 0;
 			type = BLOB_COLOR_RED;
-			_prev_connection_state = connection_state = CONNECTION_NONE;
-			
+			prev_state = state = GBE_STATE_READY_TO_FALL;
+			x_off = 0.0;
+			y_off = 0.0;
+			x_move_timer = y_move_timer = 0.0;
+
+			fall_duration = 0.3;
+			fall_idle_time = 1.3;
 		}
 		
-		DEBUGINFO ("Game Board Element. row: %i, col: %i, type: %i, connection: %i",row,col,type, connection_state)
+		DEBUGINFO ("Game Board Element. ")
 	};
 	
 	struct PlayerController : public Component
 	{
 		static ComponentID COMPONENT_ID;
-		
+		float lifetime;
 		PlayerController ()
 		{
 			_id = COMPONENT_ID;
+			lifetime = -1.0;
 		}
 		
 		DEBUGINFO ("Player Controller")
 	};
 	
-	struct Enemy : public Component
-	{
-		static ComponentID COMPONENT_ID;
-		
-		bool has_been_handled;
-		float origin_x;
-		float origin_y;
-		
-		Enemy ()
-		{
-			_id = COMPONENT_ID;
-			has_been_handled = false;
-			origin_x = origin_y = 0.0;
-		}
-		
-		DEBUGINFO ("Enemy. has_been_handled: %i origin_x: %f origin_y: %f", has_been_handled, origin_x, origin_y)
-	};
-
 }

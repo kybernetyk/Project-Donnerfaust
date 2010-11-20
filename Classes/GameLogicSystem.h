@@ -22,10 +22,6 @@ namespace game
 		void update (float delta);
 		
 	protected:
-		Action *enemy_death_action_chain (Position *enemy_pos, Enemy *enemy_information);
-		
-		std::vector<Entity*> _enemies;
-		std::vector<Entity*> _players;
 		float _delta;
 		
 		EntityManager *_entityManager;

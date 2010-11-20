@@ -22,8 +22,6 @@ namespace game
 		void update (float delta);	
 	protected:
 		void appendAnimation (Entity *e, FrameAnimation *anim );
-		void apply_landing_animations();
-		void apply_connection_animations();
 		EntityManager *_entityManager;
 		std::vector<Entity*> _entities;
 	};

@@ -12,6 +12,8 @@
 
 #include <vector>
 #include "EntityManager.h"
+#include "Actions.h"
+
 namespace mx3 
 {
 	class ActionSystem
@@ -21,6 +23,7 @@ namespace mx3
 		void update (float delta);	
 		
 		void addActionToEntity (Entity *entity, Action *action);
+		void cancelAction (Entity *entity,Action *action);
 		
 		void handle_action_container ();
 
@@ -30,9 +33,17 @@ namespace mx3
 		void handle_create_entity_action (CreateEntityAction *action);
 		void handle_add_component_action (AddComponentAction *action);
 		
+		
+		void handle_change_integer_to_action (ChangeIntegerToAction *action);
+		void handle_change_float_to_action (ChangeFloatToAction *action);
+
+		void handle_change_integer_by_action (ChangeIntegerByAction *action);
+		void handle_change_float_by_action (ChangeFloatByAction *action);
+		
+		
 		void step_action (Action *action);
 		
-		
+		virtual bool handle_game_action (Action *action);
 		
 	protected:
 		EntityManager *_entityManager;

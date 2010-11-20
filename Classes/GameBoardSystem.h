@@ -21,20 +21,31 @@ namespace game
 		GameBoardSystem (EntityManager *entityManager);
 		void update (float delta);	
 	protected:
+		bool can_move_down ();
+		bool can_move_left ();
+		bool can_move_right ();
+		
+		void move_down();
+		
+	
+		void handle_state_ready_to_fall ();
+		void handle_state_ready_to_move_left ();
+		void handle_state_ready_to_move_right ();
+		
+		void handle_state_falling ();
+		void handle_state_moving_left ();		
+		void handle_state_moving_right ();		
+		
 		Entity *_map[BOARD_NUM_COLS][BOARD_NUM_ROWS];
-		void refresh_map ();
+		void update_map ();
 		
-		bool can_fall (Entity *e);
-		bool can_move_left (Entity *e);
-		bool can_move_right (Entity *e);
-		
-		void move_elements();
-		void move_elements_siedways();
-		void dump_map();
-		void mark_connections();
+		Entity *_current_entity;
 		
 		EntityManager *_entityManager;
+		GameBoardElement *_current_gbe;
+		Position *_current_position;
 		std::vector<Entity*> _entities;
+		float _delta;
 	};
 	
 }

@@ -72,5 +72,11 @@
     [super dealloc];
 }
 
+extern bool spawn_one;
+
+- (IBAction) spawnOne: (id) sender
+{
+	spawn_one = true;	
+}
 
 @end

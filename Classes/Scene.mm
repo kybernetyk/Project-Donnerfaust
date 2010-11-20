@@ -21,6 +21,8 @@
 
 #include "blob_factory.h"
 
+bool spawn_one = false;
+
 namespace game 
 {
 	void Scene::init ()
@@ -35,7 +37,7 @@ namespace game
 		_renderSystem = new RenderSystem (_entityManager);
 		_movementSystem = new MovementSystem (_entityManager);
 		_attachmentSystem = new AttachmentSystem (_entityManager);
-		_actionSystem = new ActionSystem (_entityManager);
+		_actionSystem = new GameActionSystem (_entityManager);
 		_corpseRetrievalSystem = new CorpseRetrievalSystem (_entityManager);
 		_soundSystem = new SoundSystem (_entityManager);
 		_animationSystem = new AnimationSystem (_entityManager);
@@ -61,16 +63,14 @@ namespace game
 		
 		make_blob(BLOB_COLOR_RED, 1, 4);
 		make_blob(BLOB_COLOR_RED, 0, 5);
-		Entity *e = make_blob(BLOB_COLOR_RED, 3, 11);
-		make_blob(BLOB_COLOR_RED, 4, 7);
+		make_blob(BLOB_COLOR_RED, 3, 11);
+		make_blob(BLOB_COLOR_RED, 3, 3);
+		make_blob(BLOB_COLOR_RED, 3, 5);
+		
+
 		make_blob(BLOB_COLOR_RED, 4, 6);
-		make_blob(BLOB_COLOR_RED, 4, 5);
 		make_blob(BLOB_COLOR_RED, 3, 3);		
 		make_blob(BLOB_COLOR_RED, 4, 3);
-		
-		_entityManager->addComponent<PlayerController>(e); 
-
-		
 	}
 
 	void Scene::end ()
@@ -105,6 +105,13 @@ namespace game
 		_soundSystem->update(delta);
 		
 
+		if (spawn_one)
+		{
+			spawn_one = false;
+			Entity *e = make_blob(BLOB_COLOR_RED, 3, 11);
+			_entityManager->addComponent<PlayerController>(e);
+		}
+		
 	/*	if (g_GameState.game_state != g_GameState.next_state)
 		{
 			g_GameState.game_state = g_GameState.next_state;

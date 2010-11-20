@@ -42,6 +42,31 @@ namespace mx3
 		
 	}
 	
+	void ActionSystem::cancelAction (Entity *entity,Action *action)
+	{
+		ActionContainer *container = _entityManager->getComponent<ActionContainer>(entity);
+		if (!container)
+			return;
+		
+		for (int i = 0; i < NUM_OF_ACTIONS_PER_CONTAINER; i++)
+		{
+			if (container->actions[i] == action)
+			{
+				Action *child = action->on_complete_action;
+				
+				while (child)
+				{
+					Action *t = child;	
+					
+					child = child->on_complete_action;
+					
+					delete t;
+				}
+				container->actions[i] = NULL;
+			}
+		}
+	}
+	
 	void ActionSystem::step_action (Action *action)
 	{
 		action->_timestamp += _delta;
@@ -147,6 +172,59 @@ namespace mx3
 	}
 	
 	
+	void ActionSystem::handle_change_integer_to_action (ChangeIntegerToAction *action)
+	{
+		if (action->finished)
+		{
+			if (action->pIntToChange)
+			{
+				*action->pIntToChange = action->new_value;
+			}
+		
+		}		
+	}
+	void ActionSystem::handle_change_integer_by_action (ChangeIntegerByAction *action)
+	{
+		if (action->finished)
+		{
+			if (action->pIntToChange)
+			{
+				*action->pIntToChange += action->amount;
+			}
+			
+		}		
+	}
+	
+	void ActionSystem::handle_change_float_to_action (ChangeFloatToAction *action)
+	{
+		if (action->finished)
+		{
+			if (action->pFloatToChange)
+			{
+				*action->pFloatToChange = action->new_value;
+			}
+			
+		}
+	}
+	void ActionSystem::handle_change_float_by_action (ChangeFloatByAction *action)
+	{
+		if (action->finished)
+		{
+			if (action->pFloatToChange)
+			{
+				*action->pFloatToChange += action->amount;
+			}
+			
+		}
+	}
+	
+	
+	bool ActionSystem::handle_game_action (Action *action)
+	{
+		
+		return false;
+	}
+	
 	void ActionSystem::handle_action_container ()
 	{
 		Action **actions = _current_container->actions;
@@ -157,30 +235,46 @@ namespace mx3
 			current_action = actions[i];
 			if (!current_action)
 				continue;
-			
 			step_action(current_action);
 
-			switch (current_action->action_type) 
+			if (!handle_game_action(current_action))
 			{
-				case ACTIONTYPE_MOVE_TO:
-					handle_move_to_action((MoveToAction*)current_action);
-					break;
-				case ACTIONTYPE_MOVE_BY:
-					handle_move_by_action((MoveByAction*)current_action);
-					break;
-				case ACTIONTYPE_ADD_COMPONENT:
-					handle_add_component_action((AddComponentAction*)current_action);
-					break;
-				case ACTIONTYPE_CREATE_ENTITY:
-					handle_create_entity_action((CreateEntityAction*)current_action);
-					break;
-
-				case ACTIONTYPE_NONE:
-				default:
-					//handle_default_action(current_action);
-					break;
+				switch (current_action->action_type) 
+				{
+					case ACTIONTYPE_MOVE_TO:
+						handle_move_to_action((MoveToAction*)current_action);
+						break;
+					case ACTIONTYPE_MOVE_BY:
+						handle_move_by_action((MoveByAction*)current_action);
+						break;
+					case ACTIONTYPE_ADD_COMPONENT:
+						handle_add_component_action((AddComponentAction*)current_action);
+						break;
+					case ACTIONTYPE_CREATE_ENTITY:
+						handle_create_entity_action((CreateEntityAction*)current_action);
+						break;
+						
+					case ACTIONTYPE_CHANGE_INTEGER_TO:
+						handle_change_integer_to_action((ChangeIntegerToAction*)current_action);
+						break;
+					case ACTIONTYPE_CHANGE_FLOAT_TO:
+						handle_change_float_to_action((ChangeFloatToAction*)current_action);
+						break;
+					case ACTIONTYPE_CHANGE_INTEGER_BY:
+						handle_change_integer_by_action((ChangeIntegerByAction*)current_action);
+						break;
+					case ACTIONTYPE_CHANGE_FLOAT_BY:
+						handle_change_float_by_action((ChangeFloatByAction*)current_action);
+						break;
+						
+						
+					case ACTIONTYPE_NONE:
+					default:
+						//handle_default_action(current_action);
+						break;
+				}
+				
 			}
-			
 
 			//let's see what to do after the action is finished
 			if (current_action->finished)
@@ -205,6 +299,8 @@ namespace mx3
 			
 		}
 	}
+	
+	
 	
 	void ActionSystem::update (float delta)
 	{

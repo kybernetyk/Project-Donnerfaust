@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030F1F471298196E00093ABC /* GameActionSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 030F1F461298196E00093ABC /* GameActionSystem.cpp */; };
 		03208BF712942AF0009E8AAD /* mockup.png in Resources */ = {isa = PBXBuildFile; fileRef = 03208BF612942AF0009E8AAD /* mockup.png */; };
 		03208C3B12942DC8009E8AAD /* game_board.png in Resources */ = {isa = PBXBuildFile; fileRef = 03208C3A12942DC8009E8AAD /* game_board.png */; };
 		03208C4A12942E68009E8AAD /* red_blob_anims.png in Resources */ = {isa = PBXBuildFile; fileRef = 03208C4912942E68009E8AAD /* red_blob_anims.png */; };
@@ -90,6 +91,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030F1F451298196E00093ABC /* GameActionSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameActionSystem.h; sourceTree = "<group>"; };
+		030F1F461298196E00093ABC /* GameActionSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameActionSystem.cpp; sourceTree = "<group>"; };
+		030F1FB212981F2F00093ABC /* GameActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameActions.h; sourceTree = "<group>"; };
+		030F1FB712981F7500093ABC /* Actions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actions.h; sourceTree = "<group>"; };
 		03208BF612942AF0009E8AAD /* mockup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mockup.png; sourceTree = "<group>"; };
 		03208C3A12942DC8009E8AAD /* game_board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game_board.png; sourceTree = "<group>"; };
 		03208C4912942E68009E8AAD /* red_blob_anims.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_blob_anims.png; sourceTree = "<group>"; };
@@ -251,6 +256,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		030F1F441298196000093ABC /* Game Action System */ = {
+			isa = PBXGroup;
+			children = (
+				030F1F451298196E00093ABC /* GameActionSystem.h */,
+				030F1F461298196E00093ABC /* GameActionSystem.cpp */,
+				030F1FB212981F2F00093ABC /* GameActions.h */,
+			);
+			name = "Game Action System";
+			sourceTree = "<group>";
+		};
 		03208C7612943098009E8AAD /* GameBoardSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +329,7 @@
 			children = (
 				038B248C1295D627008AEA7D /* ActionSystem.h */,
 				038B248D1295D627008AEA7D /* ActionSystem.mm */,
+				030F1FB712981F7500093ABC /* Actions.h */,
 			);
 			name = "Action System";
 			sourceTree = "<group>";
@@ -572,6 +588,7 @@
 		034F38631292DBE900F54ABA /* Game Systems */ = {
 			isa = PBXGroup;
 			children = (
+				030F1F441298196000093ABC /* Game Action System */,
 				03208E0F12944DC8009E8AAD /* BlobAnimationSystem */,
 				03208C7612943098009E8AAD /* GameBoardSystem */,
 				033DCB7A128D7C9700C66D74 /* Player Control System */,
@@ -860,6 +877,7 @@
 				03208C79129430A8009E8AAD /* GameBoardSystem.cpp in Sources */,
 				03208E1212944DDA009E8AAD /* BlobAnimationSystem.cpp in Sources */,
 				038B248E1295D627008AEA7D /* ActionSystem.mm in Sources */,
+				030F1F471298196E00093ABC /* GameActionSystem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

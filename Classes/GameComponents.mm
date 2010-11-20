@@ -15,19 +15,8 @@ namespace game
 	//user
 	ComponentID PlayerController::COMPONENT_ID = 16;
 	
-	ComponentID Enemy::COMPONENT_ID = 17;
 	
 	ComponentID GameBoardElement::COMPONENT_ID = 18;
 	
-	ComponentID FallingState::COMPONENT_ID = 19;
-	ComponentID LandingState::COMPONENT_ID = 20;
-	ComponentID RestingState::COMPONENT_ID = 21;
-	
-	ComponentID Collidable::COMPONENT_ID = 22;
-	
-	ComponentID WaitingForFall::COMPONENT_ID = 23;
-
-	
-	ComponentID WaitingForMove::COMPONENT_ID = 24;
 	
 }

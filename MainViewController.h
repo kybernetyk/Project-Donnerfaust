@@ -14,6 +14,8 @@
 	EAGLView *glView;
 }
 
+- (IBAction) spawnOne: (id) sender;
+
 @property (nonatomic, retain) IBOutlet EAGLView *glView;
 
 @end

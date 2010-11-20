@@ -22,11 +22,13 @@ namespace game
 
 	void PlayerControlledSystem::update (float delta)
 	{
-		vector2D v;
+		bool move_left = false;
+		bool move_right = false;
 		
-		if (InputDevice::sharedInstance()->touchUpReceived())
-			v = InputDevice::sharedInstance()->touchLocation();
-		 else
+		move_left = InputDevice::sharedInstance()->getLeftActive();
+		move_right = InputDevice::sharedInstance()->getRightActive();
+		
+		if (!move_left && !move_right)
 			return;
 		
 		std::vector<Entity*> entities;
@@ -38,8 +40,17 @@ namespace game
 		while (it != entities.end())
 		{
 			current_entity = *it;
+
+			WaitingForMove *wfm = new WaitingForMove();
+			if (move_left)
+				wfm->direction = MOVE_LEFT;
+			else
+				wfm->direction = MOVE_RIGHT;
 			
-	
+			_entityManager->addComponent(current_entity, wfm);
+
+			
+
 			++it;
 		}
 	}

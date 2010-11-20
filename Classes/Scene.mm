@@ -61,10 +61,15 @@ namespace game
 		
 		make_blob(BLOB_COLOR_RED, 1, 4);
 		make_blob(BLOB_COLOR_RED, 0, 5);
-		make_blob(BLOB_COLOR_RED, 3, 11);
+		Entity *e = make_blob(BLOB_COLOR_RED, 3, 11);
 		make_blob(BLOB_COLOR_RED, 4, 7);
+		make_blob(BLOB_COLOR_RED, 4, 6);
+		make_blob(BLOB_COLOR_RED, 4, 5);
 		make_blob(BLOB_COLOR_RED, 3, 3);		
 		make_blob(BLOB_COLOR_RED, 4, 3);
+		
+		_entityManager->addComponent<PlayerController>(e); 
+
 		
 	}
 

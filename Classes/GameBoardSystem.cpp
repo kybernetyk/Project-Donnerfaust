@@ -28,10 +28,29 @@ namespace game
 		aca->component_to_add = new WaitingForFall();
 	
 		mba->on_complete_action = aca;
+
+		AddComponentAction *aca2 = new AddComponentAction();
+//		aca2->component_to_add = new Collidable();
+//		aca->on_complete_action = aca2;
 		
 		return idle;
 	}
 	
+	Action *move_one_col_action (float num_of_cols)
+	{
+		MoveByAction *mba = new MoveByAction();
+		mba->x = num_of_cols * 32;
+		mba->duration = 1.1;
+		
+		AddComponentAction *aca = new AddComponentAction();
+		aca->component_to_add = new PlayerController();
+		
+		
+		mba->on_complete_action = aca;
+
+		
+		return mba;
+	}
 	
 	GameBoardSystem::GameBoardSystem (EntityManager *entityManager)
 	{
@@ -51,6 +70,36 @@ namespace game
 		
 		return true;
 	}
+	
+	
+	bool GameBoardSystem::can_move_left (Entity *e)
+	{
+		GameBoardElement *gbo = _entityManager->getComponent <GameBoardElement> (e);
+		
+		if ( (gbo->col - 1) < 0)
+			return false;
+		
+		if (_map[gbo->col-1][gbo->row])
+			return false;
+		
+		return true;
+		
+	}
+	
+	bool GameBoardSystem::can_move_right (Entity *e)
+	{
+		GameBoardElement *gbo = _entityManager->getComponent <GameBoardElement> (e);
+		
+		if ( (gbo->col + 1) > 6)
+			return false;
+		
+		if (_map[gbo->col+1][gbo->row])
+			return false;
+		
+		return true;
+		
+	}
+
 	
 	void GameBoardSystem::dump_map ()
 	{
@@ -98,6 +147,7 @@ namespace game
 		Entity *current_entity = NULL;
 		GameBoardElement *current_gbo = NULL;
 		WaitingForFall *wff = NULL;
+		WaitingForMove *wfm = NULL;
 		while (it != _entities.end())
 		{
 			current_entity = *it;
@@ -107,27 +157,68 @@ namespace game
 			wff = _entityManager->getComponent <WaitingForFall> (current_entity);
 			if (wff)
 			{
+				//
+				
 				if (can_fall(current_entity))
 				{
 					current_gbo->row --;
+				//	_entityManager->removeComponent <Collidable> (current_entity);
 					g_pActionSystem->addActionToEntity (current_entity, fall_one_row_action());
 					//g_pActionSystem->addActionToEntity (current_entity, move_col_action(1));
+					_entityManager->removeComponent<WaitingForFall> (current_entity);
 				}
 				else
 				{
-					//current_gbo->state = COLLIDING;
-					_entityManager->removeComponent <FallingState> (current_entity);
-					_entityManager->addComponent <LandingState> (current_entity);
-					_entityManager->addComponent <Collidable> (current_entity);
+					if (!_entityManager->getComponent <WaitingForFall> (current_entity))
+						_entityManager->addComponent <WaitingForFall> (current_entity);
 				}
 			
-				_entityManager->removeComponent<WaitingForFall> (current_entity);
+				
 			}
 			
-			
-			
 		}
+	}
+	
+	void GameBoardSystem::move_elements_siedways ()
+	{
+		std::vector<Entity*>::const_iterator it = _entities.begin();
 		
+		Entity *current_entity = NULL;
+		GameBoardElement *current_gbo = NULL;
+		WaitingForFall *wff = NULL;
+		WaitingForMove *wfm = NULL;
+		while (it != _entities.end())
+		{
+			current_entity = *it;
+			++it;
+			
+			current_gbo = _entityManager->getComponent <GameBoardElement> (current_entity);
+			wfm = _entityManager->getComponent <WaitingForMove> (current_entity);
+			if (wfm)
+			{
+				if (wfm->direction == MOVE_LEFT)
+				{	
+					if (can_move_left (current_entity))
+					{	
+						current_gbo->col --;
+						//move left
+						_entityManager->removeComponent <PlayerController> (current_entity);
+						_entityManager->removeComponent <WaitingForMove> (current_entity);
+						g_pActionSystem->addActionToEntity (current_entity, move_one_col_action(-1.0));
+					}
+				}
+				else
+				{
+					if (can_move_right (current_entity))
+					{
+						current_gbo->col ++;
+						_entityManager->removeComponent <PlayerController> (current_entity);	
+						_entityManager->removeComponent <WaitingForMove> (current_entity);
+						g_pActionSystem->addActionToEntity (current_entity, move_one_col_action(1.0));
+					}
+				}
+			}
+		}			
 	}
 	
 	void GameBoardSystem::mark_connections ()
@@ -200,12 +291,18 @@ namespace game
 		_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, Collidable::COMPONENT_ID, Position::COMPONENT_ID, ARGLIST_END );
 		refresh_map();
 
+		
 		/* move falling blobs */
 		_entities.clear();
-		_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, WaitingForFall::COMPONENT_ID, FallingState::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
+		_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, WaitingForFall::COMPONENT_ID, Position::COMPONENT_ID, ARGLIST_END );
 		move_elements();
 
-		/* create map of resting blobs and connect them */
+		_entities.clear();
+		_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, WaitingForMove::COMPONENT_ID, Position::COMPONENT_ID, ARGLIST_END );
+		move_elements_siedways();
+		
+		
+		// create map of resting blobs and connect them 
 		_entities.clear();
 		_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, RestingState::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
 		refresh_map();
@@ -216,3 +313,28 @@ namespace game
 	}
 	
 }
+
+/*
+// move falling blobs sideways 
+_entities.clear();
+_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, WaitingForMove::COMPONENT_ID, Position::COMPONENT_ID, ARGLIST_END );
+move_elements_siedways();
+
+// collision map 
+_entities.clear();
+_entityManager->getEntitiesPossessingComponents(_entities,  GameBoardElement::COMPONENT_ID, Collidable::COMPONENT_ID, Position::COMPONENT_ID, ARGLIST_END );
+refresh_map();
+*/
+
+/*
+ else
+ {
+ //current_gbo->state = COLLIDING;
+ _entityManager->removeComponent <FallingState> (current_entity);
+ _entityManager->addComponent <LandingState> (current_entity);
+ //					_entityManager->addComponent <Collidable> (current_entity);
+ //					_entityManager->removeComponent <PlayerController> (current_entity);
+ _entityManager->addComponent <WaitingForFall> (current_entity); 
+ 
+ }
+*/

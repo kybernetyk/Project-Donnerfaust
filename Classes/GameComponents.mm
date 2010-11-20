@@ -27,4 +27,7 @@ namespace game
 	
 	ComponentID WaitingForFall::COMPONENT_ID = 23;
 
+	
+	ComponentID WaitingForMove::COMPONENT_ID = 24;
+	
 }

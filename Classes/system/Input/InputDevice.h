@@ -63,13 +63,46 @@ namespace mx3
 			_is_touchup_active = b;
 			_touchup_handled = false;
 		}
+		
+		void setLeftActive ()
+		{
+			_state_left_active = true;
+		}
+		
+		bool getLeftActive ()
+		{
+			if (!_state_left_active)
+				return false;
+			
+			_state_left_active = false;
+			return true;
+		}
 
+		void setRightActive ()
+		{
+			_state_right_active = true;
+		}
+		
+		bool getRightActive ()
+		{
+			if (!_state_right_active)
+				return false;
+			
+			_state_right_active = false;
+			return true;
+		}
+		
+		
 	protected:
 		Uint8 *m_pBuffer;
 		vector2D _touch_location;
 		bool _is_touch_active;
 		bool _is_touchup_active;
 		bool _touchup_handled;
+		
+		
+		bool _state_left_active;
+		bool _state_right_active;
 		
 	private:
 		InputDevice (void);

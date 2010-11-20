@@ -35,26 +35,11 @@ Entity *make_blob (int color, int col,int row)
 
 	em->addComponent<FallingState>(e);
 	em->addComponent<WaitingForFall>(e);
-
-	
+	em->addComponent<Collidable>(e); 
 	AtlasSprite *as = em->addComponent<AtlasSprite>(e);
 	as->atlas_quad = g_RenderableManager.accquireTexturedAtlasQuad("red_blob_anims.png");
 	as->src = rect_make(13*32, 0, 32, 32);
 	as->z = 3;
-	
-	
-	
-	/*
-	FrameAnimation *fa = em->addComponent<FrameAnimation>(e);
-	fa->destroy_on_finish = false;
-	fa->loop = false;
-	fa->frames_per_second = 24;
-	fa->start_frame = 0;
-	fa->end_frame = 44;
-	fa->frame_size = rect_make(0.0, 0.0, 32.0, 32.0);
-	fa->state = ANIMATION_STATE_PLAY;
-	*/
-	
-	
+
 	return e;
 }

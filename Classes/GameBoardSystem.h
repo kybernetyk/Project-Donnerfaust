@@ -23,8 +23,13 @@ namespace game
 	protected:
 		Entity *_map[BOARD_NUM_COLS][BOARD_NUM_ROWS];
 		void refresh_map ();
+		
 		bool can_fall (Entity *e);
+		bool can_move_left (Entity *e);
+		bool can_move_right (Entity *e);
+		
 		void move_elements();
+		void move_elements_siedways();
 		void dump_map();
 		void mark_connections();
 		

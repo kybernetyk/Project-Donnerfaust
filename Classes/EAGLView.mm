@@ -62,10 +62,33 @@ int gMapX,gMapY; // returns map offset for navigation
             return nil;
         }
         
+		
+		UISwipeGestureRecognizer *rec  = [[[UISwipeGestureRecognizer alloc] initWithTarget: self
+																					action: @selector(swipeHandler_left:)] autorelease];
+		
+		[rec setDirection: UISwipeGestureRecognizerDirectionLeft];
+		[self addGestureRecognizer: rec];
+		
+		rec  = [[[UISwipeGestureRecognizer alloc] initWithTarget: self
+														   action: @selector(swipeHandler_right:)] autorelease];
+		
+		[rec setDirection: UISwipeGestureRecognizerDirectionRight];
+		[self addGestureRecognizer: rec];
     }
     return self;
 }
 
+- (void) swipeHandler_left: (UISwipeGestureRecognizer *) sender
+{
+	NSLog(@"swipe left! %@",sender);
+	mx3::InputDevice::sharedInstance()->setLeftActive();
+
+}
+- (void) swipeHandler_right: (UISwipeGestureRecognizer *) sender
+{
+	NSLog(@"swipe right! %@",sender);
+	mx3::InputDevice::sharedInstance()->setRightActive();	
+}
 
 - (void)startDrawing 
 {
@@ -203,12 +226,13 @@ int gMapX,gMapY; // returns map offset for navigation
 	loc = [self convertToGL: loc];
 	mx3::vector2D v = {loc.x,loc.y};
 
-	NSLog(@"touch down!");	
-	NSLog(@"loc: %f,%f",loc.x, loc.y);
+//	NSLog(@"touch down!");	
+//	NSLog(@"loc: %f,%f",loc.x, loc.y);
 
 	mx3::InputDevice::sharedInstance()->setTouchActive(true);
 	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
 	
+	[super touchesBegan: touches withEvent: event];
 	
 	// Enumerate through all the touch objects.
    /* for (UITouch *touch in touches)
@@ -245,6 +269,7 @@ int gMapX,gMapY; // returns map offset for navigation
 	mx3::InputDevice::sharedInstance()->setTouchActive(true);
 	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
 	
+	[super touchesMoved: touches withEvent: event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -263,6 +288,8 @@ int gMapX,gMapY; // returns map offset for navigation
 	//NSLog(@"touch ended");
 	mx3::InputDevice::sharedInstance()->setTouchActive(false);
 	mx3::InputDevice::sharedInstance()->setTouchUpReceived(true);
+	
+	[super touchesEnded: touches withEvent: event];
 }
 @end
 

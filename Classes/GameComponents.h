@@ -93,7 +93,28 @@ namespace game
 		DEBUGINFO("WaitingForFall")
 		
 	};
-				  
+
+#define MOVE_RIGHT 1
+#define MOVE_LEFT 2
+	
+	struct WaitingForMove : public Component
+	{
+		static ComponentID COMPONENT_ID;
+		
+		bool handled;
+		int direction;
+		
+		WaitingForMove ()
+		{
+			_id = COMPONENT_ID;
+			handled = false;
+			direction = 0;
+		}			
+		DEBUGINFO("WaitingForFall")
+		
+	};
+
+	
 #define CONNECTION_NONE 0
 #define CONNECTION_UP 1
 #define CONNECTION_RIGHT 2

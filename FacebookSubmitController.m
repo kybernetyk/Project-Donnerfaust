@@ -40,6 +40,15 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (BOOL) handleOpenURL: (NSURL *) url
+{
+	if (!facebook)
+	{
+		facebook = [[Facebook alloc] init];
+	}
+	
+	return [facebook handleOpenURL: url];
+}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -139,6 +148,7 @@
 	NSLog(@"fb nologin");
 	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
 	[defs removeObjectForKey: @"fbtoken"];
+	[defs removeObjectForKey: @"fbdate"];
 	[defs synchronize];
 	
 	isPostingOnFB = NO;
@@ -163,6 +173,7 @@
 	NSLog(@"fb logout");
 	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
 	[defs removeObjectForKey: @"fbtoken"];
+	[defs removeObjectForKey: @"fbdate"];
 	[defs synchronize];
 	
 	unlock_orientation = NO;

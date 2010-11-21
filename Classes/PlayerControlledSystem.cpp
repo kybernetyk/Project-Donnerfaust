@@ -33,7 +33,7 @@ namespace game
 			_current_entity = *it;
 			++it;
 			_current_gbe = _entityManager->getComponent<GameBoardElement>(_current_entity);
-			
+
 			if ((_current_gbe->state & GBE_STATE_IDLE))
 				_map[_current_gbe->col][_current_gbe->row] = _current_entity;
 		}
@@ -115,6 +115,9 @@ namespace game
 		_entityManager->getEntitiesPossessingComponents(_entities,  PlayerController::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
 		std::vector<Entity*>::const_iterator it = _entities.begin();
 
+		Entity *left_blob = NULL;
+		Entity *right_blob = NULL;
+		
 		left_active = right_active = false;
 		_current_entity = NULL;
 		_current_pc = NULL;
@@ -125,10 +128,16 @@ namespace game
 
 			_current_pc = _entityManager->getComponent <PlayerController>(_current_entity);
 			if (_current_pc->left_or_right == LEFT)
+			{	
 				left_active = true;
+				left_blob = _current_entity;
+			}
 			
 			if (_current_pc->left_or_right == RIGHT)
+			{	
 				right_active = true;
+				right_blob = _current_entity;
+			}
 		}
 		
 		it = _entities.begin();

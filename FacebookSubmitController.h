@@ -27,5 +27,6 @@
 @property (readwrite, assign) NSInteger level;
 @property (readwrite, assign) id delegate;
 - (void) shareOverFarmville;
+- (BOOL) handleOpenURL: (NSURL *) url;
 
 @end

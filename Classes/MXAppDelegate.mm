@@ -231,7 +231,9 @@ unsigned int My_SDL_GetTicks()
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-	[[facebookController facebook] handleOpenURL: url];
+	//[[facebookController facebook] handleOpenURL: url];
+	
+	return [facebookController handleOpenURL: url];
 	
 	return YES;
 }

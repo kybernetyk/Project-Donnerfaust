@@ -80,6 +80,9 @@ namespace game
 		float fall_idle_time;
 		float fall_active_time;
 		
+		float collision_grace_timer;
+		float collision_grace_time;
+		
 		PlayerController ()
 		{
 			_id = COMPONENT_ID;
@@ -91,6 +94,8 @@ namespace game
 			
 			fall_idle_time = 1.0;
 			fall_active_time = 0.3;
+			collision_grace_time = 1.0;
+			collision_grace_timer = 0.0;
 		}
 		
 		DEBUGINFO ("Player Controller")

@@ -26,8 +26,8 @@ namespace game
 		memset(_map,0x00,BOARD_NUM_COLS*BOARD_NUM_ROWS*sizeof(Entity*));
 		
 		std::vector<Entity*>::const_iterator it = _entities.begin();
-		_current_entity = NULL;
-		_current_gbe = NULL;
+		Entity *_current_entity = NULL;
+		GameBoardElement *_current_gbe = NULL;
 		while (it != _entities.end())
 		{
 			_current_entity = *it;
@@ -39,13 +39,13 @@ namespace game
 		}
 	}
 	
-	bool PlayerControlledSystem::can_move_down ()
+	bool PlayerControlledSystem::can_move_down (PlayerController *pc)
 	{
-		if (_current_pc->row - 1 < 0)
+		if (pc->row - 1 < 0)
 			return false;
 		
-		int row = _current_pc->row -1;
-		int col = _current_pc->col;
+		int row = pc->row -1;
+		int col = pc->col;
 		
 		if (_map[col][row])
 			return false;
@@ -53,45 +53,59 @@ namespace game
 		return true;
 	}
 	
-	bool PlayerControlledSystem::can_move_left ()
+	bool PlayerControlledSystem::can_move_left (PlayerController *pc)
 	{
 		int advnum = 1;
-		if (_current_pc->left_or_right == RIGHT)
+		if (pc->left_or_right == RIGHT)
 			advnum = 2;
 		
-		if (!left_active)
-			advnum = 1;
 		
-		if (_current_pc->col - advnum < 0)
+		if (pc->col - advnum < 0)
 			return false;
 		
-		int row = _current_pc->row;
-		int col = _current_pc->col - advnum;
+		int row = pc->row;
+		int col = pc->col - advnum;
 		if (_map[col][row])
 			return false;
+
+		if (pc->y_timer >= pc->fall_idle_time)
+		{
+			row --;
+			if (row >= 0)
+			{
+				if (_map[col][row])
+					return false;
+			}
+		}
 		
 		return true;
 	}
 	
-	bool PlayerControlledSystem::can_move_right ()
+	bool PlayerControlledSystem::can_move_right (PlayerController *pc)
 	{
 		int advnum = 1;
 		
-		if (_current_pc->left_or_right == LEFT)
+		if (pc->left_or_right == LEFT)
 			advnum = 2;
+		
 	
-		if (!right_active)
-			advnum = 1;
 		
-		printf("advnum: %i\n", advnum);
-		
-		if (_current_pc->col + advnum >= BOARD_NUM_COLS)
+		if (pc->col + advnum >= BOARD_NUM_COLS)
 			return false;
 		
-		int row = _current_pc->row;
-		int col = _current_pc->col + advnum;
+		int row = pc->row;
+		int col = pc->col + advnum;
 		if (_map[col][row])
 			return false;
+		if (pc->y_timer >= pc->fall_idle_time)
+		{
+			row --;
+			if (row >= 0)
+			{
+				if (_map[col][row])
+					return false;
+			}
+		}
 		
 		return true;
 	}
@@ -118,96 +132,189 @@ namespace game
 		Entity *left_blob = NULL;
 		Entity *right_blob = NULL;
 		
-		left_active = right_active = false;
-		_current_entity = NULL;
-		_current_pc = NULL;
+		Entity *current_entity = NULL;
+		PlayerController *current_pc = NULL;
 		while (it != _entities.end())
 		{
-			_current_entity = *it;
+			current_entity = *it;
 			++it;
 
-			_current_pc = _entityManager->getComponent <PlayerController>(_current_entity);
-			if (_current_pc->left_or_right == LEFT)
+			current_pc = _entityManager->getComponent <PlayerController>(current_entity);
+			if (current_pc->left_or_right == LEFT)
 			{	
-				left_active = true;
-				left_blob = _current_entity;
+				left_blob = current_entity;
 			}
 			
-			if (_current_pc->left_or_right == RIGHT)
+			if (current_pc->left_or_right == RIGHT)
 			{	
-				right_active = true;
-				right_blob = _current_entity;
+				right_blob = current_entity;
 			}
 		}
 		
-		it = _entities.begin();
-		_current_entity = NULL;
-		_current_pc = NULL;
-		while (it != _entities.end())
+		/* fall move collision handling */
+		if (left_blob && right_blob)
 		{
-			_current_entity = *it;
-			++it;
+			PlayerController *left_pc = _entityManager->getComponent <PlayerController> (left_blob);
+			PlayerController *right_pc = _entityManager->getComponent <PlayerController> (right_blob);
 			
-			_current_pc = _entityManager->getComponent <PlayerController>(_current_entity);
-			_current_position = _entityManager->getComponent <Position> (_current_entity);
+			Position *left_position = _entityManager->getComponent <Position> (left_blob);
+			Position *right_position = _entityManager->getComponent <Position> (right_blob);
+			
+			bool left_can_fall = can_move_down(left_pc);
+			bool left_can_move_left = can_move_left(left_pc);
+			bool left_can_move_right = can_move_right(left_pc);
+			
+
+			bool right_can_fall = can_move_down(right_pc);
+			bool right_can_move_left = can_move_left(right_pc);
+			bool right_can_move_right = can_move_right(right_pc);
 			
 			
-			if ( (_current_pc->state & PC_STATE_IDLE) )
+			/* begin left & right can fall */
+			if (left_can_fall && right_can_fall)
 			{
-				if (can_move_down())
+				if ( (left_pc->state & PC_STATE_IDLE ))
+				{
+					left_pc->state &= (~PC_STATE_IDLE);
+					left_pc->state |= PC_STATE_MOVING_FALL;
+					left_pc->y_timer = 0.0;
+					left_pc->collision_grace_timer = 0.0;
+				}
+				
+				if ( (right_pc->state & PC_STATE_IDLE ))
+				{
+					right_pc->state &= (~PC_STATE_IDLE);
+					right_pc->state |= PC_STATE_MOVING_FALL;
+					right_pc->y_timer = 0.0;
+					right_pc->collision_grace_timer = 0.0;
+				}
+				
+				
+				if ( (left_pc->state & PC_STATE_MOVING_FALL) )
+				{
+					if (left_pc->y_timer >= left_pc->fall_idle_time)
+					{
+						left_position->y -= (delta * 32.0 / left_pc->fall_active_time);
+					}
+					
+					if (left_pc->y_timer >= (left_pc->fall_idle_time + left_pc->fall_active_time))
+					{
+						left_pc->row --;
+						left_position->y = left_pc->row * 32.0 + BOARD_Y_OFFSET;
+						left_pc->state &= (~PC_STATE_MOVING_FALL);
+						left_pc->state |= PC_STATE_IDLE;
+						left_pc->y_timer = 0.0;
+					}
+					
+					left_pc->y_timer += delta;
+				}
+				
+				if ( (right_pc->state & PC_STATE_MOVING_FALL) )
+				{
+					if (right_pc->y_timer >= right_pc->fall_idle_time)
+					{
+						right_position->y -= (delta * 32.0 / right_pc->fall_active_time);
+					}
+					
+					if (right_pc->y_timer >= (right_pc->fall_idle_time + right_pc->fall_active_time))
+					{
+						right_pc->row --;
+						right_position->y = right_pc->row * 32.0 + BOARD_Y_OFFSET;
+						right_pc->state &= (~PC_STATE_MOVING_FALL);
+						right_pc->state |= PC_STATE_IDLE;
+						right_pc->y_timer = 0.0;
+					}
+					
+					right_pc->y_timer += delta;
+				}
+	
+				if (move_left)
 				{	
-					_current_pc->state &= (~PC_STATE_IDLE);
-					_current_pc->state |= PC_STATE_MOVING_FALL;
-					_current_pc->y_timer = 0.0;
+					if (left_can_move_left && right_can_move_left)
+					{
+						left_position->x -= 32.0;
+						left_pc->col --;
+						right_position->x -= 32.0;
+						right_pc->col --;
+					}
+					
+				}
+				
+				if (move_right)
+				{	
+					if (left_can_move_right && right_can_move_right)
+					{
+						left_position->x += 32.0;
+						left_pc->col ++;
+						right_position->x += 32.0;
+						right_pc->col ++;
+					}
+				}
+			}
+			/* end left & right can fall */
+			
+			/* start non fall code */
+			if (!left_can_fall || !right_can_fall)
+			{
+				float *grace_timer = NULL;
+				float *grace_time = NULL;
+				
+				if (!left_can_fall)
+				{	
+					grace_timer = &left_pc->collision_grace_timer;
+					grace_time = &left_pc->collision_grace_time;
+				}
+				if (!right_can_fall)
+				{	
+					grace_timer = &right_pc->collision_grace_timer;
+					grace_time = &right_pc->collision_grace_time;
+				}
+				
+				
+				*grace_timer += delta;
+				
+				if (*grace_timer >= *grace_time)
+				{
+					_entityManager->addComponent <MarkOfDeath> (left_blob);
+					_entityManager->addComponent <MarkOfDeath> (right_blob);
+					
+					//PlayerController *pc = _entityManager->getComponent <PlayerController>(left_blob);
+					
+					make_blob(left_pc->type, left_pc->col, left_pc->row);
+					make_blob(right_pc->type, right_pc->col, right_pc->row);
+					
 				}
 				else
 				{
-					_entityManager->addComponent <MarkOfDeath> (_current_entity); 
+					if (move_left)
+					{	
+						if (left_can_move_left && right_can_move_left)
+						{
+							left_position->x -= 32.0;
+							left_pc->col --;
+							right_position->x -= 32.0;
+							right_pc->col --;
+						}
+						
+					}
 					
-					
-					make_blob(_current_pc->type, _current_pc->col, _current_pc->row);
-					
-				}
-			}
-			
-			if ( (_current_pc->state & PC_STATE_MOVING_FALL) )
-			{
-				if (_current_pc->y_timer >= _current_pc->fall_idle_time)
-				{
-					_current_position->y -= (delta * 32.0 / _current_pc->fall_active_time);
+					if (move_right)
+					{	
+						if (left_can_move_right && right_can_move_right)
+						{
+							left_position->x += 32.0;
+							left_pc->col ++;
+							right_position->x += 32.0;
+							right_pc->col ++;
+						}
+					}
 				}
 				
-				if (_current_pc->y_timer >= (_current_pc->fall_idle_time + _current_pc->fall_active_time))
-				{
-					_current_pc->row --;
-					_current_position->y = _current_pc->row * 32.0 + BOARD_Y_OFFSET;
-					_current_pc->state &= (~PC_STATE_MOVING_FALL);
-					_current_pc->state |= PC_STATE_IDLE;
-
-				}
-				
-				_current_pc->y_timer += delta;
 			}
-			
-			if (move_left)
-			{	
-				if (can_move_left())
-				{
-					_current_position->x -= 32.0;
-					_current_pc->col --;
-				}
-			}
-			
-			if (move_right)
-			{	
-				if (can_move_right())
-				{
-					_current_position->x += 32.0;
-					_current_pc->col ++;
-				}
-			}
-			
+			/* end non fall code */
 		}
+		/* end fall move collision handling */
+		
 	}
 
 }

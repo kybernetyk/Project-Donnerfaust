@@ -217,16 +217,22 @@ namespace game
 				if (right_pc->config == HORIZONTAL &&
 					left_pc->config == HORIZONTAL)
 				{
-					//put right blob to bottom: - > |
+					//put right blob to bottom: - > | angle = 180
 					if (right_position->x > left_position->x)
 					{
 						if (!can_move_down(left_pc))
 							return;
 						if (!can_move_down(right_pc))
 							return;
+						left_pc->rotation_angle = right_pc->rotation_angle = 180;
 						
 						right_position->x = left_position->x;
-						right_position->y = left_position->y - 32.0;
+						
+						float a = cos(DEG2RAD(right_pc->rotation_angle));
+						right_position->y = left_position->y + (32.0 * a);
+						
+					//	right_position->x = left_position->x;
+					//	right_position->y = left_position->y - 32.0;
 						right_pc->col = left_pc->col;
 						right_pc->row = left_pc->row - 1;
 						
@@ -237,12 +243,20 @@ namespace game
 						left_pc->is_aux_right = false;
 						right_pc->is_aux_left = false;
 						right_pc->is_aux_right = false;
-					}
-					else
-					{
 						
+
+					}
+					else	//angle = 0
+					{
+					
+						left_pc->rotation_angle = right_pc->rotation_angle = 0;
 						right_position->x = left_position->x;
-						right_position->y = left_position->y + 32.0;
+						float a = cos(DEG2RAD(right_pc->rotation_angle));
+						right_position->y = left_position->y + (32.0 * a);
+						
+						
+					//	right_position->x = left_position->x;
+					//	right_position->y = left_position->y + 32.0;
 						right_pc->col = left_pc->col;
 						right_pc->row = left_pc->row + 1;
 						
@@ -260,7 +274,7 @@ namespace game
 				else if (right_pc->config == VERTICAL &&
 						 left_pc->config == VERTICAL)
 				{
-					//lower to left: | > -
+					//lower to left: | > - angle = 90
 					if (right_position->y < left_position->y)
 					{
 						if (!can_move_left(right_pc))
@@ -268,8 +282,11 @@ namespace game
 						if (!can_move_left(left_pc))
 							return;
 						
-						right_position->x = left_position->x - 32;
+						left_pc->rotation_angle = right_pc->rotation_angle = 90;
+						float a = sin(DEG2RAD(right_pc->rotation_angle));
+						right_position->x = left_position->x - (32.0 * a);
 						right_position->y = left_position->y;
+
 						right_pc->col = left_pc->col-1;
 						right_pc->row = left_pc->row;
 						right_pc->config = left_pc->config = HORIZONTAL;
@@ -280,15 +297,22 @@ namespace game
 						left_pc->is_aux_left = false;
 						left_pc->is_aux_right = true;
 					}
-					else
+					else	//angle = 270
 					{
 						if (!can_move_right(right_pc))
 							return;
 						if (!can_move_right(left_pc))
 							return;
 						
-						right_position->x = left_position->x + 32;
+//						right_position->x = left_position->x + 32;
+//						right_position->y = left_position->y;
+						
+						left_pc->rotation_angle = right_pc->rotation_angle = 270;
+						float a = sin(DEG2RAD(right_pc->rotation_angle));
+						right_position->x = left_position->x - (32.0 * a);
 						right_position->y = left_position->y;
+						
+						
 						right_pc->col = left_pc->col+1;
 						right_pc->row = left_pc->row;
 						right_pc->config = left_pc->config = HORIZONTAL;

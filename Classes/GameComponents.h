@@ -94,6 +94,8 @@ namespace game
 		bool is_aux_left;			//if the blob is the outer left blob (for rotation / collision)
 		bool is_aux_right;			//if the blob is the outer right blob (for rotation / collision) 
 		
+		float rotation_angle;
+		
 		PlayerController ()
 		{
 			_id = COMPONENT_ID;
@@ -104,7 +106,7 @@ namespace game
 			state = PC_STATE_IDLE;
 			config = HORIZONTAL;
 			_y_timer = 0.0;
-			
+			rotation_angle = 90.0;
 			fall_idle_time = 1.0;
 			fall_active_time = 0.3;
 			collision_grace_time = 1.0;

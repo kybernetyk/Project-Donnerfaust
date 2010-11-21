@@ -15,7 +15,7 @@
 namespace game 
 {
 	
-	
+
 	PlayerControlledSystem::PlayerControlledSystem (EntityManager *entityManager)
 	{
 		_entityManager = entityManager;
@@ -85,7 +85,7 @@ namespace game
 			return false;
 
 		//if we are over our fall idle time the palyer may not move left if the row-1 is blocked!
-		if (pc->y_timer >= pc->fall_idle_time)
+		if (pc->_y_timer >= pc->fall_idle_time)
 		{
 			advnum = 1;
 			
@@ -126,7 +126,7 @@ namespace game
 
 		
 		//if we are over our fall idle time the palyer may not move right if the row-1 is blocked!
-		if (pc->y_timer >= pc->fall_idle_time)
+		if (pc->_y_timer >= pc->fall_idle_time)
 		{
 			advnum = 1;
 			
@@ -146,7 +146,7 @@ namespace game
 		return true;
 	}
 	
-	
+		//TODO: rename right blob and left blob to: left blob -> center blob, right blob -> rotating blob
 	void PlayerControlledSystem::update (float delta)
 	{
 		bool move_left = false;
@@ -308,7 +308,6 @@ namespace game
 				
 				return;
 			}
-			
 			/* end rotation code */ 
 			
 			/* begin left & right can fall */
@@ -319,56 +318,56 @@ namespace game
 				{
 					left_pc->state &= (~PC_STATE_IDLE);
 					left_pc->state |= PC_STATE_MOVING_FALL;
-					left_pc->y_timer = 0.0;
-					left_pc->collision_grace_timer = 0.0;
+					left_pc->_y_timer = 0.0;
+					left_pc->_collision_grace_timer = 0.0;
 				}
 				
 				if ( (right_pc->state & PC_STATE_IDLE ))
 				{
 					right_pc->state &= (~PC_STATE_IDLE);
 					right_pc->state |= PC_STATE_MOVING_FALL;
-					right_pc->y_timer = 0.0;
-					right_pc->collision_grace_timer = 0.0;
+					right_pc->_y_timer = 0.0;
+					right_pc->_collision_grace_timer = 0.0;
 				}
 				//idle state end
 				
 				//falling state
 				if ( (left_pc->state & PC_STATE_MOVING_FALL) )
 				{
-					if (left_pc->y_timer >= left_pc->fall_idle_time)
+					if (left_pc->_y_timer >= left_pc->fall_idle_time)
 					{
 						left_position->y -= (delta * 32.0 / left_pc->fall_active_time);
 					}
 					
-					if (left_pc->y_timer >= (left_pc->fall_idle_time + left_pc->fall_active_time))
+					if (left_pc->_y_timer >= (left_pc->fall_idle_time + left_pc->fall_active_time))
 					{
 						left_pc->row --;
 						left_position->y = left_pc->row * 32.0 + BOARD_Y_OFFSET;
 						left_pc->state &= (~PC_STATE_MOVING_FALL);
 						left_pc->state |= PC_STATE_IDLE;
-						left_pc->y_timer = 0.0;
+						left_pc->_y_timer = 0.0;
 					}
 					
-					left_pc->y_timer += delta;
+					left_pc->_y_timer += delta;
 				}
 				
 				if ( (right_pc->state & PC_STATE_MOVING_FALL) )
 				{
-					if (right_pc->y_timer >= right_pc->fall_idle_time)
+					if (right_pc->_y_timer >= right_pc->fall_idle_time)
 					{
 						right_position->y -= (delta * 32.0 / right_pc->fall_active_time);
 					}
 					
-					if (right_pc->y_timer >= (right_pc->fall_idle_time + right_pc->fall_active_time))
+					if (right_pc->_y_timer >= (right_pc->fall_idle_time + right_pc->fall_active_time))
 					{
 						right_pc->row --;
 						right_position->y = right_pc->row * 32.0 + BOARD_Y_OFFSET;
 						right_pc->state &= (~PC_STATE_MOVING_FALL);
 						right_pc->state |= PC_STATE_IDLE;
-						right_pc->y_timer = 0.0;
+						right_pc->_y_timer = 0.0;
 					}
 					
-					right_pc->y_timer += delta;
+					right_pc->_y_timer += delta;
 				}
 				//falling state end
 	
@@ -407,12 +406,12 @@ namespace game
 				
 				if (!left_can_fall)
 				{	
-					grace_timer = &left_pc->collision_grace_timer;
+					grace_timer = &left_pc->_collision_grace_timer;
 					grace_time = &left_pc->collision_grace_time;
 				}
 				if (!right_can_fall)
 				{	
-					grace_timer = &right_pc->collision_grace_timer;
+					grace_timer = &right_pc->_collision_grace_timer;
 					grace_time = &right_pc->collision_grace_time;
 				}
 				

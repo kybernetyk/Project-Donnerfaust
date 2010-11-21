@@ -61,33 +61,38 @@ namespace game
 	
 #define PC_STATE_IDLE (1 << 1)
 #define PC_STATE_MOVING_FALL (1 << 2)
+#define PC_STATE_ROTATING (1 << 3)
 
 	struct PlayerController : public Component
 	{
 		static ComponentID COMPONENT_ID;
 
-		int left_or_right;
-		int top_or_bottom;
+		//TODO: rename right blob and left blob to: left blob -> center blob, right blob -> rotating blob
+		int left_or_right;		//LEFT = the blob that is the center of rotation, RIGHT = the blob that rotates around the center
+								//FOR ROTATION AND COL SEE THE is_aux_* properties!!!!
+		//
+		
+		
+		int config;				//the configuration of the player blobs. either HORIZONTAL or VERTICAL
+		
+		int col;				//curent column
+		int row;				//current row
+		
+		int type;				//color type
+		
+		int state;				//current state of this controller (FALLING, IDLE, ROTATING)
+		
+		float _y_timer;			//timer for fall - internal use
+		
+		float fall_idle_time;	//how much time the blob is "idle" during the fall (not moving)
+		float fall_active_time;	//how much time the blob uses for the fall part of the FALLING state. (idle + active = time to move one row down)
+		
+		float _collision_grace_timer;	//timer for collision grace period - internal use
+		float collision_grace_time;		//how long is the collision grace period?
 
-		int config;
-		
-		int col;
-		int row;
-		
-		int type;
-		
-		int state;
-		
-		float y_timer;
-		
-		float fall_idle_time;
-		float fall_active_time;
-		
-		float collision_grace_timer;
-		float collision_grace_time;
-		
-		bool is_aux_left;
-		bool is_aux_right;
+		int top_or_bottom;			//TOP = blob is outer top blob, BOTTOM = blob is outer bottom blob (for rotation / collision)
+		bool is_aux_left;			//if the blob is the outer left blob (for rotation / collision)
+		bool is_aux_right;			//if the blob is the outer right blob (for rotation / collision) 
 		
 		PlayerController ()
 		{
@@ -98,12 +103,12 @@ namespace game
 			type = BLOB_COLOR_RED;
 			state = PC_STATE_IDLE;
 			config = HORIZONTAL;
-			y_timer = 0.0;
+			_y_timer = 0.0;
 			
 			fall_idle_time = 1.0;
 			fall_active_time = 0.3;
 			collision_grace_time = 1.0;
-			collision_grace_timer = 0.0;
+			_collision_grace_timer = 0.0;
 			is_aux_left = true;
 			is_aux_right = false;
 		}

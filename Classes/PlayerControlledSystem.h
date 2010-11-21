@@ -23,7 +23,7 @@ namespace game
 		bool can_move_left (PlayerController *pc);
 		bool can_move_right(PlayerController *pc);
 
-		
+	//TODO: rename right blob and left blob to: left blob -> center blob, right blob -> rotating blob		
 		EntityManager *_entityManager;
 		
 		Entity *_map[BOARD_NUM_COLS][BOARD_NUM_ROWS];

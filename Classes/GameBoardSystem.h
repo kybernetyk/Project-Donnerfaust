@@ -22,19 +22,12 @@ namespace game
 		void update (float delta);	
 	protected:
 		bool can_move_down ();
-		bool can_move_left ();
-		bool can_move_right ();
 		
 		void move_down();
 		
 	
-		void handle_state_ready_to_fall ();
-		void handle_state_ready_to_move_left ();
-		void handle_state_ready_to_move_right ();
-		
+		void handle_state_idle ();
 		void handle_state_falling ();
-		void handle_state_moving_left ();		
-		void handle_state_moving_right ();		
 		
 		Entity *_map[BOARD_NUM_COLS][BOARD_NUM_ROWS];
 		void update_map ();

@@ -40,3 +40,30 @@ Entity *make_blob (int color, int col,int row)
 
 	return e;
 }
+
+
+Entity *make_player_blob (int leftright, int type, int col,int row)
+{
+	EntityManager *em = Entity::entityManager;
+
+	Entity *plr = em->createNewEntity();
+	
+	Position *pos = em->addComponent <Position> (plr);
+	pos->x = col * 32.0 + BOARD_X_OFFSET;
+	pos->y = row * 32.0 + BOARD_Y_OFFSET;
+
+	PlayerController *pc = em->addComponent <PlayerController> (plr);
+	pc->left_or_right = leftright;
+	pc->type = type;
+	pc->col = col;
+	pc->row = row;
+	
+	AtlasSprite *as = em->addComponent<AtlasSprite>(plr);
+	as->atlas_quad = g_RenderableManager.accquireTexturedAtlasQuad("red_blob_anims.png");
+	as->src = rect_make(13*32, 0, 32, 32);
+	as->z = 3;
+	
+	
+	return plr;
+	
+}

@@ -19,7 +19,24 @@ namespace game
 		PlayerControlledSystem (EntityManager *entityManager);
 		void update (float delta);	
 	protected:
+		bool can_move_down ();
+		bool can_move_left ();
+		bool can_move_right();
+		
+		void move_down ();
+		
+		
 		EntityManager *_entityManager;
+		
+		Entity *_map[BOARD_NUM_COLS][BOARD_NUM_ROWS];
+		void update_map ();
+		
+		Entity *_current_entity;
+		GameBoardElement *_current_gbe;
+		Position *_current_position;
+		std::vector<Entity*> _entities;
+		float _delta;
+		PlayerController *_current_pc;
 	};
 	
 }

@@ -79,4 +79,11 @@ extern bool spawn_one;
 	spawn_one = true;	
 }
 
+extern bool spawn_player;
+
+- (IBAction) spawnPlayer: (id) sender
+{
+	spawn_player = true;
+}
+
 @end

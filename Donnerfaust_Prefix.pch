@@ -6,6 +6,8 @@
 #define ABORT_GUARDS
 //#define ORIENTATION_LANDSCAPE
 #define ORIENTATION_PORTRAIT
+#define LEFT 0
+#define RIGHT 1
 
 #include <stdint.h>
 #ifdef __OBJC__

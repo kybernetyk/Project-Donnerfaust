@@ -22,6 +22,7 @@
 #include "blob_factory.h"
 
 bool spawn_one = false;
+bool spawn_player = false;
 
 namespace game 
 {
@@ -65,7 +66,12 @@ namespace game
 		make_blob(BLOB_COLOR_RED, 0, 5);
 		make_blob(BLOB_COLOR_RED, 3, 11);
 		make_blob(BLOB_COLOR_RED, 3, 3);
-		make_blob(BLOB_COLOR_RED, 3, 5);
+		make_blob(BLOB_COLOR_RED, 2, 5);
+		make_blob(BLOB_COLOR_RED, 4, 4);
+		make_blob(BLOB_COLOR_RED, 5, 5);
+		make_blob(BLOB_COLOR_RED, 2, 11);
+		make_blob(BLOB_COLOR_RED, 1, 3);
+		make_blob(BLOB_COLOR_RED, 6, 5);
 		
 
 		make_blob(BLOB_COLOR_RED, 4, 6);
@@ -108,8 +114,18 @@ namespace game
 		if (spawn_one)
 		{
 			spawn_one = false;
-			Entity *e = make_blob(BLOB_COLOR_RED, 3, 11);
+			Entity *e = make_blob(BLOB_COLOR_RED, rand()%7, 11);
 			_entityManager->addComponent<PlayerController>(e);
+		}
+		
+		if (spawn_player)
+		{
+			spawn_player = false;
+			
+			printf("spawning player ...\n");
+			
+			make_player_blob(LEFT, BLOB_COLOR_RED, 3,11);
+			make_player_blob(RIGHT, BLOB_COLOR_RED, 4,11);
 		}
 		
 	/*	if (g_GameState.game_state != g_GameState.next_state)

@@ -42,7 +42,8 @@ namespace mx3
 		
 		Component *getById (ComponentID _id);	//proxy method because templates suck, are .h only and .h cross inclusion is holocaust
 		
-		unsigned int checksum;
+		unsigned int checksum;				//the unique checksum for this entity. 2 entities may have over time the same _guid but the checksum is guaranteed to be
+											//unique! use this to make sure your entity reference is pointing to the right entity.
 	};
 
 }

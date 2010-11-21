@@ -12,8 +12,6 @@
 #include "EntityManager.h"
 namespace mx3 
 {
-	
-		
 	class AttachmentSystem
 	{
 	public:

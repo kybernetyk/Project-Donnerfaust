@@ -19,14 +19,9 @@ namespace game
 
 #define BLOB_COLOR_RED 0x01
 	
+#define GBE_STATE_IDLE (1 << 1)
+#define GBE_STATE_MOVING_FALL (1 << 2)
 
-#define GBE_STATE_MOVING_LEFT (1 << 1)
-#define GBE_STATE_MOVING_RIGHT (1 << 2)
-#define GBE_STATE_MOVING_FALL (1 << 3)
-	
-#define GBE_STATE_READY_TO_MOVE_LEFT (1 << 4)
-#define GBE_STATE_READY_TO_MOVE_RIGHT (1 << 5)
-#define GBE_STATE_READY_TO_FALL (1 << 6)
 	
 	struct GameBoardElement : public Component
 	{
@@ -38,46 +33,64 @@ namespace game
 		int prev_row;
 		int prev_col;
 		
-		
 		int type;
 		
 		unsigned int state;
 		int prev_state;
 
-		float x_move_timer;
 		float y_move_timer;
-		
-		float x_off;
 		float y_off;
 		
 		float fall_duration;
-		float fall_idle_time;
 		
 		GameBoardElement ()
 		{
 			_id = COMPONENT_ID;
 			prev_row = prev_col = row = col = 0;
 			type = BLOB_COLOR_RED;
-			prev_state = state = GBE_STATE_READY_TO_FALL;
-			x_off = 0.0;
+			prev_state = state = GBE_STATE_IDLE;
 			y_off = 0.0;
-			x_move_timer = y_move_timer = 0.0;
+			y_move_timer = 0.0;
 
-			fall_duration = 0.3;
-			fall_idle_time = 1.3;
+			fall_duration = 0.1;
 		}
 		
 		DEBUGINFO ("Game Board Element. ")
 	};
 	
+	
+#define PC_STATE_IDLE (1 << 1)
+#define PC_STATE_MOVING_FALL (1 << 2)
+
 	struct PlayerController : public Component
 	{
 		static ComponentID COMPONENT_ID;
-		float lifetime;
+
+		int left_or_right;
+		
+		int col;
+		int row;
+		
+		int type;
+		
+		int state;
+		
+		float y_timer;
+		
+		float fall_idle_time;
+		float fall_active_time;
+		
 		PlayerController ()
 		{
 			_id = COMPONENT_ID;
-			lifetime = -1.0;
+			left_or_right = LEFT;
+			col = row = 0;
+			type = BLOB_COLOR_RED;
+			state = PC_STATE_IDLE;
+			y_timer = 0.0;
+			
+			fall_idle_time = 1.0;
+			fall_active_time = 0.0;
 		}
 		
 		DEBUGINFO ("Player Controller")

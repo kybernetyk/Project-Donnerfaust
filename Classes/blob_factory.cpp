@@ -54,6 +54,19 @@ Entity *make_player_blob (int leftright, int type, int col,int row)
 
 	PlayerController *pc = em->addComponent <PlayerController> (plr);
 	pc->left_or_right = leftright;
+	
+	if (leftright == LEFT)
+	{	
+		pc->is_aux_left = true;
+		pc->is_aux_right = false;
+	}
+	else
+	{	
+		pc->is_aux_right = true;
+		pc->is_aux_left = false;
+	}
+
+	pc->config = HORIZONTAL;
 	pc->type = type;
 	pc->col = col;
 	pc->row = row;

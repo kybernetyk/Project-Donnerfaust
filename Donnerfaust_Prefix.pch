@@ -8,6 +8,11 @@
 #define ORIENTATION_PORTRAIT
 #define LEFT 0
 #define RIGHT 1
+#define TOP 2
+#define BOTTOM 3
+
+#define HORIZONTAL 8
+#define VERTICAL 12
 
 #include <stdint.h>
 #ifdef __OBJC__

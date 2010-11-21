@@ -67,6 +67,9 @@ namespace game
 		static ComponentID COMPONENT_ID;
 
 		int left_or_right;
+		int top_or_bottom;
+
+		int config;
 		
 		int col;
 		int row;
@@ -83,19 +86,26 @@ namespace game
 		float collision_grace_timer;
 		float collision_grace_time;
 		
+		bool is_aux_left;
+		bool is_aux_right;
+		
 		PlayerController ()
 		{
 			_id = COMPONENT_ID;
 			left_or_right = LEFT;
+			top_or_bottom = TOP;
 			col = row = 0;
 			type = BLOB_COLOR_RED;
 			state = PC_STATE_IDLE;
+			config = HORIZONTAL;
 			y_timer = 0.0;
 			
 			fall_idle_time = 1.0;
 			fall_active_time = 0.3;
 			collision_grace_time = 1.0;
 			collision_grace_timer = 0.0;
+			is_aux_left = true;
+			is_aux_right = false;
 		}
 		
 		DEBUGINFO ("Player Controller")

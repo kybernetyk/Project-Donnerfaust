@@ -71,10 +71,16 @@ int gMapX,gMapY; // returns map offset for navigation
 		
 		rec  = [[[UISwipeGestureRecognizer alloc] initWithTarget: self
 														   action: @selector(swipeHandler_right:)] autorelease];
-		
 		[rec setDirection: UISwipeGestureRecognizerDirectionRight];
 		[self addGestureRecognizer: rec];
-    }
+
+    
+		rec  = [[[UISwipeGestureRecognizer alloc] initWithTarget: self
+														  action: @selector(swipeHandler_up:)] autorelease];
+		[rec setDirection: UISwipeGestureRecognizerDirectionUp];
+		[self addGestureRecognizer: rec];
+		
+	}
     return self;
 }
 
@@ -89,6 +95,12 @@ int gMapX,gMapY; // returns map offset for navigation
 	NSLog(@"swipe right! %@",sender);
 	mx3::InputDevice::sharedInstance()->setRightActive();	
 }
+- (void) swipeHandler_up: (UISwipeGestureRecognizer *) sender
+{
+	NSLog(@"swipe up! %@",sender);
+	mx3::InputDevice::sharedInstance()->setUpActive();	
+}
+
 
 - (void)startDrawing 
 {

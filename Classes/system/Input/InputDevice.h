@@ -92,6 +92,21 @@ namespace mx3
 			return true;
 		}
 		
+
+		void setUpActive ()
+		{
+			_state_up_active = true;
+		}
+		
+		bool getUpActive ()
+		{
+			if (!_state_up_active)
+				return false;
+			
+			_state_up_active = false;
+			return true;
+		}
+		
 		
 	protected:
 		Uint8 *m_pBuffer;
@@ -103,6 +118,7 @@ namespace mx3
 		
 		bool _state_left_active;
 		bool _state_right_active;
+		bool _state_up_active;
 		
 	private:
 		InputDevice (void);

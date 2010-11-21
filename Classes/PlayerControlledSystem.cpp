@@ -14,6 +14,8 @@
 
 namespace game 
 {
+	
+	
 	PlayerControlledSystem::PlayerControlledSystem (EntityManager *entityManager)
 	{
 		_entityManager = entityManager;
@@ -42,10 +44,17 @@ namespace game
 	
 	bool PlayerControlledSystem::can_move_down (PlayerController *pc)
 	{
-		if (pc->row - 1 < 0)
+		int advnum = 1;
+		if (pc->top_or_bottom == TOP)
+			advnum = 2;
+		
+		if (pc->config == HORIZONTAL)
+			advnum = 1;
+		
+		if (pc->row - advnum < 0)
 			return false;
 		
-		int row = pc->row -1;
+		int row = pc->row - advnum;
 		int col = pc->col;
 		
 		if (_map[col][row])
@@ -56,9 +65,15 @@ namespace game
 	
 	bool PlayerControlledSystem::can_move_left (PlayerController *pc)
 	{
+		
 		int advnum = 1;
-		if (pc->left_or_right == RIGHT)
-			advnum = 2;
+	
+		if (pc->config == HORIZONTAL)
+			if (pc->is_aux_right)
+				advnum = 2;
+
+		if (pc->config == VERTICAL)
+			advnum = 1;
 		
 		
 		if (pc->col - advnum < 0)
@@ -72,7 +87,13 @@ namespace game
 		//if we are over our fall idle time the palyer may not move left if the row-1 is blocked!
 		if (pc->y_timer >= pc->fall_idle_time)
 		{
-			row --;
+			advnum = 1;
+			
+			if (pc->config == VERTICAL)
+				if (pc->top_or_bottom == TOP)
+					advnum = 2;
+			
+			row -= advnum;
 			if (row >= 0)
 			{
 				if (_map[col][row])
@@ -87,10 +108,13 @@ namespace game
 	{
 		int advnum = 1;
 		
-		if (pc->left_or_right == LEFT)
-			advnum = 2;
+		if (pc->config == HORIZONTAL)
+			if (pc->is_aux_left)
+				advnum = 2;
 		
-	
+		if (pc->config == VERTICAL)
+			advnum = 1;
+
 		
 		if (pc->col + advnum >= BOARD_NUM_COLS)
 			return false;
@@ -104,13 +128,20 @@ namespace game
 		//if we are over our fall idle time the palyer may not move right if the row-1 is blocked!
 		if (pc->y_timer >= pc->fall_idle_time)
 		{
-			row --;
+			advnum = 1;
+			
+			if (pc->config == VERTICAL)
+				if (pc->top_or_bottom == TOP)
+					advnum = 2;
+			
+			row -= advnum;
 			if (row >= 0)
 			{
 				if (_map[col][row])
 					return false;
 			}
 		}
+		
 		
 		return true;
 	}
@@ -120,9 +151,13 @@ namespace game
 	{
 		bool move_left = false;
 		bool move_right = false;
+		bool rotate = false;
+		
 		
 		move_left = InputDevice::sharedInstance()->getLeftActive();
 		move_right = InputDevice::sharedInstance()->getRightActive();
+		rotate = InputDevice::sharedInstance()->getUpActive();
+		
 		
 		
 		_entities.clear();
@@ -174,6 +209,107 @@ namespace game
 			bool right_can_move_left = can_move_left(right_pc);
 			bool right_can_move_right = can_move_right(right_pc);
 			
+			/* begin rortation code */
+			if (rotate)
+			{
+				//right one rotates around left one
+
+				if (right_pc->config == HORIZONTAL &&
+					left_pc->config == HORIZONTAL)
+				{
+					//put right blob to bottom: - > |
+					if (right_position->x > left_position->x)
+					{
+						if (!can_move_down(left_pc))
+							return;
+						if (!can_move_down(right_pc))
+							return;
+						
+						right_position->x = left_position->x;
+						right_position->y = left_position->y - 32.0;
+						right_pc->col = left_pc->col;
+						right_pc->row = left_pc->row - 1;
+						
+						right_pc->top_or_bottom = BOTTOM;
+						left_pc->top_or_bottom = TOP;
+						right_pc->config = left_pc->config = VERTICAL;
+						left_pc->is_aux_left = false;
+						left_pc->is_aux_right = false;
+						right_pc->is_aux_left = false;
+						right_pc->is_aux_right = false;
+					}
+					else
+					{
+						
+						right_position->x = left_position->x;
+						right_position->y = left_position->y + 32.0;
+						right_pc->col = left_pc->col;
+						right_pc->row = left_pc->row + 1;
+						
+						right_pc->top_or_bottom = TOP;
+						left_pc->top_or_bottom = BOTTOM;
+						right_pc->config = left_pc->config = VERTICAL;
+						left_pc->is_aux_left = false;
+						left_pc->is_aux_right = false;
+						right_pc->is_aux_left = false;
+						right_pc->is_aux_right = false;
+						
+					}
+					
+				}
+				else if (right_pc->config == VERTICAL &&
+						 left_pc->config == VERTICAL)
+				{
+					//lower to left: | > -
+					if (right_position->y < left_position->y)
+					{
+						if (!can_move_left(right_pc))
+							return;
+						if (!can_move_left(left_pc))
+							return;
+						
+						right_position->x = left_position->x - 32;
+						right_position->y = left_position->y;
+						right_pc->col = left_pc->col-1;
+						right_pc->row = left_pc->row;
+						right_pc->config = left_pc->config = HORIZONTAL;
+						
+						right_pc->is_aux_left = true;
+						right_pc->is_aux_right = false;
+						
+						left_pc->is_aux_left = false;
+						left_pc->is_aux_right = true;
+					}
+					else
+					{
+						if (!can_move_right(right_pc))
+							return;
+						if (!can_move_right(left_pc))
+							return;
+						
+						right_position->x = left_position->x + 32;
+						right_position->y = left_position->y;
+						right_pc->col = left_pc->col+1;
+						right_pc->row = left_pc->row;
+						right_pc->config = left_pc->config = HORIZONTAL;
+						
+						
+						right_pc->is_aux_left = false;
+						right_pc->is_aux_right = true;
+						
+						left_pc->is_aux_left = true;
+						left_pc->is_aux_right = false;
+						
+					}
+				}
+				
+				
+
+				
+				return;
+			}
+			
+			/* end rotation code */ 
 			
 			/* begin left & right can fall */
 			if (left_can_fall && right_can_fall)

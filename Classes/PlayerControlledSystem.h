@@ -25,6 +25,8 @@ namespace game
 		
 		void move_down ();
 		
+		bool left_active;
+		bool right_active;
 		
 		EntityManager *_entityManager;
 		

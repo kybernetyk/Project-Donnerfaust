@@ -90,7 +90,7 @@ namespace game
 			y_timer = 0.0;
 			
 			fall_idle_time = 1.0;
-			fall_active_time = 0.0;
+			fall_active_time = 0.3;
 		}
 		
 		DEBUGINFO ("Player Controller")

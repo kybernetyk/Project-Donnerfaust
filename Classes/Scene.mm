@@ -114,8 +114,8 @@ namespace game
 		if (spawn_one)
 		{
 			spawn_one = false;
-			Entity *e = make_blob(BLOB_COLOR_RED, rand()%7, 11);
-			_entityManager->addComponent<PlayerController>(e);
+			make_blob(BLOB_COLOR_RED, rand()%7, 11);
+			
 		}
 		
 		if (spawn_player)

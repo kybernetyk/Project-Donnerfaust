@@ -59,6 +59,9 @@ namespace game
 		if (_current_pc->left_or_right == RIGHT)
 			advnum = 2;
 		
+		if (!left_active)
+			advnum = 1;
+		
 		if (_current_pc->col - advnum < 0)
 			return false;
 		
@@ -77,6 +80,9 @@ namespace game
 		if (_current_pc->left_or_right == LEFT)
 			advnum = 2;
 	
+		if (!right_active)
+			advnum = 1;
+		
 		printf("advnum: %i\n", advnum);
 		
 		if (_current_pc->col + advnum >= BOARD_NUM_COLS)
@@ -109,6 +115,23 @@ namespace game
 		_entityManager->getEntitiesPossessingComponents(_entities,  PlayerController::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
 		std::vector<Entity*>::const_iterator it = _entities.begin();
 
+		left_active = right_active = false;
+		_current_entity = NULL;
+		_current_pc = NULL;
+		while (it != _entities.end())
+		{
+			_current_entity = *it;
+			++it;
+
+			_current_pc = _entityManager->getComponent <PlayerController>(_current_entity);
+			if (_current_pc->left_or_right == LEFT)
+				left_active = true;
+			
+			if (_current_pc->left_or_right == RIGHT)
+				right_active = true;
+		}
+		
+		it = _entities.begin();
 		_current_entity = NULL;
 		_current_pc = NULL;
 		while (it != _entities.end())
@@ -142,13 +165,13 @@ namespace game
 			{
 				if (_current_pc->y_timer >= _current_pc->fall_idle_time)
 				{
-					//_current_position->y -= delta * (32.0 / _current_pc->fall_active_time);
+					_current_position->y -= (delta * 32.0 / _current_pc->fall_active_time);
 				}
 				
 				if (_current_pc->y_timer >= (_current_pc->fall_idle_time + _current_pc->fall_active_time))
 				{
-					_current_position->y -= 32.0;
 					_current_pc->row --;
+					_current_position->y = _current_pc->row * 32.0 + BOARD_Y_OFFSET;
 					_current_pc->state &= (~PC_STATE_MOVING_FALL);
 					_current_pc->state |= PC_STATE_IDLE;
 

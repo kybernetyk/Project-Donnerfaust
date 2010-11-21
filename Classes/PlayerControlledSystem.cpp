@@ -21,6 +21,7 @@ namespace game
 
 	}
 
+	//create collision map
 	void PlayerControlledSystem::update_map ()
 	{
 		memset(_map,0x00,BOARD_NUM_COLS*BOARD_NUM_ROWS*sizeof(Entity*));
@@ -68,6 +69,7 @@ namespace game
 		if (_map[col][row])
 			return false;
 
+		//if we are over our fall idle time the palyer may not move left if the row-1 is blocked!
 		if (pc->y_timer >= pc->fall_idle_time)
 		{
 			row --;
@@ -97,6 +99,9 @@ namespace game
 		int col = pc->col + advnum;
 		if (_map[col][row])
 			return false;
+
+		
+		//if we are over our fall idle time the palyer may not move right if the row-1 is blocked!
 		if (pc->y_timer >= pc->fall_idle_time)
 		{
 			row --;
@@ -173,6 +178,7 @@ namespace game
 			/* begin left & right can fall */
 			if (left_can_fall && right_can_fall)
 			{
+				//idle state
 				if ( (left_pc->state & PC_STATE_IDLE ))
 				{
 					left_pc->state &= (~PC_STATE_IDLE);
@@ -188,8 +194,9 @@ namespace game
 					right_pc->y_timer = 0.0;
 					right_pc->collision_grace_timer = 0.0;
 				}
+				//idle state end
 				
-				
+				//falling state
 				if ( (left_pc->state & PC_STATE_MOVING_FALL) )
 				{
 					if (left_pc->y_timer >= left_pc->fall_idle_time)
@@ -227,7 +234,9 @@ namespace game
 					
 					right_pc->y_timer += delta;
 				}
+				//falling state end
 	
+				//left/right movement
 				if (move_left)
 				{	
 					if (left_can_move_left && right_can_move_left)
@@ -250,6 +259,7 @@ namespace game
 						right_pc->col ++;
 					}
 				}
+				//left/right movement end
 			}
 			/* end left & right can fall */
 			
@@ -284,7 +294,7 @@ namespace game
 					make_blob(right_pc->type, right_pc->col, right_pc->row);
 					
 				}
-				else
+				else //allow movement during grace period
 				{
 					if (move_left)
 					{	

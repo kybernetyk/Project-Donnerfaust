@@ -124,8 +124,8 @@ namespace game
 			
 			printf("spawning player ...\n");
 			
-			make_player_blob(LEFT, BLOB_COLOR_RED, 3,11);
-			make_player_blob(RIGHT, BLOB_COLOR_RED, 4,11);
+			make_player_blob(CENTER, BLOB_COLOR_RED, 3,11);
+			make_player_blob(AUX, BLOB_COLOR_RED, 4,11);
 		}
 		
 	/*	if (g_GameState.game_state != g_GameState.next_state)

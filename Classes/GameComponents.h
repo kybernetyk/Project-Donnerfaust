@@ -67,10 +67,7 @@ namespace game
 	{
 		static ComponentID COMPONENT_ID;
 
-		//TODO: rename right blob and left blob to: left blob -> center blob, right blob -> rotating blob
-		int left_or_right;		//LEFT = the blob that is the center of rotation, RIGHT = the blob that rotates around the center
-								//FOR ROTATION AND COL SEE THE is_aux_* properties!!!!
-		//
+		int center_or_aux;		//CENTER = the blob that is the center of rotation, AUX = the blob that rotates around the center
 		
 		
 		int config;				//the configuration of the player blobs. either HORIZONTAL or VERTICAL
@@ -90,17 +87,16 @@ namespace game
 		float _collision_grace_timer;	//timer for collision grace period - internal use
 		float collision_grace_time;		//how long is the collision grace period?
 
-		int top_or_bottom;			//TOP = blob is outer top blob, BOTTOM = blob is outer bottom blob (for rotation / collision)
-		bool is_aux_left;			//if the blob is the outer left blob (for rotation / collision)
-		bool is_aux_right;			//if the blob is the outer right blob (for rotation / collision) 
+		int top_or_bottom;		//TOP = blob is the top one in the combo, BOTTOM = ...
+		int left_or_right;		//LEFT = blob is the left one in the combo, RIGHT = ...	
 		
-		float rotation_angle;
-		float rotation_timer;
+		float rotation_angle;	//current rotation angle of the aux blob rotating around the center
+		float _rotation_timer;	//timer for rotation - internal use
 		
 		PlayerController ()
 		{
 			_id = COMPONENT_ID;
-			left_or_right = LEFT;
+			center_or_aux = CENTER;
 			top_or_bottom = TOP;
 			col = row = 0;
 			type = BLOB_COLOR_RED;
@@ -112,9 +108,8 @@ namespace game
 			fall_active_time = 0.3;
 			collision_grace_time = 1.0;
 			_collision_grace_timer = 0.0;
-			is_aux_left = true;
-			is_aux_right = false;
-			rotation_timer = 90.0;
+			left_or_right = LEFT;
+			_rotation_timer = 90.0;
 		}
 		
 		DEBUGINFO ("Player Controller")

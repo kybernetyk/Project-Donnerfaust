@@ -16,4 +16,4 @@ mx3::Entity *make_blob (int color, int col,int row);
 
 
 
-mx3::Entity *make_player_blob (int leftright, int type, int col,int row);
+mx3::Entity *make_player_blob (int center_or_aux, int type, int col,int row);

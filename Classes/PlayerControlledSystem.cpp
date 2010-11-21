@@ -69,7 +69,7 @@ namespace game
 		int advnum = 1;
 	
 		if (pc->config == HORIZONTAL)
-			if (pc->is_aux_right)
+			if (pc->left_or_right == RIGHT)
 				advnum = 2;
 
 		if (pc->config == VERTICAL)
@@ -109,7 +109,7 @@ namespace game
 		int advnum = 1;
 		
 		if (pc->config == HORIZONTAL)
-			if (pc->is_aux_left)
+			if (pc->left_or_right == LEFT)
 				advnum = 2;
 		
 		if (pc->config == VERTICAL)
@@ -169,8 +169,8 @@ namespace game
 		_entityManager->getEntitiesPossessingComponents(_entities,  PlayerController::COMPONENT_ID,Position::COMPONENT_ID, ARGLIST_END );
 		std::vector<Entity*>::const_iterator it = _entities.begin();
 
-		Entity *left_blob = NULL;
-		Entity *right_blob = NULL;
+		Entity *center_blob = NULL;
+		Entity *aux_blob = NULL;
 		
 		Entity *current_entity = NULL;
 		PlayerController *current_pc = NULL;
@@ -180,57 +180,57 @@ namespace game
 			++it;
 
 			current_pc = _entityManager->getComponent <PlayerController>(current_entity);
-			if (current_pc->left_or_right == LEFT)
+			if (current_pc->center_or_aux == CENTER)
 			{	
-				left_blob = current_entity;
+				center_blob = current_entity;
 			}
 			
-			if (current_pc->left_or_right == RIGHT)
+			if (current_pc->center_or_aux == AUX)
 			{	
-				right_blob = current_entity;
+				aux_blob = current_entity;
 			}
 		}
 		
 		/* fall move collision handling */
-		if (left_blob && right_blob)
+		if (center_blob && aux_blob)
 		{
-			PlayerController *left_pc = _entityManager->getComponent <PlayerController> (left_blob);
-			PlayerController *right_pc = _entityManager->getComponent <PlayerController> (right_blob);
+			PlayerController *center_pc = _entityManager->getComponent <PlayerController> (center_blob);
+			PlayerController *aux_pc = _entityManager->getComponent <PlayerController> (aux_blob);
 			
-			Position *left_position = _entityManager->getComponent <Position> (left_blob);
-			Position *right_position = _entityManager->getComponent <Position> (right_blob);
+			Position *center_position = _entityManager->getComponent <Position> (center_blob);
+			Position *aux_position = _entityManager->getComponent <Position> (aux_blob);
 			
-			bool left_can_fall = can_move_down(left_pc);
-			bool left_can_move_left = can_move_left(left_pc);
-			bool left_can_move_right = can_move_right(left_pc);
+			bool left_can_fall = can_move_down(center_pc);
+			bool left_can_move_left = can_move_left(center_pc);
+			bool left_can_move_right = can_move_right(center_pc);
 			
 
-			bool right_can_fall = can_move_down(right_pc);
-			bool right_can_move_left = can_move_left(right_pc);
-			bool right_can_move_right = can_move_right(right_pc);
+			bool right_can_fall = can_move_down(aux_pc);
+			bool right_can_move_left = can_move_left(aux_pc);
+			bool right_can_move_right = can_move_right(aux_pc);
 			
 			
 			/*rotate state*/
-			if ((right_pc->state & PC_STATE_ROTATING))
+			if ((aux_pc->state & PC_STATE_ROTATING))
 			{
-				right_pc->rotation_timer -= (delta*900.0);
-				right_pc->rotation_angle += (delta*900.0);
+				aux_pc->_rotation_timer -= (delta*900.0);
+				aux_pc->rotation_angle += (delta*900.0);
 				
-//				if (right_pc->rotation_angle >= 360)
-//					right_pc->rotation_angle = 0;
+//				if (aux_pc->rotation_angle >= 360)
+//					aux_pc->rotation_angle = 0;
 				
-				printf("angle: %f\n", right_pc->rotation_angle);
+				printf("angle: %f\n", aux_pc->rotation_angle);
 				
-				float a = cos(DEG2RAD(right_pc->rotation_angle));
-				right_position->y = left_position->y - (32.0 * a);
+				float a = cos(DEG2RAD(aux_pc->rotation_angle));
+				aux_position->y = center_position->y - (32.0 * a);
 				
-				a = sin(DEG2RAD(right_pc->rotation_angle));
-				right_position->x = left_position->x + (32.0 * a);
+				a = sin(DEG2RAD(aux_pc->rotation_angle));
+				aux_position->x = center_position->x + (32.0 * a);
 				
-				if (current_pc->rotation_timer <= 0)
+				if (current_pc->_rotation_timer <= 0)
 				{
-					right_pc->rotation_timer = 90.0;
-					right_pc->state &= (~PC_STATE_ROTATING);
+					aux_pc->_rotation_timer = 90.0;
+					aux_pc->state &= (~PC_STATE_ROTATING);
 				}
 			}
 			
@@ -240,150 +240,136 @@ namespace game
 			{
 				//right one rotates around left one
 
-				if (right_pc->config == HORIZONTAL &&
-					left_pc->config == HORIZONTAL)
+				if (aux_pc->config == HORIZONTAL &&
+					center_pc->config == HORIZONTAL)
 				{
 					//put right blob to bottom: - > | angle = 180
-					if (right_position->x > left_position->x)
+					if (aux_position->x > center_position->x)
 					{
-/*						if (!can_move_down(left_pc))
+/*						if (!can_move_down(center_pc))
 							return;
-						if (!can_move_down(right_pc))
+						if (!can_move_down(aux_pc))
 							return;*/
-						if ((right_pc->state & PC_STATE_ROTATING))
+						if ((aux_pc->state & PC_STATE_ROTATING))
 							return;
 
 						
-						left_pc->rotation_angle = right_pc->rotation_angle = 180-90;
+						center_pc->rotation_angle = aux_pc->rotation_angle = 180-90;
 						
 						printf("90->180\n");
-						//right_position->x = left_position->x;
+						//aux_position->x = center_position->x;
 						
-					//	float a = cos(DEG2RAD(right_pc->rotation_angle));
-						//right_position->y = left_position->y + (32.0 * a);
+					//	float a = cos(DEG2RAD(aux_pc->rotation_angle));
+						//aux_position->y = center_position->y + (32.0 * a);
 
-						right_pc->rotation_timer = 90.0;
-						right_pc->state |= PC_STATE_ROTATING;
+						aux_pc->_rotation_timer = 90.0;
+						aux_pc->state |= PC_STATE_ROTATING;
 
-					//	right_position->x = left_position->x;
-					//	right_position->y = left_position->y - 32.0;
-						right_pc->col = left_pc->col;
-						right_pc->row = left_pc->row + 1;
+					//	aux_position->x = center_position->x;
+					//	aux_position->y = center_position->y - 32.0;
+						aux_pc->col = center_pc->col;
+						aux_pc->row = center_pc->row + 1;
 						
-						right_pc->top_or_bottom = TOP;
-						left_pc->top_or_bottom = BOTTOM;
-						right_pc->config = left_pc->config = VERTICAL;
-						left_pc->is_aux_left = false;
-						left_pc->is_aux_right = false;
-						right_pc->is_aux_left = false;
-						right_pc->is_aux_right = false;
+						aux_pc->top_or_bottom = TOP;
+						center_pc->top_or_bottom = BOTTOM;
+						aux_pc->config = center_pc->config = VERTICAL;
 						
 
 					}
 					else	//angle = 0
 					{
-						if (!can_move_down(left_pc))
+						if (!can_move_down(center_pc))
 							return;
-						if (!can_move_down(right_pc))
+						if (!can_move_down(aux_pc))
 							return;
 						
-						if ((right_pc->state & PC_STATE_ROTATING))
+						if ((aux_pc->state & PC_STATE_ROTATING))
 							return;
 
 						printf("270->360\n");
 
-						left_pc->rotation_angle = right_pc->rotation_angle = 270;
-					//	right_position->x = left_position->x;
-					//	float a = cos(DEG2RAD(right_pc->rotation_angle));
-					//	right_position->y = left_position->y + (32.0 * a);
+						center_pc->rotation_angle = aux_pc->rotation_angle = 270;
+					//	aux_position->x = center_position->x;
+					//	float a = cos(DEG2RAD(aux_pc->rotation_angle));
+					//	aux_position->y = center_position->y + (32.0 * a);
 						
-						right_pc->rotation_timer = 90.0;
-						right_pc->state |= PC_STATE_ROTATING;
+						aux_pc->_rotation_timer = 90.0;
+						aux_pc->state |= PC_STATE_ROTATING;
 						
-					//	right_position->x = left_position->x;
-					//	right_position->y = left_position->y + 32.0;
-						right_pc->col = left_pc->col;
-						right_pc->row = left_pc->row - 1;
+					//	aux_position->x = center_position->x;
+					//	aux_position->y = center_position->y + 32.0;
+						aux_pc->col = center_pc->col;
+						aux_pc->row = center_pc->row - 1;
 						
-						right_pc->top_or_bottom = BOTTOM;
-						left_pc->top_or_bottom = TOP;
-						right_pc->config = left_pc->config = VERTICAL;
-						left_pc->is_aux_left = false;
-						left_pc->is_aux_right = false;
-						right_pc->is_aux_left = false;
-						right_pc->is_aux_right = false;
+						aux_pc->top_or_bottom = BOTTOM;
+						center_pc->top_or_bottom = TOP;
+						aux_pc->config = center_pc->config = VERTICAL;
 						
 					}
 					
 				}
-				else if (right_pc->config == VERTICAL &&
-						 left_pc->config == VERTICAL)
+				else if (aux_pc->config == VERTICAL &&
+						 center_pc->config == VERTICAL)
 				{
 					//lower to left: | > - angle = 90
-					if (right_position->y < left_position->y)
+					if (aux_position->y < center_position->y)
 					{
-						if (!can_move_right(right_pc))
+						if (!can_move_right(aux_pc))
 							return;
-						if (!can_move_right(left_pc))
+						if (!can_move_right(center_pc))
 							return;
 						
 						
-						if ((right_pc->state & PC_STATE_ROTATING))
+						if ((aux_pc->state & PC_STATE_ROTATING))
 							return;
 	
 						printf("0->90\n");
 
 						
-						left_pc->rotation_angle = right_pc->rotation_angle = 0;
-				//		float a = sin(DEG2RAD(right_pc->rotation_angle));
-				//		right_position->x = left_position->x - (32.0 * a);
-				//		right_position->y = left_position->y;
+						center_pc->rotation_angle = aux_pc->rotation_angle = 0;
+				//		float a = sin(DEG2RAD(aux_pc->rotation_angle));
+				//		aux_position->x = center_position->x - (32.0 * a);
+				//		aux_position->y = center_position->y;
 
-						right_pc->rotation_timer = 90.0;
-						right_pc->state |= PC_STATE_ROTATING;
+						aux_pc->_rotation_timer = 90.0;
+						aux_pc->state |= PC_STATE_ROTATING;
 
-						right_pc->col = left_pc->col+1;
-						right_pc->row = left_pc->row;
-						right_pc->config = left_pc->config = HORIZONTAL;
+						aux_pc->col = center_pc->col+1;
+						aux_pc->row = center_pc->row;
+						aux_pc->config = center_pc->config = HORIZONTAL;
 						
-						right_pc->is_aux_left = false;
-						right_pc->is_aux_right = true;
-						
-						left_pc->is_aux_left = true;
-						left_pc->is_aux_right = false;
+						aux_pc->left_or_right = RIGHT;
+						center_pc->left_or_right = LEFT;
 					}
 					else	//angle = 270
 					{
-						if (!can_move_left(right_pc))
+						if (!can_move_left(aux_pc))
 							return;
-						if (!can_move_left(left_pc))
-							return;
-						
-						if ((right_pc->state & PC_STATE_ROTATING))
+						if (!can_move_left(center_pc))
 							return;
 						
-//						right_position->x = left_position->x + 32;
-//						right_position->y = left_position->y;
+						if ((aux_pc->state & PC_STATE_ROTATING))
+							return;
+						
+//						aux_position->x = center_position->x + 32;
+//						aux_position->y = center_position->y;
 						printf("180->270\n");
 
-						left_pc->rotation_angle = right_pc->rotation_angle = 180;
-					//	float a = sin(DEG2RAD(right_pc->rotation_angle));
-					//	right_position->x = left_position->x - (32.0 * a);
-					//	right_position->y = left_position->y;
+						center_pc->rotation_angle = aux_pc->rotation_angle = 180;
+					//	float a = sin(DEG2RAD(aux_pc->rotation_angle));
+					//	aux_position->x = center_position->x - (32.0 * a);
+					//	aux_position->y = center_position->y;
 						
-						right_pc->rotation_timer = 90.0;
-						right_pc->state |= PC_STATE_ROTATING;
+						aux_pc->_rotation_timer = 90.0;
+						aux_pc->state |= PC_STATE_ROTATING;
 	
-						right_pc->col = left_pc->col-1;
-						right_pc->row = left_pc->row;
-						right_pc->config = left_pc->config = HORIZONTAL;
+						aux_pc->col = center_pc->col-1;
+						aux_pc->row = center_pc->row;
+						aux_pc->config = center_pc->config = HORIZONTAL;
 						
-						
-						right_pc->is_aux_left = true;
-						right_pc->is_aux_right = false;
-						
-						left_pc->is_aux_left = false;
-						left_pc->is_aux_right = true;
+						aux_pc->left_or_right = LEFT;
+						center_pc->left_or_right = RIGHT;
+
 						
 					}
 				}
@@ -399,64 +385,64 @@ namespace game
 			if (left_can_fall && right_can_fall)
 			{
 				//idle state
-				if ( (left_pc->state & PC_STATE_IDLE ))
+				if ( (center_pc->state & PC_STATE_IDLE ))
 				{
-					left_pc->state &= (~PC_STATE_IDLE);
-					left_pc->state |= PC_STATE_MOVING_FALL;
-					left_pc->_y_timer = 0.0;
-					left_pc->_collision_grace_timer = 0.0;
+					center_pc->state &= (~PC_STATE_IDLE);
+					center_pc->state |= PC_STATE_MOVING_FALL;
+					center_pc->_y_timer = 0.0;
+					center_pc->_collision_grace_timer = 0.0;
 				}
 				
-				if ( (right_pc->state & PC_STATE_IDLE ))
+				if ( (aux_pc->state & PC_STATE_IDLE ))
 				{
-					right_pc->state &= (~PC_STATE_IDLE);
-					right_pc->state |= PC_STATE_MOVING_FALL;
-					right_pc->_y_timer = 0.0;
-					right_pc->_collision_grace_timer = 0.0;
+					aux_pc->state &= (~PC_STATE_IDLE);
+					aux_pc->state |= PC_STATE_MOVING_FALL;
+					aux_pc->_y_timer = 0.0;
+					aux_pc->_collision_grace_timer = 0.0;
 				}
 				//idle state end
 				
 				//falling state
-				if ( (left_pc->state & PC_STATE_MOVING_FALL) )
+				if ( (center_pc->state & PC_STATE_MOVING_FALL) )
 				{
 //					return;
 					
-					if (left_pc->_y_timer >= left_pc->fall_idle_time)
+					if (center_pc->_y_timer >= center_pc->fall_idle_time)
 					{
-						left_position->y -= (delta * 32.0 / left_pc->fall_active_time);
+						center_position->y -= (delta * 32.0 / center_pc->fall_active_time);
 					}
 					
-					if (left_pc->_y_timer >= (left_pc->fall_idle_time + left_pc->fall_active_time))
+					if (center_pc->_y_timer >= (center_pc->fall_idle_time + center_pc->fall_active_time))
 					{
-						left_pc->row --;
-						left_position->y = left_pc->row * 32.0 + BOARD_Y_OFFSET;
-						left_pc->state &= (~PC_STATE_MOVING_FALL);
-						left_pc->state |= PC_STATE_IDLE;
-						left_pc->_y_timer = 0.0;
+						center_pc->row --;
+						center_position->y = center_pc->row * 32.0 + BOARD_Y_OFFSET;
+						center_pc->state &= (~PC_STATE_MOVING_FALL);
+						center_pc->state |= PC_STATE_IDLE;
+						center_pc->_y_timer = 0.0;
 					}
 					
-					left_pc->_y_timer += delta;
+					center_pc->_y_timer += delta;
 				}
 				
-				if ( (right_pc->state & PC_STATE_MOVING_FALL) )
+				if ( (aux_pc->state & PC_STATE_MOVING_FALL) )
 				{
 				//	return;
 					
-					if (right_pc->_y_timer >= right_pc->fall_idle_time)
+					if (aux_pc->_y_timer >= aux_pc->fall_idle_time)
 					{
-						right_position->y -= (delta * 32.0 / right_pc->fall_active_time);
+						aux_position->y -= (delta * 32.0 / aux_pc->fall_active_time);
 					}
 					
-					if (right_pc->_y_timer >= (right_pc->fall_idle_time + right_pc->fall_active_time))
+					if (aux_pc->_y_timer >= (aux_pc->fall_idle_time + aux_pc->fall_active_time))
 					{
-						right_pc->row --;
-						right_position->y = right_pc->row * 32.0 + BOARD_Y_OFFSET;
-						right_pc->state &= (~PC_STATE_MOVING_FALL);
-						right_pc->state |= PC_STATE_IDLE;
-						right_pc->_y_timer = 0.0;
+						aux_pc->row --;
+						aux_position->y = aux_pc->row * 32.0 + BOARD_Y_OFFSET;
+						aux_pc->state &= (~PC_STATE_MOVING_FALL);
+						aux_pc->state |= PC_STATE_IDLE;
+						aux_pc->_y_timer = 0.0;
 					}
 					
-					right_pc->_y_timer += delta;
+					aux_pc->_y_timer += delta;
 				}
 				//falling state end
 	
@@ -465,10 +451,10 @@ namespace game
 				{	
 					if (left_can_move_left && right_can_move_left)
 					{
-						left_position->x -= 32.0;
-						left_pc->col --;
-						right_position->x -= 32.0;
-						right_pc->col --;
+						center_position->x -= 32.0;
+						center_pc->col --;
+						aux_position->x -= 32.0;
+						aux_pc->col --;
 					}
 					
 				}
@@ -477,10 +463,10 @@ namespace game
 				{	
 					if (left_can_move_right && right_can_move_right)
 					{
-						left_position->x += 32.0;
-						left_pc->col ++;
-						right_position->x += 32.0;
-						right_pc->col ++;
+						center_position->x += 32.0;
+						center_pc->col ++;
+						aux_position->x += 32.0;
+						aux_pc->col ++;
 					}
 				}
 				//left/right movement end
@@ -495,13 +481,13 @@ namespace game
 				
 				if (!left_can_fall)
 				{	
-					grace_timer = &left_pc->_collision_grace_timer;
-					grace_time = &left_pc->collision_grace_time;
+					grace_timer = &center_pc->_collision_grace_timer;
+					grace_time = &center_pc->collision_grace_time;
 				}
 				if (!right_can_fall)
 				{	
-					grace_timer = &right_pc->_collision_grace_timer;
-					grace_time = &right_pc->collision_grace_time;
+					grace_timer = &aux_pc->_collision_grace_timer;
+					grace_time = &aux_pc->collision_grace_time;
 				}
 				
 				
@@ -509,13 +495,12 @@ namespace game
 				
 				if (*grace_timer >= *grace_time)
 				{
-					_entityManager->addComponent <MarkOfDeath> (left_blob);
-					_entityManager->addComponent <MarkOfDeath> (right_blob);
+					_entityManager->addComponent <MarkOfDeath> (center_blob);
+					_entityManager->addComponent <MarkOfDeath> (aux_blob);
 					
-					//PlayerController *pc = _entityManager->getComponent <PlayerController>(left_blob);
 					
-					make_blob(left_pc->type, left_pc->col, left_pc->row);
-					make_blob(right_pc->type, right_pc->col, right_pc->row);
+					make_blob(center_pc->type, center_pc->col, center_pc->row);
+					make_blob(aux_pc->type, aux_pc->col, aux_pc->row);
 					
 				}
 				else //allow movement during grace period
@@ -524,10 +509,10 @@ namespace game
 					{	
 						if (left_can_move_left && right_can_move_left)
 						{
-							left_position->x -= 32.0;
-							left_pc->col --;
-							right_position->x -= 32.0;
-							right_pc->col --;
+							center_position->x -= 32.0;
+							center_pc->col --;
+							aux_position->x -= 32.0;
+							aux_pc->col --;
 						}
 						
 					}
@@ -536,10 +521,10 @@ namespace game
 					{	
 						if (left_can_move_right && right_can_move_right)
 						{
-							left_position->x += 32.0;
-							left_pc->col ++;
-							right_position->x += 32.0;
-							right_pc->col ++;
+							center_position->x += 32.0;
+							center_pc->col ++;
+							aux_position->x += 32.0;
+							aux_pc->col ++;
 						}
 					}
 				}

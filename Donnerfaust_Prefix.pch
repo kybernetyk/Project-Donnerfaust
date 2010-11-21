@@ -6,8 +6,12 @@
 #define ABORT_GUARDS
 //#define ORIENTATION_LANDSCAPE
 #define ORIENTATION_PORTRAIT
-#define LEFT 0
-#define RIGHT 1
+
+#define CENTER 0
+#define AUX 1
+
+#define LEFT 4
+#define RIGHT 5
 #define TOP 2
 #define BOTTOM 3
 

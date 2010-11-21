@@ -42,7 +42,7 @@ Entity *make_blob (int color, int col,int row)
 }
 
 
-Entity *make_player_blob (int leftright, int type, int col,int row)
+Entity *make_player_blob (int center_or_aux, int type, int col,int row)
 {
 	EntityManager *em = Entity::entityManager;
 
@@ -53,17 +53,15 @@ Entity *make_player_blob (int leftright, int type, int col,int row)
 	pos->y = row * 32.0 + BOARD_Y_OFFSET;
 
 	PlayerController *pc = em->addComponent <PlayerController> (plr);
-	pc->left_or_right = leftright;
+	pc->center_or_aux = center_or_aux;
 	
-	if (leftright == LEFT)
+	if (center_or_aux == CENTER)
 	{	
-		pc->is_aux_left = true;
-		pc->is_aux_right = false;
+		pc->left_or_right = LEFT;
 	}
 	else
 	{	
-		pc->is_aux_right = true;
-		pc->is_aux_left = false;
+		pc->left_or_right = RIGHT;
 	}
 
 	pc->config = HORIZONTAL;

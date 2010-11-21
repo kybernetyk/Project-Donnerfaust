@@ -95,6 +95,7 @@ namespace game
 		bool is_aux_right;			//if the blob is the outer right blob (for rotation / collision) 
 		
 		float rotation_angle;
+		float rotation_timer;
 		
 		PlayerController ()
 		{
@@ -113,6 +114,7 @@ namespace game
 			_collision_grace_timer = 0.0;
 			is_aux_left = true;
 			is_aux_right = false;
+			rotation_timer = 90.0;
 		}
 		
 		DEBUGINFO ("Player Controller")

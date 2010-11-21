@@ -38,7 +38,7 @@ namespace game
 	#define BOARD_Y_OFFSET 32
 	
 	#define BOARD_NUM_COLS 7
-	#define BOARD_NUM_ROWS 12
+	#define BOARD_NUM_ROWS 16
 
 
 }

@@ -170,6 +170,32 @@ unsigned int
 	 unsigned int *outh
 	 );
 	
+	unsigned int
+	SOIL_load_OGL_texture3
+	(
+	 const char *filename,
+	 int force_channels,
+	 unsigned int reuse_texture_ID,
+	 unsigned int flags,
+	 unsigned int *outw,
+	 unsigned int *outh,
+	 unsigned char **outdata
+	 );
+
+	
+	unsigned int
+	SOIL_internal_create_OGL_texture
+	(
+	 const unsigned char *const data,
+	 int width, int height, int channels,
+	 unsigned int reuse_texture_ID,
+	 unsigned int flags,
+	 unsigned int opengl_texture_type,
+	 unsigned int opengl_texture_target,
+	 unsigned int texture_check_size_enum
+ )
+;
+
 /**
 	Loads 6 images from disk into an OpenGL cubemap texture.
 	\param x_pos_file the name of the file to upload as the +x cube face

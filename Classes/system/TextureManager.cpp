@@ -46,3 +46,5 @@ namespace mx3
 	}
 
 }
+
+mx3::TextureManager g_TextureManager;

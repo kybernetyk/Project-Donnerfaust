@@ -11,6 +11,9 @@
 #include <OpenGLES/ES1/gl.h>
 #include "RenderDevice.h"
 #include "Texture2D.h"
+#import "SOIL.h"
+#include <math.h>
+
 namespace mx3 
 {
 	
@@ -108,20 +111,265 @@ namespace mx3
 	//		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 			
 	//		glEnable( GL_TEXTURE_2D);
+//			texture->makeActive();
+
 			texture->makeActive();
 			glColor4f(1.0, 1.0,1.0, alpha);
 			glVertexPointer(3, GL_FLOAT, 0, vertices);
 			glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 			
-	//		glDisable( GL_TEXTURE_2D);
-	//		glDisableClientState(GL_VERTEX_ARRAY );
-	//		glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 			glPopMatrix();
 		}
 		
 	}
 
+#pragma mark -
+#pragma mark BUFFERED QUAD
+	TexturedBufferQuad::TexturedBufferQuad ()
+	{
+		IRenderable::IRenderable();
+		init();
+	}
+	
+	
+	
+	TexturedBufferQuad::TexturedBufferQuad(std::string filename)
+	{
+		IRenderable::IRenderable();
+		init();
+		loadFromFile(filename);
+	}
+	
+	TexturedBufferQuad::~TexturedBufferQuad ()
+	{
+		printf("%p: TexturedQuad::~TexturedQuad()\n",this);
+		
+		if (texture)
+		{
+			//g_TextureManager.releaseTexture(texture);
+			delete texture;
+			texture = NULL;
+		}
+		if (alpha_mask)
+		{
+			delete [] alpha_mask;
+			alpha_mask = NULL;
+		}
+	}
+	
+	bool TexturedBufferQuad::loadFromFile (std::string filename)
+	{
+		texture = new BufferTexture2D(filename);
+		if (!texture)
+			abort();
+		
+		texture->setAliasTexParams();
+		_filename = filename;
+		w = texture->w;
+		h = texture->h;
+		create_alpha_mask();
+		
+		return true;
+	}
+	
+	void TexturedBufferQuad::create_alpha_mask ()
+	{
+		if (alpha_mask)
+			abort();
+		
+		size_t size = w * h;
+		alpha_mask = new unsigned char[size];
+		memset(alpha_mask,0x00, size);
+		printf("load\n");
+		
+		unsigned char *buf = texture->buffer;
+		
+		for (int i = 0, j = 0; i < w*h; i++, j+=4)
+		{
+			//buf[j+3] = (255&alpha_mask[i]);
+			alpha_mask[i] = buf[j+3];
+		}
+		
+	}
+#define ROUND(x) (((x)>0) ? long((x)+.5) : long((x)-.5))
+#define SQR(x)   ((x)*(x))
+#if !defined(MIN)
+#define MIN(A,B)	((A) < (B) ? (A) : (B))
+#endif
+	
+#if !defined(MAX)
+#define MAX(A,B)	((A) > (B) ? (A) : (B))
+#endif
+	
+	void line(unsigned char *buf,int buf_w, unsigned char val, int x1, int y1, int x2, int y2)
+	{
+		const int dx = abs(x1 - x2);
+		const int dy = abs(y1 - y2);
+		int const1, const2, p, x, y, step;
+		if (dx >= dy)
+		{
+			const1 = 2 * dy;
+			const2 = 2 * (dy - dx);
+			p = 2 * dy - dx;
+			x = MIN(x1,x2);
+			y = (x1 < x2) ? (y1) : (y2);
+			step = (y1 > y2) ? (1) : (-1);
+			//putpixel(x, y, getcolor());
+			buf [x + (y * buf_w)] = val;
+			while (x < MAX(x1,x2))
+			{
+				if (p < 0)
+					p += const1;
+				else
+				{
+					y += step;
+					p += const2;
+				}
+				//putpixel(++x, y, getcolor());
+				buf [(++x) + (y * buf_w)] = val;
+			}
+		}
+		else
+		{
+			const1 = 2 * dx;
+			const2 = 2 * (dx - dy);
+			p = 2 * dx - dy;
+			y = MIN(y1,y2);
+			x = (y1 < y2) ? (x1) : (x2);
+			step = (x1 > x2) ? (1) : (-1);
+			//			putpixel(x, y, getcolor());
+			buf [x + (y * buf_w)] = val;
+			while (y < MAX(y1,y2))
+			{
+				if (p < 0)
+					p += const1;
+				else
+				{
+					x += step;
+					p += const2;
+				}
+				//putpixel(x, ++y, getcolor());
+				
+				buf [(x) + (++y * buf_w)] = val;
+			}
+		}
+	}
+	
+	void circle_fill(unsigned char *buff, int buff_w, unsigned char val, int xc, int yc, int r)
+	{
+		int x1, x2;
+		for (int y=yc-r; y<=yc+r; ++y)
+		{
+			x1 = ROUND(xc + sqrt(SQR(r) - SQR(y - yc)));
+			x2 = ROUND(xc - sqrt(SQR(r) - SQR(y - yc)));
+			line(buff, buff_w, val, x1, y, x2, y);
+		}
+	}
+	
+	void circle(unsigned char *buf, int buf_w, int xc, int yc, int r)
+	{
+		int x =0;
+		int y = r;
+		int p = 3 - 2 * r;
+		
+		while (x <= y)
+		{
+			buf [(xc + x) + (yc + y) * buf_w] = 0x00;
+			buf [(xc - x) + (yc + y) * buf_w] = 0x00;				
+			buf [(xc + x) + (yc - y) * buf_w] = 0x00;
+			buf [(xc - x) + (yc - y) * buf_w] = 0x00;
+			
+			buf [(xc + y) + (yc + x) * buf_w] = 0x00;
+			buf [(xc - y) + (yc + x) * buf_w] = 0x00;
+			buf [(xc + y) + (yc - x) * buf_w] = 0x00;
+			buf [(xc - y) + (yc - x) * buf_w] = 0x00;
+			
+			if (p < 0)
+			{
+				p += 4 * x++ + 6;
+			}
+			else 
+			{
+				p += 4 * (x++ - y--) + 10;
+			}
+		}
+	}
+	
+	
+	
+	void TexturedBufferQuad::alpha_draw_circle_fill (int xc, int yc, int r, unsigned char val)
+	{
+		circle_fill (alpha_mask, w, val, xc, yc, r);
+	}
+	
+	void TexturedBufferQuad::apply_alpha_mask ()
+	{
+		if (!alpha_mask)
+			abort();
+		
+		unsigned char *buf = texture->buffer;
+		
+		for (int i = 0, j = 0; i < w*h; i++, j+=4)
+		{
+			buf[j+3] = (alpha_mask[i]);
+		}
+		
+		texture->updateTextureWithBufferData();
+	}
+
+	void TexturedBufferQuad::transform ()
+	{
+		glTranslatef(x, y, z);
+		
+		if (rotation != 0.0f )
+			glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
+		
+		if (scale_x != 1.0 || scale_y != 1.0)
+			glScalef( scale_x, scale_y, 1.0f );
+		
+		glTranslatef(- (anchorPoint.x * w), - (anchorPoint.y * h), 0);
+	}
+	
+	void TexturedBufferQuad::renderContent ()
+	{
+		if (texture)
+		{	
+			//glLoadIdentity();
+			glPushMatrix();
+			transform();
+			
+			
+			GLfloat		coordinates[] = { 0.0f,	1.0,
+				1.0,	1.0,
+				0.0f,	0.0f,
+				1.0,	0.0f };
+			GLfloat		vertices[] = 
+			{	
+				0,			0,			0,
+				w,	0,			0,
+				0,			h,	0,
+				w,			h,	0
+			};
+			
+			//		glEnableClientState( GL_VERTEX_ARRAY);
+			//		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+			
+			//		glEnable( GL_TEXTURE_2D);
+			//			texture->makeActive();
+			
+			texture->makeActive();
+			glColor4f(1.0, 1.0,1.0, alpha);
+			glVertexPointer(3, GL_FLOAT, 0, vertices);
+			glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			
+			glPopMatrix();
+		}
+		
+	}
+	
+	
 
 	#pragma mark -
 	#pragma mark atlas quad

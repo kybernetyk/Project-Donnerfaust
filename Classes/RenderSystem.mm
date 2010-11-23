@@ -82,10 +82,12 @@ namespace mx3
 		
 		Sprite *sprite = NULL;
 		AtlasSprite *atlas_sprite = NULL;
+		BufferedSprite *buffered_sprite = NULL;
 		TextLabel *label = NULL;
 		
 		TexturedQuad *textured_quad = NULL;
 		TexturedAtlasQuad *textured_atlas_quad = NULL;
+		TexturedBufferQuad *textured_buffer_quad = NULL;
 		OGLFont *font = NULL;
 		
 		
@@ -146,6 +148,27 @@ namespace mx3
 				++it;
 				continue;
 			}
+
+			if (ren->_renderable_type == RENDERABLETYPE_BUFFEREDSPRITE)
+			{
+				buffered_sprite = (BufferedSprite*)ren;
+				
+				textured_buffer_quad = buffered_sprite->quad;
+				textured_buffer_quad->x = pos->x;
+				textured_buffer_quad->y = pos->y;
+				textured_buffer_quad->z = ren->z;
+				textured_buffer_quad->scale_x = pos->scale_x;
+				textured_buffer_quad->scale_y = pos->scale_y;
+				textured_buffer_quad->rotation = pos->rot;
+				textured_buffer_quad->alpha = buffered_sprite->alpha;
+				textured_buffer_quad->anchorPoint = buffered_sprite->anchorPoint;
+			//	printf("LOL\n");
+				textured_buffer_quad->renderContent();
+				
+				++it;
+				continue;
+			}
+			
 			
 			if (ren->_renderable_type == RENDERABLETYPE_TEXT)
 			{

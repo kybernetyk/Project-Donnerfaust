@@ -6,6 +6,7 @@
  *  Copyright 2010 flux forge. All rights reserved.
  *
  */
+#pragma once
 
 namespace mx3
 {

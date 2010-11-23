@@ -12,6 +12,7 @@
 #import <OpenGLES/EAGLDrawable.h>
 #import "EAGLView.h"
 #include "InputDevice.h"
+#include "RenderDevice.h"
 
 #define USE_DEPTH_BUFFER 0
 
@@ -83,23 +84,48 @@ int gMapX,gMapY; // returns map offset for navigation
 	}
     return self;
 }
-
 - (void) swipeHandler_left: (UISwipeGestureRecognizer *) sender
 {
-	NSLog(@"swipe left! %@",sender);
+//	NSLog(@"swipe left! %@",sender);
 	mx3::InputDevice::sharedInstance()->setLeftActive();
-
+	
+	CGPoint loc = [sender locationInView: self];
+	
+	loc = [self convertToGL: loc];
+	mx3::vector2D v = {loc.x,loc.y};
+	v = mx3::RenderDevice::sharedInstance()->coord_convertScreenToWorld (v);
+	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
+	
+	
 }
 - (void) swipeHandler_right: (UISwipeGestureRecognizer *) sender
 {
-	NSLog(@"swipe right! %@",sender);
+//	NSLog(@"swipe right! %@",sender);
 	mx3::InputDevice::sharedInstance()->setRightActive();	
+	
+	CGPoint loc = [sender locationInView: self];
+	
+	loc = [self convertToGL: loc];
+	mx3::vector2D v = {loc.x,loc.y};
+	v = mx3::RenderDevice::sharedInstance()->coord_convertScreenToWorld (v);
+	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
+	
 }
 - (void) swipeHandler_up: (UISwipeGestureRecognizer *) sender
 {
-	NSLog(@"swipe up! %@",sender);
+	//NSLog(@"swipe up! %@",sender);
 	mx3::InputDevice::sharedInstance()->setUpActive();	
+	
+	CGPoint loc = [sender locationInView: self];
+	
+	loc = [self convertToGL: loc];
+	mx3::vector2D v = {loc.x,loc.y};
+	v = mx3::RenderDevice::sharedInstance()->coord_convertScreenToWorld (v);
+	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
+	
 }
+
+
 
 
 - (void)startDrawing 
@@ -231,39 +257,42 @@ int gMapX,gMapY; // returns map offset for navigation
 // Handles the start of a touch
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-
+	
 	UITouch *touch = [[touches allObjects] objectAtIndex: 0];
 	CGPoint loc = [touch locationInView: self];
-
+	
 	loc = [self convertToGL: loc];
 	mx3::vector2D v = {loc.x,loc.y};
-
-//	NSLog(@"touch down!");	
-//	NSLog(@"loc: %f,%f",loc.x, loc.y);
-
+	
+	v = mx3::RenderDevice::sharedInstance()->coord_convertScreenToWorld (v);
+	
+	
+	//	NSLog(@"touch down!");	
+	//	NSLog(@"loc: %f,%f",loc.x, loc.y);
+	
 	mx3::InputDevice::sharedInstance()->setTouchActive(true);
 	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
 	
 	[super touchesBegan: touches withEvent: event];
 	
 	// Enumerate through all the touch objects.
-   /* for (UITouch *touch in touches)
-	{
-        // Send to the dispatch method, which will make sure the appropriate subview is acted upon
-        //[self dispatchFirstTouchAtPoint:[touch locationInView:self]];
-	
-		//convert the touch to our game coordinates
-		//iphone coord system: 0,0 = top/left in portrait mode
-		//so to landscape: game.x = iphone.y; game.y = iphone.x
-		NSLog(@"touch: %@ | %f, %f",touch,[touch locationInView:self].x,[touch locationInView:self].y);
-		
-		vector2D v;
-		v.x = [touch locationInView:self].y;
-		v.y = [touch locationInView:self].x;
-		
-		InputDevice::sharedInstance()->setTouchActive(true);
-		InputDevice::sharedInstance()->setTouchLocation (v);
-    }    */
+	/* for (UITouch *touch in touches)
+	 {
+	 // Send to the dispatch method, which will make sure the appropriate subview is acted upon
+	 //[self dispatchFirstTouchAtPoint:[touch locationInView:self]];
+	 
+	 //convert the touch to our game coordinates
+	 //iphone coord system: 0,0 = top/left in portrait mode
+	 //so to landscape: game.x = iphone.y; game.y = iphone.x
+	 NSLog(@"touch: %@ | %f, %f",touch,[touch locationInView:self].x,[touch locationInView:self].y);
+	 
+	 vector2D v;
+	 v.x = [touch locationInView:self].y;
+	 v.y = [touch locationInView:self].x;
+	 
+	 InputDevice::sharedInstance()->setTouchActive(true);
+	 InputDevice::sharedInstance()->setTouchLocation (v);
+	 }    */
 }
 
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -271,13 +300,13 @@ int gMapX,gMapY; // returns map offset for navigation
 	//NSLog(@"moved!");
 	UITouch *touch = [[touches allObjects] objectAtIndex: 0];
 	CGPoint loc = [touch locationInView: self];
-
+	
 	loc = [self convertToGL: loc];
 	mx3::vector2D v = {loc.x,loc.y};
 	
-//	NSLog(@"touch moved!");	
-//	NSLog(@"loc: %f,%f",loc.x, loc.y);
-
+	//	NSLog(@"touch moved!");	
+	//	NSLog(@"loc: %f,%f",loc.x, loc.y);
+	v = mx3::RenderDevice::sharedInstance()->coord_convertScreenToWorld (v);
 	mx3::InputDevice::sharedInstance()->setTouchActive(true);
 	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
 	
@@ -291,11 +320,13 @@ int gMapX,gMapY; // returns map offset for navigation
 	
 	loc = [self convertToGL: loc];
 	mx3::vector2D v = {loc.x,loc.y};
+	
+	v = mx3::RenderDevice::sharedInstance()->coord_convertScreenToWorld (v);
 	mx3::InputDevice::sharedInstance()->setTouchLocation (v);
 	
-//	NSLog(@"touch ended!");	
-//	NSLog(@"loc: %f,%f",loc.x, loc.y);
-
+	//	NSLog(@"touch ended!");	
+	//	NSLog(@"loc: %f,%f",loc.x, loc.y);
+	
 	
 	//NSLog(@"touch ended");
 	mx3::InputDevice::sharedInstance()->setTouchActive(false);

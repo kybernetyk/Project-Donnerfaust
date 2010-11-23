@@ -177,9 +177,31 @@ namespace mx3
 			return _meterViewportSize;
 		}
 		
-	private:
+	
+//		-(CGPoint)convertToGL:(CGPoint)uiPoint;
+		vector2D coord_convertScreenToWorld (vector2D vec)
+		{
+			//printf("input: %f, %f\n", vec.x,vec.y);
+			
+			vector2D ret;
+			ret.x = vec.x * _xconv + camera.x - _meterViewportSize.x/2; //+ camera offset etc
+			ret.y = vec.y * _yconv + camera.y - _meterViewportSize.y/2;
+			
+			
+			//TODO: camera rotation
+			
+//			printf("output: %f, %f\n", ret.x, ret.y);
+			
+			return ret;
+		}
+		
+		
 		void setupViewportAndProjection (int viewport_width_in_pixels, int viewport_height_in_pixels, float viewport_width_in_meters, float viewport_height_in_meters);
 
+		vector2D camera;
+		float cam_rot;
+		
+private:
 	//	float _pixelToMeterRatio;
 		
 	//	vector2D _pixelToMeterRatio;
@@ -190,6 +212,11 @@ namespace mx3
 	//	vector2D _referenceScreenSize; //the screensize that is referenced. eg. all 32x32px sprites are 32x32px on this screen size (eg 800,600)
 		
 		//Timer _frameTimer;
+		
+		float _xconv;
+		float _yconv;
+		
+		vector2D cam_pos;
 		
 		RenderDevice (void);
 		~RenderDevice (void);

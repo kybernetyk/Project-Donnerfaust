@@ -9,6 +9,7 @@
 #pragma once
 #include <vector>
 #include "EntityManager.h"
+#include "globals.h"
 using namespace mx3;
 
 namespace game

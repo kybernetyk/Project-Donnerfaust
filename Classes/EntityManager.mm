@@ -39,7 +39,7 @@ namespace mx3
 
 	EntityGUID EntityManager::getNextAvailableID() 
 	{
-		for (EntityGUID i = 0; i < MAX_ENTITIES; i++)
+		for (EntityGUID i = 1; i < MAX_ENTITIES; i++)
 			if (_entities[i] == 0)
 				return i;
 

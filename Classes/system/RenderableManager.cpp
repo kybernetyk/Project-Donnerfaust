@@ -30,6 +30,24 @@ namespace mx3
 		return ret;
 	}
 
+	TexturedBufferQuad *RenderableManager::accquireBufferedTexturedQuad (std::string filename)
+	{
+		if (_referenceCounts[filename] > 0)
+		{
+			_referenceCounts[filename] ++;
+			return (TexturedBufferQuad*)_renderables[filename];
+		}
+		
+		TexturedBufferQuad *ret = new TexturedBufferQuad(filename);
+		if (!ret)
+			return NULL;
+		
+		_renderables[filename] = ret;
+		_referenceCounts[filename] = 1;
+		return ret;
+	}
+	
+	
 
 	TexturedAtlasQuad *RenderableManager::accquireTexturedAtlasQuad (std::string filename)
 	{
@@ -87,3 +105,5 @@ namespace mx3
 
 
 }
+
+mx3::RenderableManager g_RenderableManager;

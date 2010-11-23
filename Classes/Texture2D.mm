@@ -134,6 +134,128 @@ namespace mx3
 		TextureParams texParams = { GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 		setTexParams(&texParams);
 	}
-
-
+	
+	
+	////////////////////////////////////////////
+	
+	BufferTexture2D::BufferTexture2D (std::string filename)
+	{
+		w = h = 0;
+		buffer = 0;
+		if (!this->loadFromFile(filename))
+		{
+			printf("could not load texture: %s!\n",filename.c_str());
+			abort();
+		}
+		
+	}
+	
+	BufferTexture2D::~BufferTexture2D ()
+	{
+		if (buffer)
+		{
+			free(buffer);
+			buffer = NULL;
+		}
+			
+	}
+	
+	bool BufferTexture2D::loadFromFile (std::string filename)
+	{
+		
+		filename = pathForFile2(filename.c_str());
+		
+		printf("LOADING %s ...\n",filename.c_str());
+		
+		GLuint tex_2d = SOIL_load_OGL_texture3
+		(
+		 filename.c_str(),
+		 SOIL_LOAD_AUTO,
+		 SOIL_CREATE_NEW_ID,
+		 0
+		 // SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		 //SOIL_FLAG_MIPMAPS | SOIL_FLAG_COMPRESS_TO_DXT
+		 //	 SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		 ,&w,&h,
+		 &buffer
+		 );
+		
+		/* check for an error during the load process */
+		if( 0 == tex_2d )
+		{
+			printf( "SOIL loading error: '%s' - %s\n", SOIL_last_result(),filename.c_str());
+			
+			abort();
+		}
+		
+		printf("buffer: %p\n",buffer);
+		_openGlTextureID = tex_2d;
+		
+		_filename = filename;
+		
+		
+		
+		setAliasTexParams();
+		return true;
+		
+	}
+	
+	void BufferTexture2D::updateTextureWithBufferData ()
+	{
+//		if (_openGlTextureID)
+//		{
+//			glDeleteTextures (1, &_openGlTextureID);
+//		}
+		
+/*		tex_id = SOIL_internal_create_OGL_texture(
+													  img, width, height, channels,
+													  reuse_texture_ID, flags,
+													  GL_TEXTURE_2D, GL_TEXTURE_2D,
+													  GL_MAX_TEXTURE_SIZE );*/
+		
+	/*	for (int i = 0; i < w*h*4; i+= 4)
+		{
+			buffer[i+0] = rand()%255;
+			buffer[i+1] = rand()%255;
+			buffer[i+2] = rand()%255;
+			buffer[i+3] = 0xff;
+		}*/
+		glBindTexture(GL_TEXTURE_2D, _openGlTextureID);
+		glTexImage2D(GL_TEXTURE_2D,
+					 0,
+					 GL_RGBA, 
+					 w, h,
+					 0, 
+					 GL_RGBA,
+					 GL_UNSIGNED_BYTE,
+					 buffer);
+		
+		/*_openGlTextureID = SOIL_internal_create_OGL_texture(
+															buffer,
+															w,
+															h,
+															4,
+															0,
+															0,
+															GL_TEXTURE_2D,
+															GL_TEXTURE_2D,
+															GL_MAX_TEXTURE_SIZE);*/
+															
+		
+		
+/*		unsigned int
+		SOIL_internal_create_OGL_texture
+		(
+		 const unsigned char *const data,
+		 int width, int height, int channels,
+		 unsigned int reuse_texture_ID,
+		 unsigned int flags,
+		 unsigned int opengl_texture_type,
+		 unsigned int opengl_texture_target,
+		 unsigned int texture_check_size_enum
+		 )
+		;*/
+		
+	}
+	
 }

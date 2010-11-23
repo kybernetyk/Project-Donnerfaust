@@ -17,7 +17,7 @@ using namespace game;
 
 
 
-const int TICKS_PER_SECOND = 60;
+const int TICKS_PER_SECOND = 30;
 const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 const int MAX_FRAMESKIP = 5;
 unsigned int next_game_tick = 1;//SDL_GetTicks();
@@ -155,7 +155,7 @@ unsigned int My_SDL_GetTicks()
 	next_game_tick = My_SDL_GetTicks();
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	displayLink = [CADisplayLink displayLinkWithTarget: self selector:@selector(renderScene)];
-	[displayLink setFrameInterval: 1];
+	[displayLink setFrameInterval: 2];
 	[displayLink addToRunLoop: [NSRunLoop currentRunLoop] forMode: NSDefaultRunLoopMode];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	//mac init

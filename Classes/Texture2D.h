@@ -25,10 +25,14 @@ namespace mx3
 	class Texture2D
 	{
 	public:
+		Texture2D()
+		{
+					w = h = 0;
+		}
 		Texture2D (std::string filename);
-		~Texture2D ();
+		virtual ~Texture2D ();
 		
-		bool loadFromFile (std::string filename);
+		virtual bool loadFromFile (std::string filename);
 		void makeActive ();
 		
 		unsigned int _openGlTextureID;
@@ -45,4 +49,17 @@ namespace mx3
 	};
 
 
+	class BufferTexture2D : public Texture2D
+	{
+	public:
+		BufferTexture2D (std::string filename);
+		~BufferTexture2D();
+		
+		bool loadFromFile (std::string filename);
+		
+		unsigned char *buffer;
+		
+		void updateTextureWithBufferData ();
+	};
+	
 }

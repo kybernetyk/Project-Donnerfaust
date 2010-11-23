@@ -10,7 +10,6 @@
 #include <string>
 #include "Util.h"
 #include "bm_font.h"
-#include "globals.h"
 #include "TextureManager.h"
 namespace mx3 
 {
@@ -118,9 +117,40 @@ namespace mx3
 		void transform ();
 		void renderContent();
 		
+		
 		Texture2D *texture;
 	};
 
+	class TexturedBufferQuad : public IRenderable
+	{
+	public:
+		TexturedBufferQuad();
+		TexturedBufferQuad(std::string filename);
+		~TexturedBufferQuad ();
+		
+		void init()
+		{
+			IRenderable::init();
+			
+			texture = NULL;
+			alpha_mask = NULL;
+		}
+		
+		bool loadFromFile (std::string filename);
+		
+		void transform ();
+		void renderContent();
+		
+		void create_alpha_mask ();
+		void apply_alpha_mask ();
+		
+		BufferTexture2D *texture;
+		
+		unsigned char *alpha_mask;
+		
+		void alpha_draw_circle_fill (int xc, int yc, int r, unsigned char val);
+	};
+	
 	class TexturedAtlasQuad : public IRenderable
 	{
 	public:

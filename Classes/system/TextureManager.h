@@ -24,3 +24,5 @@ namespace mx3
 	};
 
 }
+
+extern mx3::TextureManager g_TextureManager;

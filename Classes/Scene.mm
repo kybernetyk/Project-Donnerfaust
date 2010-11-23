@@ -20,6 +20,7 @@
 #include "globals.h"
 
 #include "blob_factory.h"
+#include "RenderDevice.h"
 
 bool spawn_one = false;
 bool spawn_player = false;
@@ -58,7 +59,6 @@ namespace game
 		sprite->quad = g_RenderableManager.accquireTexturedQuad ("game_board.png");
 		sprite->anchorPoint = vector2D_make(0.0, 0.0);
 		sprite->z = -5.0;
-		
 		Name *name = _entityManager->addComponent <Name> (bg);
 		name->name = "Game Background";
 		
@@ -77,6 +77,24 @@ namespace game
 		make_blob(BLOB_COLOR_RED, 4, 6);
 		make_blob(BLOB_COLOR_RED, 3, 3);		
 		make_blob(BLOB_COLOR_RED, 4, 3);
+		
+	/*	Entity *sky = _entityManager->createNewEntity();
+		pos = _entityManager->addComponent <Position> (sky);
+		Sprite *_spr = _entityManager->addComponent<Sprite>(sky);
+		_spr->quad = g_RenderableManager.accquireTexturedQuad("sky_backdrop.png");
+		_spr->anchorPoint = vector2D_make(0.0, 0.0);
+		_spr->z = 6.9;
+		
+		
+		Entity *test = _entityManager->createNewEntity();
+		pos = _entityManager->addComponent <Position> (test);
+		BufferedSprite *spr = _entityManager->addComponent<BufferedSprite>(test);
+		spr->quad = g_RenderableManager.accquireBufferedTexturedQuad("land.png");
+		tq = spr->quad;
+		spr->anchorPoint = vector2D_make(0.0, 0.0);
+		spr->z = 7.0;
+		tq->apply_alpha_mask();		*/
+
 	}
 
 	void Scene::end ()
@@ -84,10 +102,30 @@ namespace game
 
 	}
 
+	
 	void Scene::update (float delta)
 	{
+
+		//tex->updateTextureWithBufferData();
 		InputDevice::sharedInstance()->update();
 
+/*		if (InputDevice::sharedInstance()->touchUpReceived())
+		{
+			unsigned char *buf = tq->alpha_mask;
+			
+			
+			int xc = InputDevice::sharedInstance()->touchLocation().x;
+			int yc = InputDevice::sharedInstance()->touchLocation().y;
+			
+			yc = 480 - yc;
+						
+			tq->alpha_draw_circle_fill( xc, yc, 24, 0x00);
+			
+			
+			tq->apply_alpha_mask();
+		}
+*/
+		
 		//we must collect the corpses from the last frame
 		//as the entity-manager's isDirty property is reset each frame
 		//so if we did corpse collection at the end of update
@@ -116,6 +154,7 @@ namespace game
 			spawn_one = false;
 			make_blob(BLOB_COLOR_RED, rand()%7, 11);
 			
+		//	RenderDevice::sharedInstance()->setupViewportAndProjection ( 320, 480,320, 520);
 		}
 		
 		if (spawn_player)
@@ -147,7 +186,6 @@ namespace game
 	void Scene::render (float interpolation)
 	{
 		_renderSystem->render();
-
 	}
 
 	void Scene::frameDone ()

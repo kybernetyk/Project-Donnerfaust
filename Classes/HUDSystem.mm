@@ -104,6 +104,8 @@ namespace game
 		{
 			sprintf(s, "Fps: %.2f", g_FPS);
 			fps_label->get<TextLabel>()->text = s;
+			
+			//printf("fps: %.2f\n",g_FPS);
 		}
 		
 		

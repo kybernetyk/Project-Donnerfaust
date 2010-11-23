@@ -64,6 +64,8 @@ namespace game
 		
 		Entity *player;
 
+//		TexturedBufferQuad *tq;
+	
 	};
 
 }

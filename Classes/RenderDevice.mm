@@ -63,8 +63,9 @@ namespace mx3
 		 glEnableClientState(GL_VERTEX_ARRAY);
 		 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		 */
-		
-		
+		_xconv = (float)viewport_width_in_meters / (float)viewport_width_in_pixels;
+		_yconv = (float)viewport_height_in_meters / (float)viewport_height_in_pixels;
+
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
@@ -89,7 +90,7 @@ namespace mx3
 
 		//glOrthof(-viewport_width_in_meters/2.0 , viewport_width_in_meters/2.0 , -viewport_height_in_meters/2.0, viewport_height_in_meters/2.0 , -10.0 , 10.0 );
 
-		glOrthof(0 , viewport_width_in_meters , 0, viewport_height_in_meters , -10.0 , 10.0 );
+		glOrthof(0, viewport_width_in_meters, 0, viewport_height_in_meters, -10.0 , 10.0 );
 		
 		//landscape
 
@@ -123,8 +124,8 @@ namespace mx3
 		/*
 		 iPhone muessen wir die meter-size invertieren, da das ding ja um 90 grad landscape gehalten wird
 		 */
-		 _meterViewportSize.x = viewport_height_in_meters;
-		 _meterViewportSize.y = viewport_width_in_meters;
+		_meterViewportSize.x = viewport_width_in_meters;
+		_meterViewportSize.y = viewport_height_in_meters;
 		
 		
 	}
@@ -148,8 +149,8 @@ namespace mx3
 		float viewport_size_y = 480.0;	
 	#endif	
 
-		
-
+		cam_rot = 0.0;		
+		camera = vector2D_make(viewport_size_x/2, viewport_size_y/2);
 		setupViewportAndProjection(screen_size_x,screen_size_y,viewport_size_x,viewport_size_y);
 		
 	}
@@ -168,6 +169,15 @@ namespace mx3
 	{
 		glLoadIdentity();
 		
+		
+		glTranslatef( _meterViewportSize.x/2.0, _meterViewportSize.y/2.0, 0);
+		
+		if (cam_rot != 0.0)
+			glRotatef(cam_rot, 0.0, 0.0, 1.0);
+		
+		glTranslatef( -camera.x , -camera.y, 0.0);
+
+
 		//glTranslatef(-_pixelViewportSize.x/2.0, -_pixelViewportSize.y/2.0, 0);
 	}
 

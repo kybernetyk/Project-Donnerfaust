@@ -11,6 +11,8 @@
 #import "types.h"
 #include <string>
 #include "TexturedQuad.h"
+#include "TextureManager.h"
+#include "RenderableManager.h"
 #include <vector>
 
 	
@@ -205,6 +207,7 @@ namespace mx3
 	#define RENDERABLETYPE_SPRITE 1
 	#define RENDERABLETYPE_ATLASSPRITE 2
 	#define RENDERABLETYPE_TEXT 3
+	#define RENDERABLETYPE_BUFFEREDSPRITE 4
 
 	struct Renderable : public Component
 	{
@@ -254,6 +257,31 @@ namespace mx3
 		DEBUGINFO ("Renderable: quad=%p, z=%f", quad,z)
 	};
 
+	struct BufferedSprite : public Renderable
+	{
+		static ComponentID COMPONENT_ID;
+		
+		TexturedBufferQuad *quad;
+		
+		BufferedSprite()
+		{
+			Renderable::Renderable();
+			
+			_id = COMPONENT_ID;
+			_renderable_type = RENDERABLETYPE_BUFFEREDSPRITE;
+			
+			quad = NULL;
+		}
+		~BufferedSprite()
+		{
+			g_RenderableManager.release(quad);
+		}
+		//WARNING: Don't forget to set the entity manager to dirty when you change the z value of an existing component! (Which shouldn't happen too often anyways)
+		
+		DEBUGINFO ("BufferedSprite: quad=%p, z=%f", quad,z)
+	};
+	
+	
 	struct AtlasSprite : public Renderable
 	{
 		static ComponentID COMPONENT_ID;

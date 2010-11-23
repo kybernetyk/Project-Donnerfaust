@@ -17,6 +17,7 @@ namespace mx3
 	class TexturedQuad;
 	class TexturedAtlasQuad;
 	class OGLFont;
+	class TexturedBufferQuad;
 	class IRenderable;
 
 
@@ -25,6 +26,8 @@ namespace mx3
 	public:
 		TexturedQuad *accquireTexturedQuad (std::string filename);
 		TexturedAtlasQuad *accquireTexturedAtlasQuad (std::string filename);
+		TexturedBufferQuad *accquireBufferedTexturedQuad (std::string filename);
+		
 		OGLFont *accquireOGLFont (std::string filename);
 		
 		void release (IRenderable *pRenderable);
@@ -35,3 +38,5 @@ namespace mx3
 	};
 
 }
+
+extern mx3::RenderableManager g_RenderableManager;

@@ -11,6 +11,7 @@
 #include "Util.h"
 #include "bm_font.h"
 #include "TextureManager.h"
+#import "ParticleEmitter.h"
 namespace mx3 
 {
 		
@@ -41,6 +42,10 @@ namespace mx3
 			w = h = 0;
 		}
 		
+		virtual ~IRenderable()
+		{
+			printf("IRenderable sagt bai!\n");
+		}
 		
 		virtual void renderContent()
 		{
@@ -66,7 +71,6 @@ namespace mx3
 	public:
 		OGLFont (std::string fnt_filename)
 		{
-			IRenderable::IRenderable();
 			init();
 
 			loadFromFNTFile (fnt_filename);
@@ -79,6 +83,8 @@ namespace mx3
 				g_TextureManager.releaseTexture(texture);
 				texture = NULL;
 			}
+			
+			printf("OGL FONT SAGT BAI!\n");
 		}
 		void init()
 		{
@@ -95,6 +101,71 @@ namespace mx3
 		char *text;
 		bm_font font;
 		Texture2D *texture;
+	};
+	
+	class PE_Proxy : public IRenderable
+	{
+	public:
+		ParticleEmitter *pe;
+
+		PE_Proxy ()
+		{
+			init();
+		}
+
+		PE_Proxy(std::string filename)
+		{
+			init();
+			loadFromFile(filename);
+			
+		}
+		
+		void update (float delta)
+		{
+			Vector2f pos;
+			pos.x = x;
+			pos.y = y;
+			
+			[pe setSourcePosition: pos];
+			[pe updateWithDelta: delta];
+		}
+		
+		void renderContent ()
+		{
+			[pe renderParticles];
+		}
+
+		bool loadFromFile (std::string filename)
+		{
+			NSString *nsfilename = [NSString stringWithCString: filename.c_str()];
+			
+			pe = [[ParticleEmitter alloc] initParticleEmitterWithFile: nsfilename];
+			if (pe)
+				return true;
+			
+			return false;
+		}
+		
+		void init()
+		{
+			IRenderable::init();
+			
+			pe = nil;
+		}
+		
+		~PE_Proxy ()
+		{
+			printf("%p: PE_Proxy::~PE_Proxy()\n",this);
+			
+			if (pe)
+			{
+				//g_TextureManager.releaseTexture(texture);
+				//texture = NULL;
+				[pe release];
+				pe = nil;
+			}
+		}
+		
 	};
 
 	class TexturedQuad : public IRenderable
@@ -149,6 +220,12 @@ namespace mx3
 		unsigned char *alpha_mask;
 		
 		void alpha_draw_circle_fill (int xc, int yc, int r, unsigned char val);
+		
+	protected:
+		void line(unsigned char *buf,int buf_w, unsigned char val, int x1, int y1, int x2, int y2);
+		void circle_fill(unsigned char *buff, int buff_w, unsigned char val, int xc, int yc, int r);
+		void circle(unsigned char *buf, int buf_w, int xc, int yc, int r);
+		
 	};
 	
 	class TexturedAtlasQuad : public IRenderable

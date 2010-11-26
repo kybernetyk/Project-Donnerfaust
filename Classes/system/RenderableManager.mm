@@ -85,6 +85,11 @@ namespace mx3
 		return ret;
 		
 	}
+	
+	PE_Proxy *RenderableManager::accquireParticleEmmiter (std::string filename)
+	{
+		return new PE_Proxy(filename);
+	}
 
 	void RenderableManager::release (IRenderable *pRenderable)
 	{

@@ -14,7 +14,8 @@
 #include "TextureManager.h"
 #include "RenderableManager.h"
 #include <vector>
-
+#import "ParticleEmitter.h"
+#include "Actions.h"
 	
 #ifdef __RUNTIME_INFORMATION__
 	#define DEBUGINFO(format,...) virtual std::string toString () \
@@ -29,9 +30,6 @@
 
 namespace mx3 
 {
-	
-	struct Action;
-	
 	struct Component
 	{
 		ComponentID _id;
@@ -208,6 +206,7 @@ namespace mx3
 	#define RENDERABLETYPE_ATLASSPRITE 2
 	#define RENDERABLETYPE_TEXT 3
 	#define RENDERABLETYPE_BUFFEREDSPRITE 4
+	#define RENDERABLETYPE_PARTICLE_EMITTER 5
 
 	struct Renderable : public Component
 	{
@@ -226,7 +225,7 @@ namespace mx3
 		}
 		virtual ~Renderable()
 		{
-			
+			printf("renderable sagt bai!\n");
 		}
 		//WARNING: Don't forget to set the entity manager to dirty when you change the z value of an existing component! (Which shouldn't happen too often anyways)
 
@@ -241,8 +240,6 @@ namespace mx3
 		
 		Sprite()
 		{
-			Renderable::Renderable();
-			
 			_id = COMPONENT_ID;
 			_renderable_type = RENDERABLETYPE_SPRITE;
 			
@@ -257,6 +254,31 @@ namespace mx3
 		DEBUGINFO ("Renderable: quad=%p, z=%f", quad,z)
 	};
 
+	struct PEmitter : public Renderable
+	{
+		static ComponentID COMPONENT_ID;
+		
+		PE_Proxy *pe;
+		
+		PEmitter()
+		{
+			_id = COMPONENT_ID;
+			_renderable_type = RENDERABLETYPE_PARTICLE_EMITTER;
+			
+			pe = nil;
+		}
+		~PEmitter()
+		{
+			printf("PEmitter SAGT BAI!\n");
+//			g_RenderableManager.release(quad);		//hmm - each PE is unique because it has a unique state :[ what to do?
+			delete pe;
+		}
+		//WARNING: Don't forget to set the entity manager to dirty when you change the z value of an existing component! (Which shouldn't happen too often anyways)
+		
+		DEBUGINFO ("PEmitter: pe=%p, z=%f", pe,z)
+	};
+	
+
 	struct BufferedSprite : public Renderable
 	{
 		static ComponentID COMPONENT_ID;
@@ -265,8 +287,6 @@ namespace mx3
 		
 		BufferedSprite()
 		{
-			Renderable::Renderable();
-			
 			_id = COMPONENT_ID;
 			_renderable_type = RENDERABLETYPE_BUFFEREDSPRITE;
 			
@@ -292,8 +312,6 @@ namespace mx3
 		
 		AtlasSprite()
 		{
-			Renderable::Renderable();
-			
 			_id = COMPONENT_ID;
 			_renderable_type = RENDERABLETYPE_ATLASSPRITE;
 			src.x = src.y = src.w = src.h = 0;
@@ -320,8 +338,6 @@ namespace mx3
 		
 		TextLabel()
 		{
-			Renderable::Renderable();
-			
 			_id = COMPONENT_ID;
 			_renderable_type = RENDERABLETYPE_TEXT;
 			
@@ -360,10 +376,24 @@ namespace mx3
 			memset(actions,0x00,NUM_OF_ACTIONS_PER_CONTAINER*sizeof(Action*));
 		}
 		
-		
+		~ActionContainer()
+		{
+			printf("LOL ACTION CONTAINER SAGT BAI!\n");
+			for (int i = 0; i < NUM_OF_ACTIONS_PER_CONTAINER; i++)
+			{
+				if (actions[i])
+				{	
+					Action *a = actions[i];
+					
+					printf("a: %p\n",a);
+					
+					delete a;
+					
+				}
+			}
+		}
 	};
 	
 	
 }
-#include "GameComponents.h"
 

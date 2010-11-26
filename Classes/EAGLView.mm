@@ -133,7 +133,7 @@ int gMapX,gMapY; // returns map offset for navigation
     [EAGLContext setCurrentContext:context];
     
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
-    glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
     
@@ -165,6 +165,9 @@ int gMapX,gMapY; // returns map offset for navigation
     [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(CAEAGLLayer*)self.layer];
     glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, viewRenderbuffer);
     
+	printf("frameb: %i\n", viewFramebuffer);
+	printf("renderb: %i\n", viewRenderbuffer);
+	
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
     
@@ -180,6 +183,11 @@ int gMapX,gMapY; // returns map offset for navigation
         return NO;
     }
     
+	
+	RenderDevice::sharedInstance()->setupBackingTexture();
+	RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
+	RenderDevice::sharedInstance()->setRenderTargetScreen();
+	
     return YES;
 }
 

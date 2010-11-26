@@ -23,7 +23,6 @@ namespace mx3
 	#pragma mark textured quad
 	TexturedQuad::TexturedQuad ()
 	{
-		IRenderable::IRenderable();
 		init();
 	}
 
@@ -40,7 +39,6 @@ namespace mx3
 
 	TexturedQuad::TexturedQuad(std::string filename)
 	{
-		IRenderable::IRenderable();
 		init();
 		loadFromFile(filename);
 	}
@@ -107,14 +105,23 @@ namespace mx3
 				w,			h,	0
 			};
 			
-	//		glEnableClientState( GL_VERTEX_ARRAY);
+			GLfloat colors[] = 
+			{
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+			};
+			glColorPointer(4, GL_FLOAT, 0, colors);
+			//		glEnableClientState( GL_VERTEX_ARRAY);
 	//		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 			
 	//		glEnable( GL_TEXTURE_2D);
 //			texture->makeActive();
 
 			texture->makeActive();
-			glColor4f(1.0, 1.0,1.0, alpha);
+			//glColor4f(1.0, 1.0,1.0, alpha);
+			
 			glVertexPointer(3, GL_FLOAT, 0, vertices);
 			glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -128,7 +135,6 @@ namespace mx3
 #pragma mark BUFFERED QUAD
 	TexturedBufferQuad::TexturedBufferQuad ()
 	{
-		IRenderable::IRenderable();
 		init();
 	}
 	
@@ -202,8 +208,29 @@ namespace mx3
 #define MAX(A,B)	((A) > (B) ? (A) : (B))
 #endif
 	
-	void line(unsigned char *buf,int buf_w, unsigned char val, int x1, int y1, int x2, int y2)
+	void TexturedBufferQuad::line(unsigned char *buf,int buf_w, unsigned char val, int x1, int y1, int x2, int y2)
 	{
+//		x1 = MIN(x1,w);
+//		x2 = MIN(x2,w);
+		
+		if (x1 < 0)
+			x1 = 0;
+		if (x1 >= w)
+			x1 = w-1;
+		if (y1 < 0)
+			y1 = 0;
+		if (y1 >= h)
+			y1 = h-1;
+		if (x2 < 0)
+			x2 = 0;
+		if (x2 >= w)
+			x2 = w-1;
+		if (y2 < 0)
+			y2 = 0;
+		if (y2 >= h)
+			y2 = h-1;
+		
+		
 		const int dx = abs(x1 - x2);
 		const int dy = abs(y1 - y2);
 		int const1, const2, p, x, y, step;
@@ -256,7 +283,7 @@ namespace mx3
 		}
 	}
 	
-	void circle_fill(unsigned char *buff, int buff_w, unsigned char val, int xc, int yc, int r)
+	void TexturedBufferQuad::circle_fill(unsigned char *buff, int buff_w, unsigned char val, int xc, int yc, int r)
 	{
 		int x1, x2;
 		for (int y=yc-r; y<=yc+r; ++y)
@@ -267,7 +294,7 @@ namespace mx3
 		}
 	}
 	
-	void circle(unsigned char *buf, int buf_w, int xc, int yc, int r)
+	void TexturedBufferQuad::circle(unsigned char *buf, int buf_w, int xc, int yc, int r)
 	{
 		int x =0;
 		int y = r;
@@ -357,9 +384,17 @@ namespace mx3
 			
 			//		glEnable( GL_TEXTURE_2D);
 			//			texture->makeActive();
+			GLfloat colors[] = 
+			{
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+			};
+			glColorPointer(4, GL_FLOAT, 0, colors);
 			
 			texture->makeActive();
-			glColor4f(1.0, 1.0,1.0, alpha);
+		//	glColor4f(1.0, 1.0,1.0, alpha);
 			glVertexPointer(3, GL_FLOAT, 0, vertices);
 			glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -375,7 +410,6 @@ namespace mx3
 	#pragma mark atlas quad
 	TexturedAtlasQuad::TexturedAtlasQuad ()
 	{
-		IRenderable::IRenderable();
 		init();
 	}
 
@@ -394,7 +428,6 @@ namespace mx3
 
 	TexturedAtlasQuad::TexturedAtlasQuad(std::string filename)
 	{
-		IRenderable::IRenderable();
 		init();
 		loadFromFile(filename);
 		
@@ -479,10 +512,18 @@ namespace mx3
 			
 	//		glEnableClientState( GL_VERTEX_ARRAY);
 	//		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+			GLfloat colors[] = 
+			{
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+			};
+			glColorPointer(4, GL_FLOAT, 0, colors);
 			
 	//		glEnable( GL_TEXTURE_2D);
 			texture->makeActive();
-			glColor4f(1.0, 1.0,1.0, alpha);
+			//glColor4f(1.0, 1.0,1.0, alpha);
 			glVertexPointer(3, GL_FLOAT, 0, vertices);
 			glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -680,8 +721,16 @@ namespace mx3
 			
 	//		glEnable( GL_TEXTURE_2D);
 			texture->makeActive();
-			glColor4f(1.0, 1.0,1.0, alpha);
-
+		//	glColor4f(1.0, 1.0,1.0, alpha);
+			GLfloat colors[] = 
+			{
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+			};
+			glColorPointer(4, GL_FLOAT, 0, colors);
+			
 			
 			double tx,ty,tw,th;
 			

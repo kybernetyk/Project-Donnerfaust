@@ -16,6 +16,10 @@ namespace mx3
 		_is_touchup_active = false;
 		_state_right_active = _state_left_active = false;
 		_state_up_active = false;
+		
+		_touchdown_handled = false;
+
+
 	}
 
 	InputDevice::~InputDevice (void)

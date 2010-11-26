@@ -2,7 +2,10 @@
 #include "Util.h"
 #include <vector>
 #include "Timer.h"
-
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/Es1/glext.h>
+#include "Texture2D.h"
+#include "util.h"
 namespace mx3 
 {
 	
@@ -198,10 +201,205 @@ namespace mx3
 		
 		void setupViewportAndProjection (int viewport_width_in_pixels, int viewport_height_in_pixels, float viewport_width_in_meters, float viewport_height_in_meters);
 
+		GLuint textureFrameBuffer;
+		GLuint renderTexture;
+		GLint prev;
+		
+		void setupBackingTexture ()
+		{
+			renderTexture = make_empty_texture(512, 512);
+			
+			//Texture2D *rtx = new Texture2D("white.png");
+
+			//renderTexture = rtx->_openGlTextureID;
+			
+			prev = 100;
+			glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &prev);
+			printf("prev: %i\n",prev);
+			
+			printf("tex: %i\n", 			renderTexture);
+			
+			glGenFramebuffersOES(1, &textureFrameBuffer);
+			glBindFramebufferOES(GL_FRAMEBUFFER_OES, textureFrameBuffer);
+			
+			
+			
+			// attach renderbuffer
+			glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, renderTexture, 0);
+			GLint backingWidth;
+			GLint backingHeight;
+			GLuint depthRenderbuffer;
+			// attach depth buffer
+			glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
+			glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+			
+			printf("w: %i h: %i\n",backingWidth, backingHeight);
+			
+			if (0) 
+			{
+				glGenRenderbuffersOES(1, &depthRenderbuffer);
+				glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
+				glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, backingWidth, backingHeight);
+				glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
+			}
+			
+			// unbind frame buffer
+			 glBindFramebufferOES(GL_FRAMEBUFFER_OES, prev);
+			r = 0;
+		}
+
+		void setRenderTargetBackingTexture ()
+		{
+			glBindFramebufferOES(GL_FRAMEBUFFER_OES, textureFrameBuffer);
+
+//			glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
+			glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+			glLoadIdentity();
+			
+		}
+		
+		void setRenderTargetScreen ()
+		{
+			 glBindFramebufferOES(GL_FRAMEBUFFER_OES, prev);
+		}
+		float r;
+		void renderBackingTextureToScreen ()
+		{
+		//	setRenderTargetScreen();
+			
+			//glLoadIdentity();
+			glPushMatrix();
+//			glLoadIdentity();
+
+
+			
+//			glTranslatef( (0.5 * 320),  (0.5 * 480), 0);
+
+/*			r+=1.0;
+			glRotatef(r, 0, 0, 1);
+			float xscale = fabs(sin (DEG2RAD (r)))+0.2;
+			float yscale = fabs(cos (DEG2RAD (r)))+0.2;
+//			xscale = MIN(xscale, 1.2);
+//			yscale = MIN(yscale, 1.2);
+			
+			glScalef(xscale, yscale, 0.0);*/
+//			glTranslatef( -(0.5 * 320),  -(0.5 * 480), 0);			
+			
+			
+//						glTranslatef( x, y, 0);
+			//glTranslatef(x, y, z);
+			
+			/*if (rotation != 0.0f )
+				glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
+			
+			if (scale_x != 1.0 || scale_y != 1.0)
+				glScalef( scale_x, scale_y, 1.0f );*/
+			
+//			glTranslatef(- (0.5 * 320), - (0.5 * 480), 0);
+			
+			
+
+			//glTranslatef(320/2, 480/2, 0);
+			
+			
+//			glTranslatef(320/2, 480/2, 0);
+//			glTranslatef(0/2, -480/2, 0);
+			//glScalef(1.0, 1.0, 1.0);
+			//glRotatef(45, 0, 0, 1);
+			//glTranslatef(320/2, -480/2, 0);
+
+		//	transform();
+			
+			
+		/*	GLfloat		coordinates[] = { 0.0f,	1.0,
+				1.0,	1.0,
+				0.0f,	0.0f,
+				1.0,	0.0f };
+		*/
+			
+		/*	GLfloat		coordinates[] = { 0.0f,	0.0,
+				1.0,	0.0,
+				0.0f,	1.0f,
+				1.0,	1.0f };*/
+			
+			
+			GLfloat		coordinates[] = { 0.0f,	0.0,
+				320.0/512.0,	0.0,
+				0.0f,	480.0/512.0,
+				320.0/512.0,	480.0/512.0 };
+			
+			
+			
+			
+/*			GLfloat		vertices[] = 
+			{	
+				0,			0,			0,
+				512,	0,			0,
+				0,			512,	0,
+				512,			512,	0
+			};*/
+			
+
+						GLfloat		vertices[] = 
+			 {	
+			 0,			0,			0,
+			 320,	0,			0,
+			 0,			480,	0,
+			 320,			480,	0
+			 };
+			
+			
+			
+			
+			//		glEnableClientState( GL_VERTEX_ARRAY);
+			//		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+			
+			//		glEnable( GL_TEXTURE_2D);
+			//			texture->makeActive();
+			
+			float alpha = 1.0;
+			GLfloat colors[] = 
+			{
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+				1.0,1.0,1.0,alpha,
+			};
+			glColorPointer(4, GL_FLOAT, 0, colors);
+			
+			glBindTexture( GL_TEXTURE_2D, renderTexture );
+
+			//	glColor4f(1.0, 1.0,1.0, alpha);
+			glVertexPointer(3, GL_FLOAT, 0, vertices);
+			glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			
+			glPopMatrix();
+			
+		}
+		
 		vector2D camera;
 		float cam_rot;
 		
 private:
+		GLuint make_empty_texture (int width, int height)
+		{
+			GLuint ret;
+			
+			glGenTextures(1, &ret);
+			
+			glBindTexture(GL_TEXTURE_2D, ret);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+			
+			glBindTexture(GL_TEXTURE_2D, ret);
+			
+			return ret;
+		}
+		
+		
 	//	float _pixelToMeterRatio;
 		
 	//	vector2D _pixelToMeterRatio;

@@ -11,6 +11,7 @@
 #include "PlayerControlledSystem.h"
 #include "InputDevice.h"
 #include "blob_factory.h"
+#include "ParticleSystem.h"
 
 namespace game 
 {
@@ -501,6 +502,18 @@ namespace game
 					
 					make_blob(center_pc->type, center_pc->col, center_pc->row);
 					make_blob(aux_pc->type, aux_pc->col, aux_pc->row);
+				
+					int x1 = center_pc->col * 32.0 + BOARD_X_OFFSET;
+					int x2 = aux_pc->col * 32.0 + BOARD_X_OFFSET;
+
+					int y1 = center_pc->row * 32.0 + BOARD_X_OFFSET;
+					int y2 = aux_pc->row * 32.0 + BOARD_X_OFFSET;
+
+				
+					int x = (x1 + x2) / 2;
+					int y = (y1 + y2) / 2;
+					
+					ParticleSystem::createParticleEmitter ("explosion.pex", 0.0, vector2D_make(x,y));
 					
 				}
 				else //allow movement during grace period

@@ -17,7 +17,7 @@ using namespace game;
 
 
 
-const int TICKS_PER_SECOND = 30;
+const int TICKS_PER_SECOND = 60;
 const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 const int MAX_FRAMESKIP = 5;
 unsigned int next_game_tick = 1;//SDL_GetTicks();
@@ -151,11 +151,10 @@ unsigned int My_SDL_GetTicks()
 	scene->init();
 	
 	RenderDevice::sharedInstance()->init ();
-	
 	next_game_tick = My_SDL_GetTicks();
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	displayLink = [CADisplayLink displayLinkWithTarget: self selector:@selector(renderScene)];
-	[displayLink setFrameInterval: 2];
+	[displayLink setFrameInterval: 1];
 	[displayLink addToRunLoop: [NSRunLoop currentRunLoop] forMode: NSDefaultRunLoopMode];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	//mac init
@@ -208,6 +207,11 @@ unsigned int My_SDL_GetTicks()
 	
 	//draw
 	[glView startDrawing];
+
+	RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
+	
+//	RenderDevice::sharedInstance()->setRenderTargetScreen();
+
 	RenderDevice::sharedInstance()->beginRender();
 
 	//scene->render(interpolation * (1.0/TICKS_PER_SECOND));
@@ -215,6 +219,81 @@ unsigned int My_SDL_GetTicks()
 	
 	scene->frameDone();
 	RenderDevice::sharedInstance()->endRender();
+
+	RenderDevice::sharedInstance()->setRenderTargetScreen();
+	RenderDevice::sharedInstance()->beginRender();	
+
+	static float r = 0;
+
+	float xscale = fabs(sin (DEG2RAD (r))) + 0.2;
+	float yscale = (cos (DEG2RAD (r))) * 2.0;
+
+//	xscale = 0.1;
+//	yscale = 0.1;	
+	
+	glTranslatef( (0.5 * 320),  (0.5 * 480), 0);
+	glScalef(xscale, xscale, 1.0);
+	glRotatef(r, 0, 0, 1.0);
+	glTranslatef( -(0.5 * 320),  -(0.5 * 480), 0);
+	//glTranslatef( 320/2, 480/2, 0);
+	//glTranslatef( 320/2, 480/2, 0);
+
+
+//	glTranslatef( 320/2, 480/2, 0);
+
+	
+	//glRotatef(r, 0, 0, 1.0);
+	r+=1.0;
+	
+	glPushMatrix();
+	glTranslatef(-320, -480, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+	
+	
+	glPushMatrix();
+	glTranslatef(0, -480, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(320, -480, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-320, 0, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 0, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(320, 0, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-320, 480, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 480, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(320, 480, 0);
+	RenderDevice::sharedInstance()->renderBackingTextureToScreen();
+	glPopMatrix();
+	
+	
+	RenderDevice::sharedInstance()->endRender();	
+	
 	[glView endDrawing];
 }
 

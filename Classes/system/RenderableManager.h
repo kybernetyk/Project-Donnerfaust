@@ -19,6 +19,7 @@ namespace mx3
 	class OGLFont;
 	class TexturedBufferQuad;
 	class IRenderable;
+	class PE_Proxy;
 
 
 	class RenderableManager
@@ -27,7 +28,9 @@ namespace mx3
 		TexturedQuad *accquireTexturedQuad (std::string filename);
 		TexturedAtlasQuad *accquireTexturedAtlasQuad (std::string filename);
 		TexturedBufferQuad *accquireBufferedTexturedQuad (std::string filename);
-		
+
+		PE_Proxy *accquireParticleEmmiter (std::string filename);
+
 		OGLFont *accquireOGLFont (std::string filename);
 		
 		void release (IRenderable *pRenderable);

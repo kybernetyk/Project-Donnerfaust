@@ -6,9 +6,6 @@
 #include "Timer.h"
 #include "Scene.h"
 
-#define FPS 60.0
-// handy value to convert degrees to radians
-#define RAD_DEGREE 0.01745
 
 
 @interface MXAppDelegate : NSObject <UIApplicationDelegate> 

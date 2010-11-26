@@ -12,6 +12,7 @@
 #include "EntityManager.h"
 #include "RenderSystem.h"
 #include "MovementSystem.h"
+#include "ParticleSystem.h"
 #include "PlayerControlledSystem.h"
 #include "AttachmentSystem.h"
 #include "ActionSystem.h"
@@ -51,6 +52,7 @@ namespace game
 		CorpseRetrievalSystem *_corpseRetrievalSystem;	
 		SoundSystem *_soundSystem;
 		AnimationSystem *_animationSystem;
+		ParticleSystem *_particleSystem;
 
 		HUDSystem *_hudSystem;
 		PlayerControlledSystem *_playerControlledSystem;

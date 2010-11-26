@@ -13,6 +13,8 @@
 #include "globals.h"
 #include "ActionSystem.h"
 #include "InputDevice.h"
+#include "Component.h"
+#include "GameComponents.h"
 
 namespace game 
 {

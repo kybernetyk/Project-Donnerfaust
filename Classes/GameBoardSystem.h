@@ -11,6 +11,7 @@
 #include <vector>
 #include "EntityManager.h"
 #include "globals.h"
+#include "GameComponents.h"
 using namespace mx3;
 
 namespace game

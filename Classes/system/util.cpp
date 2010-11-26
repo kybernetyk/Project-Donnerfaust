@@ -8,6 +8,7 @@
  */
 
 #include "util.h"
+#include <math.h>
 namespace mx3 
 {
 	vector2D vector2D_make (float x, float y)
@@ -16,6 +17,15 @@ namespace mx3
 		return vc;
 	}
 
+	vector2D vector2D_normalize (vector2D vec)
+	{
+		float len = sqrt((vec.x * vec.x) + (vec.y * vec.y));
+		vec.x = vec.x/len;
+		vec.y = vec.y/len;
+		
+		return vec;
+	}
+	
 	rect rect_make (float x, float y, float w, float h)
 	{
 		rect rc = {x,y,w,h};

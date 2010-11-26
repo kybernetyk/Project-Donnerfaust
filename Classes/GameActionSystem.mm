@@ -8,7 +8,7 @@
  */
 
 #include "GameActionSystem.h"
-
+#include "GameComponents.h"
 namespace game
 {
 	void GameActionSystem::handle_gbe_set_state_action (GBESetStateAction *action)

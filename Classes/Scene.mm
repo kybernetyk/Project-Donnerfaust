@@ -22,6 +22,9 @@
 #include "blob_factory.h"
 #include "RenderDevice.h"
 
+#import "ParticleEmitter.h"
+
+
 bool spawn_one = false;
 bool spawn_player = false;
 
@@ -40,9 +43,11 @@ namespace game
 		_movementSystem = new MovementSystem (_entityManager);
 		_attachmentSystem = new AttachmentSystem (_entityManager);
 		_actionSystem = new GameActionSystem (_entityManager);
+		_particleSystem = new ParticleSystem (_entityManager);
 		_corpseRetrievalSystem = new CorpseRetrievalSystem (_entityManager);
 		_soundSystem = new SoundSystem (_entityManager);
 		_animationSystem = new AnimationSystem (_entityManager);
+
 		_blobAnimationSystem = new BlobAnimationSystem (_entityManager);
 		
 		_gameLogicSystem = new GameLogicSystem (_entityManager);
@@ -95,6 +100,11 @@ namespace game
 		spr->z = 7.0;
 		tq->apply_alpha_mask();		*/
 
+
+
+		
+		
+		
 	}
 
 	void Scene::end ()
@@ -143,16 +153,26 @@ namespace game
 		_gameBoardSystem->update(delta);
 		_gameLogicSystem->update(delta);
 		_blobAnimationSystem->update(delta);
-		
-		
 		_hudSystem->update(delta);
 		_soundSystem->update(delta);
 		
+		_particleSystem->update(delta);
+		
 
+
+		
 		if (spawn_one)
 		{
 			spawn_one = false;
-			make_blob(BLOB_COLOR_RED, rand()%7, 11);
+			Entity *blob = make_blob(BLOB_COLOR_RED, rand()%7, 11);
+			
+			Entity *pe = ParticleSystem::createParticleEmitter ("lolsterne.pex", 1.0, vector2D_make(320/2, 480/2));
+			
+			Attachment *a = _entityManager->addComponent <Attachment> (pe);
+			a->targetEntityID = blob->_guid;
+			a->entityChecksum = blob->checksum;
+			
+			
 			
 		//	RenderDevice::sharedInstance()->setupViewportAndProjection ( 320, 480,320, 520);
 		}
@@ -164,7 +184,9 @@ namespace game
 			printf("spawning player ...\n");
 			
 			make_player_blob(CENTER, BLOB_COLOR_RED, 3,11);
-			make_player_blob(AUX, BLOB_COLOR_RED, 4,11);
+			Entity *blob = make_player_blob(AUX, BLOB_COLOR_RED, 4,11);
+			
+			
 		}
 		
 	/*	if (g_GameState.game_state != g_GameState.next_state)
@@ -177,15 +199,16 @@ namespace game
 			}
 			
 		}*/
+
 		
-		
-		
+	
 		
 	}
 
 	void Scene::render (float interpolation)
 	{
 		_renderSystem->render();
+
 	}
 
 	void Scene::frameDone ()

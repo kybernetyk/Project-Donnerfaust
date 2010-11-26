@@ -18,6 +18,8 @@ namespace mx3
 #define ACTIONTYPE_MOVE_BY 2
 #define ACTIONTYPE_ADD_COMPONENT 3
 #define ACTIONTYPE_CREATE_ENTITY 4
+
+	struct Component;
 	
 	struct Action
 	{
@@ -39,15 +41,17 @@ namespace mx3
 			_timestamp = duration = 0.0;
 			may_be_aborted = true;
 			finished = false;
+			
+			printf("I action: %p\n", this);
 		}
 		
 		virtual ~Action ()
 		{
-			
+			printf("virtual action bai ...\n");
 		}
+
 		
-		
-		DEBUGINFO ("Empty Action with duration: %f and timestamp: %f", duration, _timestamp)
+		//DEBUGINFO ("Empty Action with duration: %f and timestamp: %f", duration, _timestamp)
 	};
 	
 	
@@ -60,8 +64,6 @@ namespace mx3
 		
 		MoveToAction()
 		{
-			Action::Action();
-			
 			_ups_x = INFINITY;
 			_ups_y = INFINITY;
 			
@@ -69,7 +71,13 @@ namespace mx3
 			action_type = ACTIONTYPE_MOVE_TO;
 		}
 		
-		DEBUGINFO ("Move To: x=%f, y=%f duration: %f timestamp: %f",x,y,duration, _timestamp)
+		~MoveToAction()
+		{
+			printf(" MOVE TO ACTION SAGT BAI!\n");
+			
+		}
+		
+		//DEBUGINFO ("Move To: x=%f, y=%f duration: %f timestamp: %f",x,y,duration, _timestamp)
 	};
 	struct MoveByAction : public Action
 	{
@@ -81,14 +89,12 @@ namespace mx3
 		
 		MoveByAction()
 		{
-			Action::Action();
-			
 			_dx = _dy = INFINITY;			//mark with INFINITY to dirty so the action system can see that this value needs an init
 			x = y = 0.0;
 			action_type = ACTIONTYPE_MOVE_BY;
 		}
 		
-		DEBUGINFO ("Move By: x=%f, y=%f duration: %f timestamp: %f",x,y,duration, _timestamp)
+		//DEBUGINFO ("Move By: x=%f, y=%f duration: %f timestamp: %f",x,y,duration, _timestamp)
 	};
 	struct AddComponentAction : public Action
 	{
@@ -98,15 +104,12 @@ namespace mx3
 		
 		AddComponentAction()
 		{
-			Action::Action();
-			
-			
 			component_to_add = NULL;
 			
 			action_type = ACTIONTYPE_ADD_COMPONENT;
 		}
 		
-		DEBUGINFO ("AddComponentAction: %p duration: %f timestamp: %f",component_to_add,duration,_timestamp)
+	//	DEBUGINFO ("AddComponentAction: %p duration: %f timestamp: %f",component_to_add,duration,_timestamp)
 	};
 	
 	struct CreateEntityAction : public Action
@@ -115,12 +118,10 @@ namespace mx3
 		
 		CreateEntityAction()
 		{
-			Action::Action();
-			
 			action_type = ACTIONTYPE_CREATE_ENTITY;
 		}
-		
-		DEBUGINFO ("CreateEntityAction. duration: %f timestamp: %f",duration,_timestamp)
+	//	
+	//	DEBUGINFO ("CreateEntityAction. duration: %f timestamp: %f",duration,_timestamp)
 	};
 	
 #define ACTIONTYPE_CHANGE_INTEGER_TO 5
@@ -132,8 +133,6 @@ namespace mx3
 		
 		ChangeIntegerToAction()
 		{
-			Action::Action();
-			
 			action_type = ACTIONTYPE_CHANGE_INTEGER_TO;
 			pIntToChange = NULL;
 			new_value = 0;
@@ -148,8 +147,6 @@ namespace mx3
 		
 		ChangeIntegerByAction()
 		{
-			Action::Action();
-			
 			action_type = ACTIONTYPE_CHANGE_INTEGER_BY;
 			pIntToChange = NULL;
 			amount = 0;
@@ -167,8 +164,6 @@ namespace mx3
 		
 		ChangeFloatToAction()
 		{
-			Action::Action();
-			
 			action_type = ACTIONTYPE_CHANGE_FLOAT_TO;
 			pFloatToChange = NULL;
 			new_value = 0;
@@ -183,8 +178,6 @@ namespace mx3
 		
 		ChangeFloatByAction()
 		{
-			Action::Action();
-			
 			action_type = ACTIONTYPE_CHANGE_FLOAT_BY;
 			pFloatToChange = NULL;
 			amount = 0;

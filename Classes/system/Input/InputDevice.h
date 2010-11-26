@@ -30,6 +30,12 @@ namespace mx3
 				_touchup_handled = false;
 			}
 			
+			if (_touchdown_handled)
+			{
+				_is_touch_active = false;
+				_touchdown_handled = false;
+			}
+			
 		}
 		
 		vector2D touchLocation ()
@@ -44,13 +50,16 @@ namespace mx3
 		
 		bool isTouchActive ()
 		{
+			_touchdown_handled = true;
 			return _is_touch_active;
 		}
 		
 		void setTouchActive (bool b)
 		{
+			_touchdown_handled = false;
 			_is_touch_active = b;
 		}
+		
 		
 		bool touchUpReceived ()
 		{
@@ -115,6 +124,7 @@ namespace mx3
 		bool _is_touchup_active;
 		bool _touchup_handled;
 		
+		bool _touchdown_handled;
 		
 		bool _state_left_active;
 		bool _state_right_active;

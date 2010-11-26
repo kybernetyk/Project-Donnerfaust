@@ -91,7 +91,7 @@ namespace mx3
 			}
 	#endif
 			
-			T *comp = new T;
+			T *comp = new T();
 			
 			if (_components[e->_guid][T::COMPONENT_ID])
 			{

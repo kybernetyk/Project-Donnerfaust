@@ -23,6 +23,8 @@ namespace mx3
 	ComponentID AtlasSprite::COMPONENT_ID = 4;
 	ComponentID TextLabel::COMPONENT_ID = 4;
 	ComponentID BufferedSprite::COMPONENT_ID = 4;
+	ComponentID PEmitter::COMPONENT_ID = 4;	
+	
 	
 	ComponentID Name::COMPONENT_ID = 5;
 

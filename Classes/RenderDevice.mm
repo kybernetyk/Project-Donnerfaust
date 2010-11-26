@@ -73,9 +73,11 @@ namespace mx3
 		
 		glEnable(GL_TEXTURE_2D); //enable texture mapping
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //Black Background
+
 		glClearDepthf(1.0); //enables clearing of deapth buffer
 		glDepthFunc(GL_LEQUAL); //type of depth test
 		glEnable(GL_DEPTH_TEST); //enables depth testing
+		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );//GL_ONE_MINUS_SRC_ALPHA);      // Enable Alpha Blending (disable alpha testing)
 		
 		glShadeModel(GL_SMOOTH); //enables smooth color shading
@@ -105,9 +107,10 @@ namespace mx3
 		
 				glEnableClientState( GL_VERTEX_ARRAY);
 				glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+				glEnableClientState( GL_COLOR_ARRAY);
 		
 				glEnable( GL_TEXTURE_2D);
-		
+
 	//	printf("OMFG");
 
 	/*	_pixelViewportSize.x = viewport_width_in_pixels;
@@ -178,7 +181,7 @@ namespace mx3
 		glTranslatef( -camera.x , -camera.y, 0.0);
 
 
-		//glTranslatef(-_pixelViewportSize.x/2.0, -_pixelViewportSize.y/2.0, 0);
+
 	}
 
 	void RenderDevice::endRender (void)

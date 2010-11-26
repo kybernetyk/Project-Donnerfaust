@@ -89,6 +89,7 @@ namespace mx3
 		TexturedAtlasQuad *textured_atlas_quad = NULL;
 		TexturedBufferQuad *textured_buffer_quad = NULL;
 		OGLFont *font = NULL;
+		PEmitter *pe = NULL;
 		
 		
 		while (it != moveableList.end())
@@ -184,6 +185,19 @@ namespace mx3
 				font->alpha = label->alpha;
 				font->anchorPoint = label->anchorPoint;
 				font->renderContent();
+				
+				++it;
+				continue;
+			}
+			
+			if (ren->_renderable_type == RENDERABLETYPE_PARTICLE_EMITTER)
+			{
+				pe = (PEmitter*)ren;
+/*				pe->pe->x = pos->x;
+				pe->pe->y = pos->y;*/ 		///handled by particle system update()
+				
+				pe->pe->renderContent();
+				
 				
 				++it;
 				continue;

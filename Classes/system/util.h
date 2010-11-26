@@ -10,6 +10,17 @@
 
 #define DEG2RAD(x) (0.0174532925 * (x))
 #define RAD2DEG(x) (57.295779578 * (x))
+
+#define ROUND(x) (((x)>0) ? long((x)+.5) : long((x)-.5))
+#define SQR(x)   ((x)*(x))
+#if !defined(MIN)
+#define MIN(A,B)	((A) < (B) ? (A) : (B))
+#endif
+
+#if !defined(MAX)
+#define MAX(A,B)	((A) > (B) ? (A) : (B))
+#endif
+
 namespace mx3 
 {
 		
@@ -20,7 +31,7 @@ namespace mx3
 	};
 
 	vector2D vector2D_make (float x, float y);
-
+	vector2D vector2D_normalize (vector2D vec);
 	struct rect
 	{
 		float x;

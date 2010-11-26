@@ -154,6 +154,8 @@ namespace mx3
 
 		cam_rot = 0.0;		
 		camera = vector2D_make(viewport_size_x/2, viewport_size_y/2);
+		
+		//camera = vector2D_make(0, 0);
 		setupViewportAndProjection(screen_size_x,screen_size_y,viewport_size_x,viewport_size_y);
 		
 	}

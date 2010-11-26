@@ -28,6 +28,8 @@
 bool spawn_one = false;
 bool spawn_player = false;
 
+extern int g_ActiveGFX;
+
 namespace game 
 {
 	void Scene::init ()
@@ -179,6 +181,11 @@ namespace game
 		
 		if (spawn_player)
 		{
+			if (g_ActiveGFX)
+				g_ActiveGFX = GFX_NONE;
+			else
+				g_ActiveGFX = GFX_ROTOZOOM;
+			
 			spawn_player = false;
 			
 			printf("spawning player ...\n");

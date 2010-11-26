@@ -13,3 +13,4 @@
 
 game::GameState g_GameState;
 double g_FPS = 0.0;
+int g_ActiveGFX = 0;

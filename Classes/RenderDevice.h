@@ -269,7 +269,7 @@ namespace mx3
 		//	setRenderTargetScreen();
 			
 			//glLoadIdentity();
-			glPushMatrix();
+			//glPushMatrix();
 //			glLoadIdentity();
 
 
@@ -324,10 +324,11 @@ namespace mx3
 				1.0,	1.0f };*/
 			
 			
+			//inverse coords oO
 			GLfloat		coordinates[] = { 0.0f,	0.0,
-				320.0/512.0,	0.0,
-				0.0f,	480.0/512.0,
-				320.0/512.0,	480.0/512.0 };
+				_pixelViewportSize.x/512.0,	0.0,
+				0.0f,	_pixelViewportSize.y/512.0,
+				_pixelViewportSize.x/512.0,	_pixelViewportSize.y/512.0 };
 			
 			
 			
@@ -341,12 +342,12 @@ namespace mx3
 			};*/
 			
 
-						GLfloat		vertices[] = 
+			GLfloat		vertices[] = 
 			 {	
 			 0,			0,			0,
-			 320,	0,			0,
-			 0,			480,	0,
-			 320,			480,	0
+			 _pixelViewportSize.x*_xconv,	0,			0,
+			 0,			_pixelViewportSize.y*_yconv,	0,
+			 _pixelViewportSize.x*_xconv,			_pixelViewportSize.y*_yconv,	0
 			 };
 			
 			
@@ -375,12 +376,14 @@ namespace mx3
 			glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 			
-			glPopMatrix();
+		//	glPopMatrix();
 			
 		}
 		
 		vector2D camera;
 		float cam_rot;
+		
+		
 		
 private:
 		GLuint make_empty_texture (int width, int height)

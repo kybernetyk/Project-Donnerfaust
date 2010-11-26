@@ -40,6 +40,7 @@ namespace game
 	#define BOARD_NUM_COLS 7
 	#define BOARD_NUM_ROWS 16
 
+	
 
 }
 
@@ -47,3 +48,7 @@ extern game::GameState g_GameState;
 extern double g_FPS;
 	
 
+extern int g_ActiveGFX;
+
+#define GFX_NONE 0
+#define GFX_ROTOZOOM 1

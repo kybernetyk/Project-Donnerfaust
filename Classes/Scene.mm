@@ -32,6 +32,11 @@ extern int g_ActiveGFX;
 
 namespace game 
 {
+	void Scene::preload ()
+	{
+		preload_blob_textures ();	
+	}
+	
 	void Scene::init ()
 	{
 		_isRunning = true;
@@ -50,12 +55,20 @@ namespace game
 		_soundSystem = new SoundSystem (_entityManager);
 		_animationSystem = new AnimationSystem (_entityManager);
 
+		_blobConnectionSystem = new BlobConnectionSystem (_entityManager);
 		_blobAnimationSystem = new BlobAnimationSystem (_entityManager);
 		
 		_gameLogicSystem = new GameLogicSystem (_entityManager);
 		_hudSystem = new HUDSystem (_entityManager);
 		_playerControlledSystem = new PlayerControlledSystem (_entityManager);
 		_gameBoardSystem = new GameBoardSystem (_entityManager);
+		
+		
+		
+		
+		
+		preload();
+		
 		
 		_soundSystem->playMusic(MUSIC_GAME);
 
@@ -68,22 +81,16 @@ namespace game
 		sprite->z = -5.0;
 		Name *name = _entityManager->addComponent <Name> (bg);
 		name->name = "Game Background";
-		
-		make_blob(BLOB_COLOR_RED, 1, 4);
-		make_blob(BLOB_COLOR_RED, 0, 5);
-		make_blob(BLOB_COLOR_RED, 3, 11);
-		make_blob(BLOB_COLOR_RED, 3, 3);
-		make_blob(BLOB_COLOR_RED, 2, 5);
-		make_blob(BLOB_COLOR_RED, 4, 4);
-		make_blob(BLOB_COLOR_RED, 5, 5);
-		make_blob(BLOB_COLOR_RED, 2, 11);
-		make_blob(BLOB_COLOR_RED, 1, 3);
-		make_blob(BLOB_COLOR_RED, 6, 5);
-		
-
-		make_blob(BLOB_COLOR_RED, 4, 6);
-		make_blob(BLOB_COLOR_RED, 3, 3);		
-		make_blob(BLOB_COLOR_RED, 4, 3);
+//		
+//		for (int i = 0; i < 12; i++)
+//		{
+//			int col = rand()%4;
+//			int x = rand()%6;
+//			int y = rand()%11;
+//			
+//			make_blob(col, x, y);
+//		}
+//		
 		
 	/*	Entity *sky = _entityManager->createNewEntity();
 		pos = _entityManager->addComponent <Position> (sky);
@@ -153,6 +160,7 @@ namespace game
 		_attachmentSystem->update(delta);
 		_animationSystem->update(delta);
 		_gameBoardSystem->update(delta);
+		_blobConnectionSystem->update(delta);
 		_gameLogicSystem->update(delta);
 		_blobAnimationSystem->update(delta);
 		_hudSystem->update(delta);
@@ -166,14 +174,14 @@ namespace game
 		if (spawn_one)
 		{
 			spawn_one = false;
-			Entity *blob = make_blob(BLOB_COLOR_RED, rand()%7, 11);
+			Entity *blob = make_blob(rand()%4, rand()%7, 11);
 			
-			Entity *pe = ParticleSystem::createParticleEmitter ("lolsterne.pex", 1.0, vector2D_make(320/2, 480/2));
-			
-			Attachment *a = _entityManager->addComponent <Attachment> (pe);
-			a->targetEntityID = blob->_guid;
-			a->entityChecksum = blob->checksum;
-			
+		//	Entity *pe = ParticleSystem::createParticleEmitter ("lolsterne.pex", 1.0, vector2D_make(320/2, 480/2));
+//			
+//			Attachment *a = _entityManager->addComponent <Attachment> (pe);
+//			a->targetEntityID = blob->_guid;
+//			a->entityChecksum = blob->checksum;
+//			
 			
 			
 		//	RenderDevice::sharedInstance()->setupViewportAndProjection ( 320, 480,320, 520);
@@ -181,11 +189,11 @@ namespace game
 		
 		if (spawn_player)
 		{
-			if (g_ActiveGFX)
-				g_ActiveGFX = GFX_NONE;
-			else
-				g_ActiveGFX = GFX_ROTOZOOM;
-			
+		//	if (g_ActiveGFX)
+//				g_ActiveGFX = GFX_NONE;
+//			else
+//				g_ActiveGFX = GFX_ROTOZOOM;
+//			
 			spawn_player = false;
 			
 			printf("spawning player ...\n");

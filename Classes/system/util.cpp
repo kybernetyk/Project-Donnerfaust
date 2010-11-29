@@ -32,4 +32,15 @@ namespace mx3
 		return rc;
 	}
 
+	bool rect_is_equal_to_rect (rect *r1, rect *r2)
+	{
+		
+		if ((int)r1->x == (int)r2->x &&
+			(int)r1->y == (int)r2->y &&
+			(int)r1->w == (int)r2->w &&
+			(int)r1->h == (int)r2->h)
+			return true;
+		
+		return false;
+	}
 }

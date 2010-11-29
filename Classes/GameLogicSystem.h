@@ -14,7 +14,6 @@ using namespace mx3;
 
 namespace game 
 {
-
 	class GameLogicSystem
 	{
 	public:

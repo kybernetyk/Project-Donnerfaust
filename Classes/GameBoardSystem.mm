@@ -32,7 +32,7 @@ namespace game
 			++it;
 			_current_gbe = _entityManager->getComponent<GameBoardElement>(_current_entity);
 			
-			if ((_current_gbe->state & GBE_STATE_IDLE))
+			if ((_current_gbe->state == GBE_STATE_IDLE))
 				_map[_current_gbe->col][_current_gbe->row] = _current_entity;
 		}
 	}
@@ -62,10 +62,17 @@ namespace game
 	{
 		if (can_move_down())
 		{
-			_current_gbe->state &= (~GBE_STATE_IDLE);
-			_current_gbe->state |= GBE_STATE_MOVING_FALL;
+//			_current_gbe->state &= (~GBE_STATE_IDLE);
+//			_current_gbe->state |= GBE_STATE_MOVING_FALL;
+			_current_gbe->state = GBE_STATE_MOVING_FALL;
+
 			_current_gbe->prev_row = _current_gbe->row;
 			_current_gbe->y_move_timer = 0.0;
+			_current_gbe->landed = false;
+		}
+		else
+		{
+			_current_gbe->landed = true;
 		}
 	}
 
@@ -76,9 +83,11 @@ namespace game
 		
 		if (_current_gbe->y_move_timer >= _current_gbe->fall_duration)
 		{
-			_current_gbe->state |= (GBE_STATE_IDLE);
-			_current_gbe->state &= (~GBE_STATE_MOVING_FALL);
+			//_current_gbe->state |= (GBE_STATE_IDLE);
+			//_current_gbe->state &= (~GBE_STATE_MOVING_FALL);
 
+			_current_gbe->state = GBE_STATE_IDLE;
+			
 			_current_gbe->row --;
 			_current_gbe->y_off = 0.0;
 			_current_gbe->y_move_timer = 0.0;
@@ -106,10 +115,10 @@ namespace game
 			_current_gbe = _entityManager->getComponent<GameBoardElement>(_current_entity);
 			_current_position = _entityManager->getComponent<Position>(_current_entity);
 
-			if ((_current_gbe->state & GBE_STATE_IDLE))
+			if ((_current_gbe->state == GBE_STATE_IDLE))
 				handle_state_idle();
 		
-			if (_current_gbe->state & GBE_STATE_MOVING_FALL)
+			if (_current_gbe->state == GBE_STATE_MOVING_FALL)
 				handle_state_falling ();
 
 			

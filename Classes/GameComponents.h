@@ -17,11 +17,19 @@ namespace game
 #pragma mark -
 #pragma mark game 
 
-#define BLOB_COLOR_RED 0x01
+#define BLOB_COLOR_RED 0x00
+#define BLOB_COLOR_GREEN 0x01
+#define BLOB_COLOR_BLUE 0x02
+#define BLOB_COLOR_YELLOW 0x03
 	
-#define GBE_STATE_IDLE (1 << 1)
-#define GBE_STATE_MOVING_FALL (1 << 2)
+#define GBE_STATE_IDLE 0
+#define GBE_STATE_MOVING_FALL 1
 
+#define GBE_CONNECTED_NONE (1 << 0)	
+#define GBE_CONNECTED_TO_UP (1 << 1)
+#define GBE_CONNECTED_TO_LEFT (1 << 2)
+#define GBE_CONNECTED_TO_DOWN (1 << 3)
+#define GBE_CONNECTED_TO_RIGHT (1 << 4)	
 	
 	struct GameBoardElement : public Component
 	{
@@ -36,26 +44,34 @@ namespace game
 		int type;
 		
 		unsigned int state;
-		int prev_state;
 
 		float y_move_timer;
 		float y_off;
 		
 		float fall_duration;
+		bool landed;
+		bool must_be_animated;
+		unsigned int connection_state;
+		unsigned int prev_connection_state;
+		unsigned int animation_state;
 		
 		GameBoardElement ()
 		{
 			_id = COMPONENT_ID;
 			prev_row = prev_col = row = col = 0;
 			type = BLOB_COLOR_RED;
-			prev_state = state = GBE_STATE_IDLE;
+			state = GBE_STATE_IDLE;
+			animation_state = prev_connection_state = connection_state = 0;// GBE_CONNECTED_NONE;
 			y_off = 0.0;
 			y_move_timer = 0.0;
-
+			landed = false;
+			must_be_animated = false;
+	
+			printf("8 = %i\n",GBE_CONNECTED_TO_DOWN);
 			fall_duration = 0.1;
 		}
 		
-		DEBUGINFO ("Game Board Element. ")
+		DEBUGINFO ("Game Board Element. connection state = %i, prev con = %i, animation state = %i ", connection_state, prev_connection_state, animation_state)
 	};
 	
 	

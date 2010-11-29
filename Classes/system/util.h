@@ -41,5 +41,5 @@ namespace mx3
 	};
 
 	rect rect_make (float x, float y, float w, float h);
-
+	bool rect_is_equal_to_rect (rect *r1, rect *r2);
 }

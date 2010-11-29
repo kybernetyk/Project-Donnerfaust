@@ -38,7 +38,7 @@ namespace game
 			++it;
 			_current_gbe = _entityManager->getComponent<GameBoardElement>(_current_entity);
 
-			if ((_current_gbe->state & GBE_STATE_IDLE))
+			if ((_current_gbe->state == GBE_STATE_IDLE))
 				_map[_current_gbe->col][_current_gbe->row] = _current_entity;
 		}
 	}

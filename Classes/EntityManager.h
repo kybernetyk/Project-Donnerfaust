@@ -46,7 +46,7 @@
 #include "Component.h"
 #include "Entity.h"
 
-#define __ENTITY_MANAGER_WARNINGS__
+//#define __ENTITY_MANAGER_WARNINGS__
 namespace mx3 
 {
 	

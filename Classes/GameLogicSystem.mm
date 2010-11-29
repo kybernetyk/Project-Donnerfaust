@@ -57,6 +57,7 @@ namespace game
 					v.x+16 < pos->x+32 && v.y+16 < pos->y + 32)
 				{
 					_entityManager->addComponent <MarkOfDeath> (current_entity); 
+					_entityManager->dumpEntity( current_entity );
 				}
 			}
 			

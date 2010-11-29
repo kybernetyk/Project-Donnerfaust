@@ -101,14 +101,14 @@ namespace game
 
 		static float d = 0.0;
 		d += delta;
-		if (d > 0.0)
+		if (d > 2.0)
 		{
 			d = 0.0;
 			char s[255];
 			sprintf(s, "Fps: %.2f", g_FPS);
 			fps_label->get<TextLabel>()->text = s;
 			
-			printf("fps: %.2f\n",g_FPS);
+			//printf("fps: %.2f\n",g_FPS);
 		}
 		
 		

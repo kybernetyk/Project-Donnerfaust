@@ -24,6 +24,7 @@
 #include "GameBoardSystem.h"
 #include "BlobAnimationSystem.h"
 #include "GameActionSystem.h"
+#include "BlobConnectionSystem.h"
 
 using namespace mx3;
 
@@ -33,6 +34,7 @@ namespace game
 	class Scene
 	{
 	public:
+		virtual void preload ();
 		virtual void init ();
 		virtual void end ();
 		
@@ -58,7 +60,9 @@ namespace game
 		PlayerControlledSystem *_playerControlledSystem;
 		GameLogicSystem *_gameLogicSystem;
 		GameBoardSystem *_gameBoardSystem;
+		BlobConnectionSystem *_blobConnectionSystem;
 		BlobAnimationSystem *_blobAnimationSystem;
+
 		
 		Entity *red_blob;
 		Entity *green_blob;

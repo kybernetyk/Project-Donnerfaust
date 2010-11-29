@@ -14,6 +14,22 @@
 		03208C4D12942EB0009E8AAD /* blob_factory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03208C4C12942EB0009E8AAD /* blob_factory.mm */; };
 		03208C79129430A8009E8AAD /* GameBoardSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03208C78129430A8009E8AAD /* GameBoardSystem.mm */; };
 		03208E1212944DDA009E8AAD /* BlobAnimationSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03208E1112944DDA009E8AAD /* BlobAnimationSystem.mm */; };
+		0322FA0212A3D29F00E4BFB4 /* Landung.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9F312A3D29F00E4BFB4 /* Landung.png */; };
+		0322FA0312A3D29F00E4BFB4 /* blue_lr.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9F412A3D29F00E4BFB4 /* blue_lr.png */; };
+		0322FA0412A3D29F00E4BFB4 /* blue_ud.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9F512A3D29F00E4BFB4 /* blue_ud.png */; };
+		0322FA0512A3D29F00E4BFB4 /* cyan_lr.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9F612A3D29F00E4BFB4 /* cyan_lr.png */; };
+		0322FA0612A3D29F00E4BFB4 /* cyan_ud.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9F712A3D29F00E4BFB4 /* cyan_ud.png */; };
+		0322FA0712A3D29F00E4BFB4 /* green_lr.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9F812A3D29F00E4BFB4 /* green_lr.png */; };
+		0322FA0812A3D29F00E4BFB4 /* green_ud.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9F912A3D29F00E4BFB4 /* green_ud.png */; };
+		0322FA0912A3D29F00E4BFB4 /* orange_lr.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9FA12A3D29F00E4BFB4 /* orange_lr.png */; };
+		0322FA0A12A3D29F00E4BFB4 /* orange_ud.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9FB12A3D29F00E4BFB4 /* orange_ud.png */; };
+		0322FA0B12A3D29F00E4BFB4 /* purple_lr.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9FC12A3D29F00E4BFB4 /* purple_lr.png */; };
+		0322FA0C12A3D29F00E4BFB4 /* purple_ud.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9FD12A3D29F00E4BFB4 /* purple_ud.png */; };
+		0322FA0D12A3D29F00E4BFB4 /* red_lr.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9FE12A3D29F00E4BFB4 /* red_lr.png */; };
+		0322FA0E12A3D29F00E4BFB4 /* red_ud.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322F9FF12A3D29F00E4BFB4 /* red_ud.png */; };
+		0322FA0F12A3D29F00E4BFB4 /* yellow_lr.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322FA0012A3D29F00E4BFB4 /* yellow_lr.png */; };
+		0322FA1012A3D29F00E4BFB4 /* yellow_ud.png in Resources */ = {isa = PBXBuildFile; fileRef = 0322FA0112A3D29F00E4BFB4 /* yellow_ud.png */; };
+		0322FAD012A3DD5900E4BFB4 /* BlobConnectionSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0322FACF12A3DD5900E4BFB4 /* BlobConnectionSystem.mm */; };
 		033DCBAC128D7C9700C66D74 /* HUDSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB6B128D7C9700C66D74 /* HUDSystem.mm */; };
 		033DCBAD128D7C9700C66D74 /* CorpseRetrievalSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB6E128D7C9700C66D74 /* CorpseRetrievalSystem.mm */; };
 		033DCBAE128D7C9700C66D74 /* GameLogicSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCB71128D7C9700C66D74 /* GameLogicSystem.mm */; };
@@ -121,6 +137,23 @@
 		03208C78129430A8009E8AAD /* GameBoardSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameBoardSystem.mm; sourceTree = "<group>"; };
 		03208E1012944DDA009E8AAD /* BlobAnimationSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobAnimationSystem.h; sourceTree = "<group>"; };
 		03208E1112944DDA009E8AAD /* BlobAnimationSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlobAnimationSystem.mm; sourceTree = "<group>"; };
+		0322F9F312A3D29F00E4BFB4 /* Landung.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Landung.png; sourceTree = "<group>"; };
+		0322F9F412A3D29F00E4BFB4 /* blue_lr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_lr.png; sourceTree = "<group>"; };
+		0322F9F512A3D29F00E4BFB4 /* blue_ud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_ud.png; sourceTree = "<group>"; };
+		0322F9F612A3D29F00E4BFB4 /* cyan_lr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cyan_lr.png; sourceTree = "<group>"; };
+		0322F9F712A3D29F00E4BFB4 /* cyan_ud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cyan_ud.png; sourceTree = "<group>"; };
+		0322F9F812A3D29F00E4BFB4 /* green_lr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_lr.png; sourceTree = "<group>"; };
+		0322F9F912A3D29F00E4BFB4 /* green_ud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_ud.png; sourceTree = "<group>"; };
+		0322F9FA12A3D29F00E4BFB4 /* orange_lr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_lr.png; sourceTree = "<group>"; };
+		0322F9FB12A3D29F00E4BFB4 /* orange_ud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_ud.png; sourceTree = "<group>"; };
+		0322F9FC12A3D29F00E4BFB4 /* purple_lr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_lr.png; sourceTree = "<group>"; };
+		0322F9FD12A3D29F00E4BFB4 /* purple_ud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_ud.png; sourceTree = "<group>"; };
+		0322F9FE12A3D29F00E4BFB4 /* red_lr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_lr.png; sourceTree = "<group>"; };
+		0322F9FF12A3D29F00E4BFB4 /* red_ud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_ud.png; sourceTree = "<group>"; };
+		0322FA0012A3D29F00E4BFB4 /* yellow_lr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_lr.png; sourceTree = "<group>"; };
+		0322FA0112A3D29F00E4BFB4 /* yellow_ud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_ud.png; sourceTree = "<group>"; };
+		0322FACE12A3DD5900E4BFB4 /* BlobConnectionSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobConnectionSystem.h; sourceTree = "<group>"; };
+		0322FACF12A3DD5900E4BFB4 /* BlobConnectionSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlobConnectionSystem.mm; sourceTree = "<group>"; };
 		033DCB6A128D7C9700C66D74 /* HUDSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDSystem.h; sourceTree = "<group>"; };
 		033DCB6B128D7C9700C66D74 /* HUDSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HUDSystem.mm; sourceTree = "<group>"; };
 		033DCB6D128D7C9700C66D74 /* CorpseRetrievalSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorpseRetrievalSystem.h; sourceTree = "<group>"; };
@@ -325,6 +358,15 @@
 				03208E1112944DDA009E8AAD /* BlobAnimationSystem.mm */,
 			);
 			name = BlobAnimationSystem;
+			sourceTree = "<group>";
+		};
+		0322FACD12A3DD4900E4BFB4 /* BlobConnectionSystem */ = {
+			isa = PBXGroup;
+			children = (
+				0322FACE12A3DD5900E4BFB4 /* BlobConnectionSystem.h */,
+				0322FACF12A3DD5900E4BFB4 /* BlobConnectionSystem.mm */,
+			);
+			name = BlobConnectionSystem;
 			sourceTree = "<group>";
 		};
 		033DCB68128D7C9700C66D74 /* ComponentV3 */ = {
@@ -633,6 +675,7 @@
 		034F38631292DBE900F54ABA /* Game Systems */ = {
 			isa = PBXGroup;
 			children = (
+				0322FACD12A3DD4900E4BFB4 /* BlobConnectionSystem */,
 				030F1F441298196000093ABC /* Game Action System */,
 				03208E0F12944DC8009E8AAD /* BlobAnimationSystem */,
 				03208C7612943098009E8AAD /* GameBoardSystem */,
@@ -744,6 +787,21 @@
 		03EDF865128D81B50086763A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0322F9F312A3D29F00E4BFB4 /* Landung.png */,
+				0322F9F412A3D29F00E4BFB4 /* blue_lr.png */,
+				0322F9F512A3D29F00E4BFB4 /* blue_ud.png */,
+				0322F9F612A3D29F00E4BFB4 /* cyan_lr.png */,
+				0322F9F712A3D29F00E4BFB4 /* cyan_ud.png */,
+				0322F9F812A3D29F00E4BFB4 /* green_lr.png */,
+				0322F9F912A3D29F00E4BFB4 /* green_ud.png */,
+				0322F9FA12A3D29F00E4BFB4 /* orange_lr.png */,
+				0322F9FB12A3D29F00E4BFB4 /* orange_ud.png */,
+				0322F9FC12A3D29F00E4BFB4 /* purple_lr.png */,
+				0322F9FD12A3D29F00E4BFB4 /* purple_ud.png */,
+				0322F9FE12A3D29F00E4BFB4 /* red_lr.png */,
+				0322F9FF12A3D29F00E4BFB4 /* red_ud.png */,
+				0322FA0012A3D29F00E4BFB4 /* yellow_lr.png */,
+				0322FA0112A3D29F00E4BFB4 /* yellow_ud.png */,
 				03D5721712A04F9900C5AF7C /* white.png */,
 				03D5702612A02AA500C5AF7C /* bof.pex */,
 				03D56F6112A01C1E00C5AF7C /* monstah.pex */,
@@ -926,6 +984,21 @@
 				03D56FD712A024C600C5AF7C /* lolsterne.pex in Resources */,
 				03D5702712A02AA500C5AF7C /* bof.pex in Resources */,
 				03D5721812A04F9900C5AF7C /* white.png in Resources */,
+				0322FA0212A3D29F00E4BFB4 /* Landung.png in Resources */,
+				0322FA0312A3D29F00E4BFB4 /* blue_lr.png in Resources */,
+				0322FA0412A3D29F00E4BFB4 /* blue_ud.png in Resources */,
+				0322FA0512A3D29F00E4BFB4 /* cyan_lr.png in Resources */,
+				0322FA0612A3D29F00E4BFB4 /* cyan_ud.png in Resources */,
+				0322FA0712A3D29F00E4BFB4 /* green_lr.png in Resources */,
+				0322FA0812A3D29F00E4BFB4 /* green_ud.png in Resources */,
+				0322FA0912A3D29F00E4BFB4 /* orange_lr.png in Resources */,
+				0322FA0A12A3D29F00E4BFB4 /* orange_ud.png in Resources */,
+				0322FA0B12A3D29F00E4BFB4 /* purple_lr.png in Resources */,
+				0322FA0C12A3D29F00E4BFB4 /* purple_ud.png in Resources */,
+				0322FA0D12A3D29F00E4BFB4 /* red_lr.png in Resources */,
+				0322FA0E12A3D29F00E4BFB4 /* red_ud.png in Resources */,
+				0322FA0F12A3D29F00E4BFB4 /* yellow_lr.png in Resources */,
+				0322FA1012A3D29F00E4BFB4 /* yellow_ud.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,6 +1067,7 @@
 				03D56C2B129FF50D00C5AF7C /* NSDataAdditions.m in Sources */,
 				03D56C2C129FF50D00C5AF7C /* TBXML.m in Sources */,
 				03D56CC612A0001100C5AF7C /* ParticleSystem.mm in Sources */,
+				0322FAD012A3DD5900E4BFB4 /* BlobConnectionSystem.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

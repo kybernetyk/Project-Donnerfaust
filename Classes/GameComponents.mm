@@ -18,5 +18,5 @@ namespace game
 	
 	ComponentID GameBoardElement::COMPONENT_ID = 18;
 	
-	
+	ComponentID NeedsAnimation::COMPONENT_ID = 19;
 }

@@ -100,169 +100,6 @@ namespace game
 		
 	}
 	
-	void BlobAnimationSystem::check_for_consistency ()
-	{
-		std::vector<Entity*>::const_iterator it = _entities.begin();
-		
-		Entity *current_entity = NULL;
-		GameBoardElement *current_gbe = NULL;
-		AtlasSprite *current_sprite = NULL;
-		FrameAnimation *current_animation = NULL;
-		rect src, src1, src2, src3, src4;
-		bool invalidate;
-		while (it != _entities.end())
-		{
-			current_entity = *it;
-			++it;
-			
-			current_animation = _entityManager->getComponent <FrameAnimation> (current_entity);
-			if (current_animation)
-				continue;
-			
-			current_gbe = _entityManager->getComponent <GameBoardElement> (current_entity);
-			current_sprite = _entityManager->getComponent <AtlasSprite> (current_entity);
-
-			invalidate = false;
-			
-			if (current_gbe->connection_state == GBE_CONNECTED_NONE ||
-				current_gbe->connection_state == 0)
-			{				
-				
-				src = rect_make(0*32, 0, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP))
-			{
-				src = rect_make(15*32, 0*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_LEFT))
-			{
-				src = rect_make(15*32, 8*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN))
-			{
-				src = rect_make(15*32, 8*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_RIGHT))
-			{
-				src = rect_make(15*32, 0*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-				
-			}
-			
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN))
-			{
-				src1 = rect_make(15*32, 12*32, 32, 32);
-				src2 = rect_make(15*32, 4*32, 32, 32);
-				
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src1) &&
-					!rect_is_equal_to_rect(&current_sprite->src, &src2))
-					invalidate = true;
-
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT))
-			{
-					src1 = rect_make(15*32, 1*32, 32, 32);
-					src2 = rect_make(15*32, 9*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src1) &&
-					!rect_is_equal_to_rect(&current_sprite->src, &src2))
-					invalidate = true;
-				
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT))
-			{
-					src1 = rect_make(15*32, 10*32, 32, 32);
-					src2 = rect_make(15*32, 1*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src1) &&
-					!rect_is_equal_to_rect(&current_sprite->src, &src2))
-					invalidate = true;
-				
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT))
-			{
-					src1 = rect_make(15*32, 2*32, 32, 32);
-					src2 = rect_make(15*32, 2*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src1) &&
-					!rect_is_equal_to_rect(&current_sprite->src, &src2))
-					invalidate = true;
-				
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT))
-			{
-					src1 = rect_make(15*32, 11*32, 32, 32);	
-					src2 = rect_make(15*32, 9*32, 32, 32);	
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src1) &&
-					!rect_is_equal_to_rect(&current_sprite->src, &src2))
-					invalidate = true;
-				
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT))
-			{
-				src = rect_make(15*32, 10*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT ))
-			{
-				src = rect_make(15*32, 5*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT ))
-			{
-				src = rect_make(15*32, 6*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT ))
-			{
-				src = rect_make(15*32, 3*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT ))
-			{
-				src = rect_make(15*32, 11*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT | GBE_CONNECTED_TO_UP ))
-			{
-				src = rect_make(15*32, 15*32, 32, 32);
-				if (!rect_is_equal_to_rect(&current_sprite->src, &src))
-					invalidate = true;
-			}
-			
-			if (invalidate)
-			{
-				current_gbe->prev_connection_state = 0xff;
-			}
-		}
-	}
 	
 	void BlobAnimationSystem::update (float delta)
 	{
@@ -282,15 +119,16 @@ namespace game
 		 
 			current_gbe = _entityManager->getComponent <GameBoardElement> (current_entity);
 			
-		//	printf("con: %i\n", current_gbe->connection_state);
-			if (current_gbe->connection_state == current_gbe->prev_connection_state)
-			{	
-				
-			//	printf("DEIN GESICHT: %i, %i!\n",current_gbe->connection_state,current_gbe->prev_connection_state );
-				continue;
-				
+			
+			if (_entityManager->getComponent <NeedsAnimation> (current_entity))
+			{
+				_entityManager->removeComponent <NeedsAnimation> (current_entity);
 			}
-
+			else
+			{
+				continue;
+			}
+			
 
 			unsigned int prev_state = current_gbe->prev_connection_state;
 			
@@ -304,18 +142,19 @@ namespace game
 			{
 				filename = blob_filenames[current_gbe->type];
 				src = rect_make(0*32, 0, 32, 32);
-				current_gbe->animation_state = current_gbe->connection_state;
+				
 				printf("none\n");
-//				continue;
+
+				goto addshit;
 			}
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP))
 			{
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 0*32, 32, 32);
-				current_gbe->animation_state = current_gbe->connection_state;
 				fa = new_animation(0);					
 				printf("up\n");
+				goto addshit;
 			}
 
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_LEFT))
@@ -323,21 +162,21 @@ namespace game
 				filename = blob_filenames[current_gbe->type];
 				src = rect_make(15*32, 8*32, 32, 32);
 
-				current_gbe->animation_state = current_gbe->connection_state;
 				
 				fa = new_animation(8);					
 
 				printf("left\n");
+				goto addshit;
 			}
 
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN))
 			{
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 8*32, 32, 32);
-				current_gbe->animation_state = current_gbe->connection_state;
 				fa = new_animation(8);					
 
 				printf("down\n");
+				goto addshit;
 			}
 
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_RIGHT))
@@ -347,8 +186,8 @@ namespace game
 
 				fa = new_animation(0);					
 
-				current_gbe->animation_state = current_gbe->connection_state;
 				printf("right\n");
+				goto addshit;
 			}
 			
 
@@ -357,7 +196,6 @@ namespace game
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 12*32, 32, 32);
 
-				current_gbe->animation_state = current_gbe->connection_state;
 				
 				if (prev_state == GBE_CONNECTED_TO_UP)
 				{
@@ -371,14 +209,13 @@ namespace game
 				}
 				
 				printf("up and down\n");
+				goto addshit;
 			}
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT))
 			{
 				filename = blob_filenames[current_gbe->type];
 				src = rect_make(15*32, 1*32, 32, 32);
-				
-				current_gbe->animation_state = current_gbe->connection_state;
 				
 				
 				if (prev_state == GBE_CONNECTED_TO_LEFT)
@@ -394,14 +231,13 @@ namespace game
 				
 
 				printf("left and right\n");
+				goto addshit;
 			}
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT))
 			{
 				filename = blob_filenames[current_gbe->type];
 				src = rect_make(15*32, 10*32, 32, 32);
-				
-				current_gbe->animation_state = current_gbe->connection_state;
 				
 				
 				if (prev_state == GBE_CONNECTED_TO_UP)
@@ -418,14 +254,13 @@ namespace game
 				
 				
 				printf("up and left\n");
+				goto addshit;
 			}
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT))
 			{
 				filename = blob_filenames[current_gbe->type];
 				src = rect_make(15*32, 2*32, 32, 32);
-				
-				current_gbe->animation_state = current_gbe->connection_state;
 				
 				
 				if (prev_state == GBE_CONNECTED_TO_UP)
@@ -443,15 +278,13 @@ namespace game
 				
 				
 				printf("up and right\n");
+				goto addshit;
 			}
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT))
 			{
 				filename = blob_filenames[current_gbe->type];
 				src = rect_make(15*32, 11*32, 32, 32);	
-				
-				current_gbe->animation_state = current_gbe->connection_state;
-				
 				
 				
 				if (prev_state == GBE_CONNECTED_TO_DOWN)
@@ -470,14 +303,13 @@ namespace game
 				
 
 				printf("left and down\n");
+				goto addshit;
 			}
 
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT))
 			{
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 10*32, 32, 32);
-				
-				current_gbe->animation_state = current_gbe->connection_state;
 				
 				
 				if (prev_state == GBE_CONNECTED_TO_DOWN)
@@ -493,70 +325,68 @@ namespace game
 				}
 				
 				printf("up and down\n");
+				goto addshit;
 			}
 			
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT ))
 			{
 				
-				current_gbe->animation_state = current_gbe->connection_state;
-				
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 5*32, 32, 32);
 
 				printf("up, down, left\n");
+				goto addshit;
 			}
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT ))
 			{
 				
-				current_gbe->animation_state = current_gbe->connection_state;
-				
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 6*32, 32, 32);
 				
 				printf("up, down, right\n");
+				goto addshit;
 			}
 
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT ))
 			{
 				
-				current_gbe->animation_state = current_gbe->connection_state;
-				
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 3*32, 32, 32);
 
 				
 				printf("up, left, right\n");
+				goto addshit;
 			}
 			
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT ))
 			{
-				
-				current_gbe->animation_state = current_gbe->connection_state;
 				
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 11*32, 32, 32);
 
 				
 				printf("down, left, right\n");
+				goto addshit;
 			}
 
 			if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT | GBE_CONNECTED_TO_UP ))
 			{
-				
-				current_gbe->animation_state = current_gbe->connection_state;
-				
 				filename = blob_filenames_2[current_gbe->type];
 				src = rect_make(15*32, 15*32, 32, 32);
 
 				
 				printf("ALL\n");
+				goto addshit;
 			}
 
-			current_gbe->prev_connection_state = current_gbe->connection_state;
+			abort();
 			
+//			current_gbe->prev_connection_state = current_gbe->connection_state;
+	
+		addshit:
 			AtlasSprite *as = _entityManager->addComponent<AtlasSprite>(current_entity);
 			as->atlas_quad = g_RenderableManager.accquireTexturedAtlasQuad(filename);
 			as->src = src; 
@@ -564,11 +394,16 @@ namespace game
 				
 			
 			if (fa)
+			{	
 				appendAnimation(current_entity, fa);
+				
+			}
+			else
+			{
+				_entityManager->removeComponent <FrameAnimation> (current_entity);
+			}
 			
 		}
-		
-		check_for_consistency();
 		
 	}
 	

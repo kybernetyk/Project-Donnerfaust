@@ -206,6 +206,14 @@ namespace game
 							current_gbe->connection_state = GBE_CONNECTED_NONE;
 //							current_gbe->prev_connection_state = 0xff;
 						}
+						
+						if (current_gbe->connection_state != current_gbe->prev_connection_state)
+						{
+							
+							current_gbe->prev_connection_state = current_gbe->connection_state;
+							
+							_entityManager->addComponent <NeedsAnimation> (_current_entity);
+						}
 
 					}
 				}

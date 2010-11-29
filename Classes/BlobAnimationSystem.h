@@ -23,7 +23,6 @@ namespace game
 		
 	protected:
 		void appendAnimation (Entity *e, FrameAnimation *anim );
-		void check_for_consistency();
 		EntityManager *_entityManager;
 		std::vector<Entity*> _entities;
 	};

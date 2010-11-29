@@ -50,10 +50,8 @@ namespace game
 		
 		float fall_duration;
 		bool landed;
-		bool must_be_animated;
 		unsigned int connection_state;
 		unsigned int prev_connection_state;
-		unsigned int animation_state;
 		
 		GameBoardElement ()
 		{
@@ -61,17 +59,16 @@ namespace game
 			prev_row = prev_col = row = col = 0;
 			type = BLOB_COLOR_RED;
 			state = GBE_STATE_IDLE;
-			animation_state = prev_connection_state = connection_state = 0;// GBE_CONNECTED_NONE;
+			prev_connection_state = connection_state = 0;// GBE_CONNECTED_NONE;
 			y_off = 0.0;
 			y_move_timer = 0.0;
 			landed = false;
-			must_be_animated = false;
+
 	
-			printf("8 = %i\n",GBE_CONNECTED_TO_DOWN);
 			fall_duration = 0.1;
 		}
 		
-		DEBUGINFO ("Game Board Element. connection state = %i, prev con = %i, animation state = %i ", connection_state, prev_connection_state, animation_state)
+		DEBUGINFO ("Game Board Element. connection state = %i, prev con = %i", connection_state, prev_connection_state)
 	};
 	
 	
@@ -131,4 +128,14 @@ namespace game
 		DEBUGINFO ("Player Controller")
 	};
 	
+	struct NeedsAnimation : public Component
+	{
+		static ComponentID COMPONENT_ID;
+
+		
+		NeedsAnimation ()
+		{
+			_id = COMPONENT_ID;
+		}
+	};	
 }

@@ -79,14 +79,18 @@ namespace mx3
 		glEnable(GL_DEPTH_TEST); //enables depth testing*/
 
 		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_ALPHA_TEST);
 		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );//GL_ONE_MINUS_SRC_ALPHA);      // Enable Alpha Blending (disable alpha testing)
+		glEnable(GL_BLEND);
 		
 		glShadeModel(GL_SMOOTH); //enables smooth color shading
 		//glEnable(GL_ALPHA_TEST);
 		//glAlphaFunc(GL_GREATER, 0.1);
 		
-		glEnable(GL_BLEND);
+
+		
+		
 		
 		
 		glMatrixMode(GL_PROJECTION);

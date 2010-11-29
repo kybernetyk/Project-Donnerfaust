@@ -277,7 +277,6 @@ namespace mx3
 		
 		void renderBackingTextureToScreen ()
 		{
-			Texture2D::boundTexture = 0;
 			
 			//return;
 		//	setRenderTargetScreen();

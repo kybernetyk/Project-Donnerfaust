@@ -101,7 +101,7 @@ namespace game
 
 		static float d = 0.0;
 		d += delta;
-		if (d > 0.25)
+		if (d > 0.0)
 		{
 			d = 0.0;
 			char s[255];

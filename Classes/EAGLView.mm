@@ -132,10 +132,10 @@ int gMapX,gMapY; // returns map offset for navigation
 {
     [EAGLContext setCurrentContext:context];
     
-    glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
-    glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+  //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
+//    glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+  //  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+//	glLoadIdentity();
     
 }
 

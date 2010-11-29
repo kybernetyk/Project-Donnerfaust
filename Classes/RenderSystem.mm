@@ -196,8 +196,10 @@ namespace mx3
 /*				pe->pe->x = pos->x;
 				pe->pe->y = pos->y;*/ 		///handled by particle system update()
 				
+				glPushMatrix();
+				glTranslatef(0.0, 0.0, pe->pe->z);
 				pe->pe->renderContent();
-				
+				glPopMatrix();
 				
 				++it;
 				continue;

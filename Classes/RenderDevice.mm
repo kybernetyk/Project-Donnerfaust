@@ -74,15 +74,17 @@ namespace mx3
 		glEnable(GL_TEXTURE_2D); //enable texture mapping
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //Black Background
 
-		glClearDepthf(1.0); //enables clearing of deapth buffer
+		/*glClearDepthf(1.0); //enables clearing of deapth buffer
 		glDepthFunc(GL_LEQUAL); //type of depth test
-		glEnable(GL_DEPTH_TEST); //enables depth testing
+		glEnable(GL_DEPTH_TEST); //enables depth testing*/
+
+		glDisable(GL_DEPTH_TEST);
 		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );//GL_ONE_MINUS_SRC_ALPHA);      // Enable Alpha Blending (disable alpha testing)
 		
 		glShadeModel(GL_SMOOTH); //enables smooth color shading
-		glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0.1);
+		//glEnable(GL_ALPHA_TEST);
+		//glAlphaFunc(GL_GREATER, 0.1);
 		
 		glEnable(GL_BLEND);
 		

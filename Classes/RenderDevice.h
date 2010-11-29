@@ -210,7 +210,7 @@ namespace mx3
 			renderTexture = make_empty_texture(512, 512);
 			
 			//Texture2D *rtx = new Texture2D("white.png");
-
+			//rtx->setAliasTexParams();
 			//renderTexture = rtx->_openGlTextureID;
 			
 			prev = 100;
@@ -226,17 +226,18 @@ namespace mx3
 			
 			// attach renderbuffer
 			glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, renderTexture, 0);
-			GLint backingWidth;
-			GLint backingHeight;
-			GLuint depthRenderbuffer;
-			// attach depth buffer
-			glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
-			glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
-			
-			printf("w: %i h: %i\n",backingWidth, backingHeight);
 			
 			if (0) 
 			{
+				GLint backingWidth;
+				GLint backingHeight;
+				GLuint depthRenderbuffer;
+				// attach depth buffer
+				glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
+				glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+				
+				printf("w: %i h: %i\n",backingWidth, backingHeight);
+				
 				glGenRenderbuffersOES(1, &depthRenderbuffer);
 				glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
 				glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, backingWidth, backingHeight);
@@ -251,10 +252,10 @@ namespace mx3
 		void setRenderTargetBackingTexture ()
 		{
 			glBindFramebufferOES(GL_FRAMEBUFFER_OES, textureFrameBuffer);
+			glViewport(0, 0, 512, 512);
 
-//			glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
 			glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT);
 			glLoadIdentity();
 			
 		}
@@ -262,10 +263,17 @@ namespace mx3
 		void setRenderTargetScreen ()
 		{
 			 glBindFramebufferOES(GL_FRAMEBUFFER_OES, prev);
+			glViewport(0,0,_pixelViewportSize.x, _pixelViewportSize.y);
+			
+			glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			glLoadIdentity();
+			
 		}
 		float r;
 		void renderBackingTextureToScreen ()
 		{
+			//return;
 		//	setRenderTargetScreen();
 			
 			//glLoadIdentity();
@@ -318,17 +326,17 @@ namespace mx3
 				1.0,	0.0f };
 		*/
 			
-		/*	GLfloat		coordinates[] = { 0.0f,	0.0,
+			GLfloat		coordinates[] = { 0.0f,	0.0,
 				1.0,	0.0,
 				0.0f,	1.0f,
-				1.0,	1.0f };*/
+				1.0,	1.0f };
 			
 			
 			//inverse coords oO
-			GLfloat		coordinates[] = { 0.0f,	0.0,
+		/*	GLfloat		coordinates[] = { 0.0f,	0.0,
 				_pixelViewportSize.x/512.0,	0.0,
 				0.0f,	_pixelViewportSize.y/512.0,
-				_pixelViewportSize.x/512.0,	_pixelViewportSize.y/512.0 };
+				_pixelViewportSize.x/512.0,	_pixelViewportSize.y/512.0 };*/
 			
 			
 			
@@ -393,7 +401,8 @@ private:
 			glGenTextures(1, &ret);
 			
 			glBindTexture(GL_TEXTURE_2D, ret);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 			

@@ -82,7 +82,7 @@ namespace mx3
 		pos->y = position.y;
 		PEmitter *pe = em->addComponent <PEmitter> (par);
 		pe->pe = g_RenderableManager.accquireParticleEmmiter (filename);
-		pe->z = 8.0;
+		pe->z = 5.0;
 
 	/*	Vector2f vec;
 		vec.x = position.x;

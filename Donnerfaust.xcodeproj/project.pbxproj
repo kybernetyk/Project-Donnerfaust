@@ -34,10 +34,10 @@
 		033DCBC0128D7C9700C66D74 /* globals.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBA5128D7C9700C66D74 /* globals.mm */; };
 		033DCBC2128D7C9700C66D74 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBA9128D7C9700C66D74 /* EAGLView.mm */; };
 		033DCBC3128D7C9700C66D74 /* MXAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBAB128D7C9700C66D74 /* MXAppDelegate.mm */; };
-		033DCBCF128D7CAD00C66D74 /* image_DXT.m in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBC6128D7CAD00C66D74 /* image_DXT.m */; };
-		033DCBD0128D7CAD00C66D74 /* image_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBC8128D7CAD00C66D74 /* image_helper.m */; };
-		033DCBD1128D7CAD00C66D74 /* SOIL.m in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBCA128D7CAD00C66D74 /* SOIL.m */; };
-		033DCBD2128D7CAD00C66D74 /* stb_image_aug.m in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBCC128D7CAD00C66D74 /* stb_image_aug.m */; };
+		033DCBCF128D7CAD00C66D74 /* image_DXT.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBC6128D7CAD00C66D74 /* image_DXT.mm */; };
+		033DCBD0128D7CAD00C66D74 /* image_helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBC8128D7CAD00C66D74 /* image_helper.mm */; };
+		033DCBD1128D7CAD00C66D74 /* SOIL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBCA128D7CAD00C66D74 /* SOIL.mm */; };
+		033DCBD2128D7CAD00C66D74 /* stb_image_aug.mm in Sources */ = {isa = PBXBuildFile; fileRef = 033DCBCC128D7CAD00C66D74 /* stb_image_aug.mm */; };
 		033DCC0B128D7D5D00C66D74 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033DCC0A128D7D5D00C66D74 /* OpenGLES.framework */; };
 		033DCC0D128D7D6F00C66D74 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033DCC0C128D7D6F00C66D74 /* QuartzCore.framework */; };
 		034F33801290539500F54ABA /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 034F33681290539400F54ABA /* FBDialog.bundle */; };
@@ -66,7 +66,7 @@
 		03A847D2128ED3FA006EACB3 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A847CD128ED3FA006EACB3 /* CocosDenshion.m */; };
 		03A847D3128ED3FA006EACB3 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A847CF128ED3FA006EACB3 /* SimpleAudioEngine.m */; };
 		03A847E4128ED43B006EACB3 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A847E3128ED43B006EACB3 /* OpenAL.framework */; };
-		03D56C28129FF50D00C5AF7C /* OBJCTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D56C1B129FF50D00C5AF7C /* OBJCTexture2D.m */; };
+		03D56C28129FF50D00C5AF7C /* OBJCTexture2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03D56C1B129FF50D00C5AF7C /* OBJCTexture2D.mm */; };
 		03D56C29129FF50D00C5AF7C /* TBXMLParticleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D56C20129FF50D00C5AF7C /* TBXMLParticleAdditions.m */; };
 		03D56C2A129FF50D00C5AF7C /* ParticleEmitter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03D56C22129FF50D00C5AF7C /* ParticleEmitter.mm */; };
 		03D56C2B129FF50D00C5AF7C /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D56C25129FF50D00C5AF7C /* NSDataAdditions.m */; };
@@ -165,13 +165,13 @@
 		033DCBAA128D7C9700C66D74 /* MXAppDelegate.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = MXAppDelegate.h; path = Classes/MXAppDelegate.h; sourceTree = "<group>"; };
 		033DCBAB128D7C9700C66D74 /* MXAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MXAppDelegate.mm; path = Classes/MXAppDelegate.mm; sourceTree = "<group>"; };
 		033DCBC5128D7CAD00C66D74 /* image_DXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_DXT.h; sourceTree = "<group>"; };
-		033DCBC6128D7CAD00C66D74 /* image_DXT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = image_DXT.m; sourceTree = "<group>"; };
+		033DCBC6128D7CAD00C66D74 /* image_DXT.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = image_DXT.mm; sourceTree = "<group>"; };
 		033DCBC7128D7CAD00C66D74 /* image_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_helper.h; sourceTree = "<group>"; };
-		033DCBC8128D7CAD00C66D74 /* image_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = image_helper.m; sourceTree = "<group>"; };
+		033DCBC8128D7CAD00C66D74 /* image_helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = image_helper.mm; sourceTree = "<group>"; };
 		033DCBC9128D7CAD00C66D74 /* SOIL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOIL.h; sourceTree = "<group>"; };
-		033DCBCA128D7CAD00C66D74 /* SOIL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOIL.m; sourceTree = "<group>"; };
+		033DCBCA128D7CAD00C66D74 /* SOIL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SOIL.mm; sourceTree = "<group>"; };
 		033DCBCB128D7CAD00C66D74 /* stb_image_aug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_aug.h; sourceTree = "<group>"; };
-		033DCBCC128D7CAD00C66D74 /* stb_image_aug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = stb_image_aug.m; sourceTree = "<group>"; };
+		033DCBCC128D7CAD00C66D74 /* stb_image_aug.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = stb_image_aug.mm; sourceTree = "<group>"; };
 		033DCBCD128D7CAD00C66D74 /* stbi_DDS_aug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stbi_DDS_aug.h; sourceTree = "<group>"; };
 		033DCBCE128D7CAD00C66D74 /* stbi_DDS_aug_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stbi_DDS_aug_c.h; sourceTree = "<group>"; };
 		033DCBD3128D7CB700C66D74 /* Donnerfaust_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Donnerfaust_Prefix.pch; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 		03A847CF128ED3FA006EACB3 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		03A847E3128ED43B006EACB3 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		03D56C1A129FF50D00C5AF7C /* OBJCTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBJCTexture2D.h; sourceTree = "<group>"; };
-		03D56C1B129FF50D00C5AF7C /* OBJCTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBJCTexture2D.m; sourceTree = "<group>"; };
+		03D56C1B129FF50D00C5AF7C /* OBJCTexture2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OBJCTexture2D.mm; sourceTree = "<group>"; };
 		03D56C1C129FF50D00C5AF7C /* Structures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		03D56C1D129FF50D00C5AF7C /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		03D56C1F129FF50D00C5AF7C /* TBXMLParticleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXMLParticleAdditions.h; sourceTree = "<group>"; };
@@ -500,13 +500,13 @@
 			isa = PBXGroup;
 			children = (
 				033DCBC5128D7CAD00C66D74 /* image_DXT.h */,
-				033DCBC6128D7CAD00C66D74 /* image_DXT.m */,
+				033DCBC6128D7CAD00C66D74 /* image_DXT.mm */,
 				033DCBC7128D7CAD00C66D74 /* image_helper.h */,
-				033DCBC8128D7CAD00C66D74 /* image_helper.m */,
+				033DCBC8128D7CAD00C66D74 /* image_helper.mm */,
 				033DCBC9128D7CAD00C66D74 /* SOIL.h */,
-				033DCBCA128D7CAD00C66D74 /* SOIL.m */,
+				033DCBCA128D7CAD00C66D74 /* SOIL.mm */,
 				033DCBCB128D7CAD00C66D74 /* stb_image_aug.h */,
-				033DCBCC128D7CAD00C66D74 /* stb_image_aug.m */,
+				033DCBCC128D7CAD00C66D74 /* stb_image_aug.mm */,
 				033DCBCD128D7CAD00C66D74 /* stbi_DDS_aug.h */,
 				033DCBCE128D7CAD00C66D74 /* stbi_DDS_aug_c.h */,
 			);
@@ -703,7 +703,7 @@
 				03D56C23129FF50D00C5AF7C /* TBXML */,
 				03D56C1E129FF50D00C5AF7C /* Particle Emitter */,
 				03D56C1A129FF50D00C5AF7C /* OBJCTexture2D.h */,
-				03D56C1B129FF50D00C5AF7C /* OBJCTexture2D.m */,
+				03D56C1B129FF50D00C5AF7C /* OBJCTexture2D.mm */,
 				03D56C1C129FF50D00C5AF7C /* Structures.h */,
 				03D56C1D129FF50D00C5AF7C /* Global.h */,
 			);
@@ -956,10 +956,10 @@
 				033DCBC0128D7C9700C66D74 /* globals.mm in Sources */,
 				033DCBC2128D7C9700C66D74 /* EAGLView.mm in Sources */,
 				033DCBC3128D7C9700C66D74 /* MXAppDelegate.mm in Sources */,
-				033DCBCF128D7CAD00C66D74 /* image_DXT.m in Sources */,
-				033DCBD0128D7CAD00C66D74 /* image_helper.m in Sources */,
-				033DCBD1128D7CAD00C66D74 /* SOIL.m in Sources */,
-				033DCBD2128D7CAD00C66D74 /* stb_image_aug.m in Sources */,
+				033DCBCF128D7CAD00C66D74 /* image_DXT.mm in Sources */,
+				033DCBD0128D7CAD00C66D74 /* image_helper.mm in Sources */,
+				033DCBD1128D7CAD00C66D74 /* SOIL.mm in Sources */,
+				033DCBD2128D7CAD00C66D74 /* stb_image_aug.mm in Sources */,
 				03EDF8A9128D822D0086763A /* main.mm in Sources */,
 				03EDF8F9128D8C4B0086763A /* SoundSystem.mm in Sources */,
 				03A847D0128ED3FA006EACB3 /* CDAudioManager.m in Sources */,
@@ -988,7 +988,7 @@
 				03208E1212944DDA009E8AAD /* BlobAnimationSystem.mm in Sources */,
 				038B248E1295D627008AEA7D /* ActionSystem.mm in Sources */,
 				030F1F471298196E00093ABC /* GameActionSystem.mm in Sources */,
-				03D56C28129FF50D00C5AF7C /* OBJCTexture2D.m in Sources */,
+				03D56C28129FF50D00C5AF7C /* OBJCTexture2D.mm in Sources */,
 				03D56C29129FF50D00C5AF7C /* TBXMLParticleAdditions.m in Sources */,
 				03D56C2A129FF50D00C5AF7C /* ParticleEmitter.mm in Sources */,
 				03D56C2B129FF50D00C5AF7C /* NSDataAdditions.m in Sources */,

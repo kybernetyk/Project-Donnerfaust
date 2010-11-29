@@ -30,6 +30,7 @@
 #import "TBXMLParticleAdditions.h"
 #import "OBJCTexture2D.h"
 #import "NSDataAdditions.h"
+#import "Texture2D.h"
 
 #pragma mark -
 #pragma mark Private interface
@@ -306,6 +307,7 @@
 	glVertexPointer(2, GL_FLOAT, sizeof(PointSprite), 0);
 	glColorPointer(4,GL_FLOAT,sizeof(PointSprite),(GLvoid*) (sizeof(GLfloat)*3));
 	
+	mx3::Texture2D::boundTexture = texture.name;
 	// Bind to the particles texture
 	glBindTexture(GL_TEXTURE_2D, texture.name);
 	

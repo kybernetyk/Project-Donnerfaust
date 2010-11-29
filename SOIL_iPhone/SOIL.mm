@@ -44,6 +44,7 @@
 #include "stb_image_aug.h"
 #include "image_helper.h"
 #include "image_DXT.h"
+#include "Texture2D.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -1342,6 +1343,8 @@ unsigned int
 		}
 		/*  bind an OpenGL texture ID	*/
 		glBindTexture( opengl_texture_type, tex_id );
+		mx3::Texture2D::boundTexture = tex_id;
+
 		check_for_GL_errors( "glBindTexture" );
 		/*  upload the main image	*/
 		if( DXT_mode == SOIL_CAPABILITY_PRESENT )
@@ -1845,6 +1848,8 @@ unsigned int SOIL_direct_load_DDS_from_memory(
 	}
 	/*  bind an OpenGL texture ID	*/
 	glBindTexture( opengl_texture_type, tex_ID );
+	mx3::Texture2D::boundTexture = tex_ID;
+
 	/*	do this for each face of the cubemap!	*/
 	for( cf_target = ogl_target_start; cf_target <= ogl_target_end; ++cf_target )
 	{

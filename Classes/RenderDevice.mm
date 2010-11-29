@@ -153,7 +153,7 @@ namespace mx3
 		float viewport_size_x = 320.0;// / pixeltometerratio;//viewport_size_x / xyratio;
 		float viewport_size_y = 480.0;	
 	#endif	
-
+		current_render_target = RENDERTARGET_SCREEN;
 		cam_rot = 0.0;		
 		camera = vector2D_make(viewport_size_x/2, viewport_size_y/2);
 		
@@ -174,6 +174,9 @@ namespace mx3
 
 	void RenderDevice::beginRender (void)
 	{
+		glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		
 		glLoadIdentity();
 		
 		

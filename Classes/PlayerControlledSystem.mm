@@ -217,8 +217,8 @@ namespace game
 				aux_pc->_rotation_timer -= (delta*900.0);
 				aux_pc->rotation_angle += (delta*900.0);
 				
-//				if (aux_pc->rotation_angle >= 360)
-//					aux_pc->rotation_angle = 0;
+				if (aux_pc->rotation_angle >= 360)
+					aux_pc->rotation_angle = 0;
 				
 				printf("angle: %f\n", aux_pc->rotation_angle);
 				

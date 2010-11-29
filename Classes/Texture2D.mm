@@ -45,7 +45,7 @@ namespace mx3
 		
 	}
 
-	static unsigned int boundTexture = 0;
+	unsigned int Texture2D::boundTexture = 0;
 
 	Texture2D::Texture2D (std::string filename)
 	{
@@ -108,7 +108,7 @@ namespace mx3
 			return;
 		
 		boundTexture = _openGlTextureID;
-		//	printf("binding texture id %i\n",_openGlTextureID);
+			//	printf("binding texture id %i\n",_openGlTextureID);
 		glBindTexture( GL_TEXTURE_2D, _openGlTextureID );
 	}
 

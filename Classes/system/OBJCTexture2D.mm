@@ -25,6 +25,7 @@
 #import <OpenGLES/ES1/glext.h>
 #import "OBJCTexture2D.h"
 #import "Global.h"
+#import "Texture2D.h"
 
 #define kMaxTextureSize	1024
 
@@ -190,6 +191,7 @@
         // Generate a new OpenGL texture name and bind to it
         glGenTextures(1, &name);
         glBindTexture(GL_TEXTURE_2D, name);
+		mx3::Texture2D::boundTexture = name;
         
         // Configure the textures min and mag filters.  This MUST happen for textures to show up on the iPhone
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, aFilter);

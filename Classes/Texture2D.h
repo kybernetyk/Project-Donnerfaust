@@ -46,6 +46,8 @@ namespace mx3
 		
 		unsigned int w;
 		unsigned int h;
+		
+		static unsigned int boundTexture;
 	};
 
 

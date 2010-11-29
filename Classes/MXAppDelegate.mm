@@ -20,6 +20,7 @@ using namespace game;
 const int TICKS_PER_SECOND = 60;
 const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 const int MAX_FRAMESKIP = 5;
+const double FIXED_DELTA = (1.0/TICKS_PER_SECOND);
 unsigned int next_game_tick = 1;//SDL_GetTicks();
 int loops;
 float interpolation;
@@ -191,18 +192,20 @@ unsigned int My_SDL_GetTicks()
 	timer.update();
 	g_FPS = timer.printFPS(false);
 	
-#define ADVANCED_LOOP
-#ifdef ADVANCED_LOOP
+#define FIXED_STEP_LOOP
+#ifdef FIXED_STEP_LOOP
 	loops = 0;
 	while( My_SDL_GetTicks() > next_game_tick && loops < MAX_FRAMESKIP) 
 	{
-		scene->update(1.0/TICKS_PER_SECOND);
+		scene->update(FIXED_DELTA);
 		next_game_tick += SKIP_TICKS;
-		loops++;
-		r += 32.0/TICKS_PER_SECOND;
+		loops++;	
+		r += 32.0 * FIXED_DELTA;
 	}
+
 #else
-	scene->update(timer.fdelta());
+	r+=32.0*timer.fdelta();
+	scene->update(timer.fdelta());	//blob rotation doesn't work well with high dynamic delta! fix this before enabling dynamic delta
 #endif
 
 	/*[glView startDrawing];

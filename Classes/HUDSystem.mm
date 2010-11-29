@@ -98,10 +98,13 @@ namespace game
 
 	void HUDSystem::update (float delta)
 	{
-		char s[255];
-		
-		if (delta > 0.0)
+
+		static float d = 0.0;
+		d += delta;
+		if (d > 0.25)
 		{
+			d = 0.0;
+			char s[255];
 			sprintf(s, "Fps: %.2f", g_FPS);
 			fps_label->get<TextLabel>()->text = s;
 			

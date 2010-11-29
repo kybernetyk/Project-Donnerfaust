@@ -27,6 +27,11 @@ namespace mx3
 		
 		void endRender (void);
 
+#define RENDERTARGET_SCREEN 0
+#define RENDERTARGET_TEXTURE 1		
+		float r;
+		int current_render_target;
+		
 
 		//das hier benutzen, wenn man etwas auf den reference screen in npixels will und es auf der aktuellen aufloesung hochskallieren soll
 		//zb ein background bild mit w = reference_w wird zu einem bild mit w = 100% aktueller screen
@@ -251,28 +256,29 @@ namespace mx3
 
 		void setRenderTargetBackingTexture ()
 		{
+			if (current_render_target == RENDERTARGET_TEXTURE)
+				return;
+			current_render_target = RENDERTARGET_TEXTURE;
+			
 			glBindFramebufferOES(GL_FRAMEBUFFER_OES, textureFrameBuffer);
 			glViewport(0, 0, 512, 512);
 
-			glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
-			glLoadIdentity();
-			
 		}
 		
 		void setRenderTargetScreen ()
 		{
-			 glBindFramebufferOES(GL_FRAMEBUFFER_OES, prev);
+			if (current_render_target == RENDERTARGET_SCREEN)
+				return;
+			current_render_target = RENDERTARGET_SCREEN;
+			
+			glBindFramebufferOES(GL_FRAMEBUFFER_OES, prev);
 			glViewport(0,0,_pixelViewportSize.x, _pixelViewportSize.y);
-			
-			glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
-			glLoadIdentity();
-			
 		}
-		float r;
+		
 		void renderBackingTextureToScreen ()
 		{
+			Texture2D::boundTexture = 0;
+			
 			//return;
 		//	setRenderTargetScreen();
 			
@@ -377,7 +383,11 @@ namespace mx3
 			};
 			glColorPointer(4, GL_FLOAT, 0, colors);
 			
-			glBindTexture( GL_TEXTURE_2D, renderTexture );
+			if (mx3::Texture2D::boundTexture != renderTexture)
+			{
+				mx3::Texture2D::boundTexture = renderTexture;
+				glBindTexture( GL_TEXTURE_2D, renderTexture );
+			}
 
 			//	glColor4f(1.0, 1.0,1.0, alpha);
 			glVertexPointer(3, GL_FLOAT, 0, vertices);
@@ -399,7 +409,7 @@ private:
 			GLuint ret;
 			
 			glGenTextures(1, &ret);
-			
+
 			glBindTexture(GL_TEXTURE_2D, ret);
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -407,6 +417,7 @@ private:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 			
 			glBindTexture(GL_TEXTURE_2D, ret);
+			mx3::Texture2D::boundTexture = ret;
 			
 			return ret;
 		}

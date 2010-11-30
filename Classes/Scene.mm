@@ -81,16 +81,16 @@ namespace game
 		sprite->z = -5.0;
 		Name *name = _entityManager->addComponent <Name> (bg);
 		name->name = "Game Background";
-//		
-//		for (int i = 0; i < 12; i++)
-//		{
-//			int col = rand()%4;
-//			int x = rand()%6;
-//			int y = rand()%11;
-//			
-//			make_blob(col, x, y);
-//		}
-//		
+		
+		for (int i = 0; i < 16; i++)
+		{
+			int col = rand()%4;
+			int x = rand()%6;
+			int y = rand()%11;
+			
+			make_blob(col, x, y);
+		}
+		
 		
 	/*	Entity *sky = _entityManager->createNewEntity();
 		pos = _entityManager->addComponent <Position> (sky);

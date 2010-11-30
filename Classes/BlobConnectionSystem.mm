@@ -89,6 +89,7 @@ namespace game
 					bool handled = false;
 					
 					current_gbe = _entityManager->getComponent <GameBoardElement> (_current_entity);
+					//unsigned int temp = current_gbe->prev_connection_state;
 					current_gbe->connection_state = 0;
 					
 					
@@ -210,7 +211,7 @@ namespace game
 						if (current_gbe->connection_state != current_gbe->prev_connection_state)
 						{
 							
-							current_gbe->prev_connection_state = current_gbe->connection_state;
+							//current_gbe->prev_connection_state = temp;
 							
 							_entityManager->addComponent <NeedsAnimation> (_current_entity);
 						}

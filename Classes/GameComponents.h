@@ -59,7 +59,7 @@ namespace game
 			prev_row = prev_col = row = col = 0;
 			type = BLOB_COLOR_RED;
 			state = GBE_STATE_IDLE;
-			prev_connection_state = connection_state = 0;// GBE_CONNECTED_NONE;
+			prev_connection_state = connection_state = GBE_CONNECTED_NONE;// GBE_CONNECTED_NONE;
 			y_off = 0.0;
 			y_move_timer = 0.0;
 			landed = false;
@@ -68,7 +68,7 @@ namespace game
 			fall_duration = 0.1;
 		}
 		
-		DEBUGINFO ("Game Board Element. connection state = %i, prev con = %i", connection_state, prev_connection_state)
+		DEBUGINFO ("Game Board Element. connection state = %i\n prev con = %i\nstate = %i\nlanded = %i\n", connection_state, prev_connection_state, state, landed)
 	};
 	
 	

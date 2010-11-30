@@ -20,27 +20,19 @@ using namespace game;
 
 std::string blob_filenames[] = 
 {
-	"red_lr.png",
-	"green_lr.png",
-	"blue_lr.png",
-	"yellow_lr.png"
+	"red.png",
+	"yellow.png",
+	"blue.png",
+	"green.png",
+	"cyan.png"
 };
-
-std::string blob_filenames_2[] = 
-{
-	"red_ud.png",
-	"green_ud.png",
-	"blue_ud.png",
-	"yellow_ud.png"
-};
-
 
 void preload_blob_textures ()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < MAX_BLOB_TYPES; i++)
 	{	
+		printf("loading blob type %i ...\n",i);
 		g_RenderableManager.accquireTexturedAtlasQuad(blob_filenames[i]);
-		g_RenderableManager.accquireTexturedAtlasQuad(blob_filenames_2[i]);
 	}
 	
 }

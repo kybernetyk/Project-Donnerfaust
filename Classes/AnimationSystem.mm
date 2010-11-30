@@ -133,10 +133,10 @@ namespace mx3
 				
 				rect fs = current_animation->frame_size;
 				int sx = current_sprite->atlas_quad->tex_w / fs.w;
-				int sy = current_sprite->atlas_quad->tex_h / fs.h;
+			//	int sy = current_sprite->atlas_quad->tex_h / fs.h;
 				
 				int fx = ((int)current_animation->current_frame) % sx;
-				int fy = ((int)current_animation->current_frame) / sy;
+				int fy = ((int)current_animation->current_frame) / sx; // (/ sy is for quadratische texutren! ansonsten muessen wir durch x beficken, damit wir indexiert tun koennen)
 				
 				current_sprite->src.x = fx * fs.w;
 				current_sprite->src.y = fy * fs.h;

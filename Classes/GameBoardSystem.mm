@@ -68,7 +68,8 @@ namespace game
 
 			_current_gbe->prev_row = _current_gbe->row;
 			_current_gbe->y_move_timer = 0.0;
-			_current_gbe->landed = false;
+
+			_current_gbe->landed = false;  //remove this if you don't want falling blob neighbours to reconnect with the falling blob
 		}
 		else
 		{
@@ -78,6 +79,7 @@ namespace game
 
 	void GameBoardSystem::handle_state_falling ()
 	{
+		//_current_gbe->landed = false;
 		_current_gbe->y_move_timer += _delta;
 		_current_gbe->y_off -= _delta * (32.0/_current_gbe->fall_duration);	
 		
@@ -106,6 +108,41 @@ namespace game
 		
 		std::vector<Entity*>::const_iterator it = _entities.begin();
 		
+		//mark columns to drop down and remove sideways connections (remove the connection fizzling if you want 
+		//the blobs not to reconnect when they drop down while touching a friendblob sideways.
+		for (int col = 0; col < BOARD_NUM_COLS; col ++)
+		{
+			for (int row = 0; row < BOARD_NUM_ROWS; row ++)
+			{
+				if (!_map[col][row])
+				{
+					for (int j = row; j < BOARD_NUM_ROWS; j++)
+					{
+						Entity *ee = _map[col][j];
+						if (ee)
+						{
+							GameBoardElement *g = _entityManager->getComponent<GameBoardElement>(ee);
+							
+							if ( (g->connection_state & GBE_CONNECTED_TO_LEFT) ||
+								 (g->connection_state & GBE_CONNECTED_TO_RIGHT))
+							{
+								g->connection_state &= (~GBE_CONNECTED_TO_LEFT);
+								g->connection_state &= (~GBE_CONNECTED_TO_RIGHT);
+								
+								if (g->connection_state == 0)
+									g->connection_state = GBE_CONNECTED_NONE;
+								
+								_entityManager->addComponent <NeedsAnimation> (ee);
+							}
+							
+							
+						}
+						_map[col][j] = NULL;
+					}
+				}
+			}
+		}
+		
 		_current_entity = NULL;
 		_current_gbe = NULL;
 		while (it != _entities.end())
@@ -117,7 +154,6 @@ namespace game
 
 			if ((_current_gbe->state == GBE_STATE_IDLE))
 				handle_state_idle();
-		
 			if (_current_gbe->state == GBE_STATE_MOVING_FALL)
 				handle_state_falling ();
 

@@ -40,7 +40,7 @@ namespace game
 			++it;
 			_current_gbe = _entityManager->getComponent<GameBoardElement>(_current_entity);
 			
-			if ((_current_gbe->landed))
+			if ((_current_gbe->landed) && ! _entityManager->getComponent <MarkOfDeath> (_current_entity) )
 			{
 				
 				_map[_current_gbe->col][_current_gbe->row] = _current_entity;
@@ -73,7 +73,7 @@ namespace game
 			_current_entity = *it;
 			++it;
 			current_gbe = _entityManager->getComponent <GameBoardElement> (_current_entity);
-			current_gbe->connection_state = GBE_CONNECTED_NONE;
+		//	current_gbe->connection_state = GBE_CONNECTED_NONE;
 
 		}
 		
@@ -83,15 +83,24 @@ namespace game
 		{
 			for (int x = 0; x < BOARD_NUM_COLS; x++)
 			{
+
+				current_gbe = NULL;
+				_current_entity = NULL;
+				
 				if (_map[x][y])
 				{
 					_current_entity = _map[x][y];
 					bool handled = false;
 					
 					current_gbe = _entityManager->getComponent <GameBoardElement> (_current_entity);
+			
+//					if (!current_gbe->landed)
+//						abort();
 					//unsigned int temp = current_gbe->prev_connection_state;
-					current_gbe->connection_state = 0;
+					current_gbe->connection_state |= GBE_CONNECTED_NONE;
 					
+					compare_gbe = NULL;
+					compare_entity = NULL;
 					
 					//check left
 					if (x > 0)
@@ -103,21 +112,20 @@ namespace game
 							if (current_gbe->type == compare_gbe->type)
 							{
 								current_gbe->connection_state |= GBE_CONNECTED_TO_LEFT;
-								compare_gbe->connection_state |= GBE_CONNECTED_TO_RIGHT;
+								//compare_gbe->connection_state |= GBE_CONNECTED_TO_RIGHT;
+								
+								current_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+								//compare_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+								
+								handled = true;
 							}
-//							else
-//							{
-//								current_gbe->connection_state &= (~GBE_CONNECTED_TO_LEFT);
-//								compare_gbe->connection_state &= (~GBE_CONNECTED_TO_RIGHT);
-//							}
 						}
-//						else
-//						{
-//							current_gbe->connection_state &= (~GBE_CONNECTED_TO_LEFT);
-//						}
-//						handled = true;
-			
 					}
+					if (!handled)
+					{	
+						current_gbe->connection_state &= (~GBE_CONNECTED_TO_LEFT);
+					}
+					handled = false;
 					//end check left
 					
 					//check right
@@ -131,22 +139,21 @@ namespace game
 							if (current_gbe->type == compare_gbe->type)
 							{
 								current_gbe->connection_state |= GBE_CONNECTED_TO_RIGHT;
-								compare_gbe->connection_state |= GBE_CONNECTED_TO_LEFT;
+								//compare_gbe->connection_state |= GBE_CONNECTED_TO_LEFT;
+								current_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+								//compare_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+								
+								handled = true;
 							}
-//							else
-//							{
-//								current_gbe->connection_state &= (~GBE_CONNECTED_TO_RIGHT);
-//								compare_gbe->connection_state &= (~GBE_CONNECTED_TO_LEFT);
-//							}
 						}
-//						else
-//						{
-//							current_gbe->connection_state &= (~GBE_CONNECTED_TO_RIGHT);
-//						}
-//						handled = true;
 				
 					}
-					//end check left
+					if (!handled)
+					{	
+						current_gbe->connection_state &= (~GBE_CONNECTED_TO_RIGHT);
+					}
+					handled = false;
+					//end check right
 					
 					
 					//check down
@@ -160,21 +167,20 @@ namespace game
 							if (current_gbe->type == compare_gbe->type)
 							{
 								current_gbe->connection_state |= GBE_CONNECTED_TO_DOWN;
-								compare_gbe->connection_state |= GBE_CONNECTED_TO_UP;
+							//	compare_gbe->connection_state |= GBE_CONNECTED_TO_UP;
+								current_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+							//	compare_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+								
+								handled = true;
 							}
-//							else
-//							{
-//								current_gbe->connection_state &= (~GBE_CONNECTED_TO_DOWN);
-//								compare_gbe->connection_state &= (~GBE_CONNECTED_TO_UP);
-//							}
 						}
-//						else
-//						{
-//							current_gbe->connection_state &= (~GBE_CONNECTED_TO_DOWN);
-//						}
-//						handled = true;
 					
 					}
+					if (!handled)
+					{	
+						current_gbe->connection_state &= (~GBE_CONNECTED_TO_DOWN);
+					}
+					handled = false;
 					//end check down
 
 					//check up
@@ -187,36 +193,40 @@ namespace game
 							if (current_gbe->type == compare_gbe->type)
 							{
 								current_gbe->connection_state |= GBE_CONNECTED_TO_UP;
-								compare_gbe->connection_state |= GBE_CONNECTED_TO_DOWN;
+							//	compare_gbe->connection_state |= GBE_CONNECTED_TO_DOWN;
+								current_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+							//	compare_gbe->connection_state &= (~GBE_CONNECTED_NONE);
+								
+								handled = true;
 							}
-//							else
-//							{
-//								current_gbe->connection_state &= (~GBE_CONNECTED_TO_UP);
-//								compare_gbe->connection_state &= (~GBE_CONNECTED_TO_DOWN);
-//
-//							}
 						}
-//						else
-//						{
-//							current_gbe->connection_state &= (~GBE_CONNECTED_TO_UP);
-//						}
-						
-						handled = true;
-						if (current_gbe->connection_state == 0)
-						{	
-							current_gbe->connection_state = GBE_CONNECTED_NONE;
-//							current_gbe->prev_connection_state = 0xff;
-						}
-						
-						if (current_gbe->connection_state != current_gbe->prev_connection_state)
-						{
-							
-							//current_gbe->prev_connection_state = temp;
-							
-							_entityManager->addComponent <NeedsAnimation> (_current_entity);
-						}
-
 					}
+					if (!handled)
+					{	
+						current_gbe->connection_state &= (~GBE_CONNECTED_TO_UP);
+					}
+					handled = false;
+					//end check up
+					
+				//	if (current_gbe->connection_state == 0)
+				//		current_gbe->connection_state = GBE_CONNECTED_NONE;
+
+/*					if (current_gbe->connection_state == GBE_CONNECTED_NONE)
+					{
+						if (current_gbe->type == BLOB_COLOR_RED)
+						{
+							_entityManager->dumpEntity(_current_entity);
+							
+						}
+					}*/
+					if (current_gbe->connection_state != current_gbe->prev_connection_state)
+					{
+						
+						//current_gbe->prev_connection_state = temp;
+					//	if (current_gbe->connection_state)
+							_entityManager->addComponent <NeedsAnimation> (_current_entity);
+					}
+					
 				}
 			}
 		}

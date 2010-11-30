@@ -11,8 +11,8 @@
 
 struct mx3::Entity;
 
+#define MAX_BLOB_TYPES 5
 extern std::string blob_filenames[];
-extern std::string blob_filenames_2[];
 
 mx3::Entity *make_blob (int color, int col,int row);
 

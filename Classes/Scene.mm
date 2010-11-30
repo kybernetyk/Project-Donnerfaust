@@ -84,12 +84,14 @@ namespace game
 		
 		for (int i = 0; i < 16; i++)
 		{
-			int col = rand()%4;
+			int col = rand()%MAX_BLOB_TYPES;
 			int x = rand()%6;
 			int y = rand()%11;
 			
-			make_blob(col, x, y);
+			make_blob (col, x, y);
 		}
+		
+//		make_blob (BLOB_COLOR_BLUE, 5, 2);
 		
 		
 	/*	Entity *sky = _entityManager->createNewEntity();
@@ -158,11 +160,16 @@ namespace game
 		_actionSystem->update(delta);
 		_movementSystem->update(delta);
 		_attachmentSystem->update(delta);
-		_animationSystem->update(delta);
 		_gameBoardSystem->update(delta);
 		_blobConnectionSystem->update(delta);
-		_gameLogicSystem->update(delta);
 		_blobAnimationSystem->update(delta);
+		
+
+		_gameLogicSystem->update(delta);
+
+
+
+
 		_hudSystem->update(delta);
 		_soundSystem->update(delta);
 		
@@ -170,11 +177,11 @@ namespace game
 		
 
 
-		
+		_animationSystem->update(delta);		
 		if (spawn_one)
 		{
 			spawn_one = false;
-			Entity *blob = make_blob(rand()%4, rand()%7, 11);
+			Entity *blob = make_blob(rand()%MAX_BLOB_TYPES, rand()%7, 11);
 			
 		//	Entity *pe = ParticleSystem::createParticleEmitter ("lolsterne.pex", 1.0, vector2D_make(320/2, 480/2));
 //			

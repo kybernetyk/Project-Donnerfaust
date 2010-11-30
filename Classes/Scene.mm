@@ -155,6 +155,12 @@ namespace game
 		_corpseRetrievalSystem->collectCorpses();
 		
 		
+		//wegen block removal und marking mit MOD
+		//im normalspiel wohl wayne
+		//kann also runterbewegt werden		
+		_gameLogicSystem->update(delta);
+
+		
 		
 		_playerControlledSystem->update(delta);
 		_actionSystem->update(delta);
@@ -164,8 +170,6 @@ namespace game
 		_blobConnectionSystem->update(delta);
 		_blobAnimationSystem->update(delta);
 		
-
-		_gameLogicSystem->update(delta);
 
 
 

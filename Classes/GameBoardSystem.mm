@@ -134,8 +134,6 @@ namespace game
 								
 								_entityManager->addComponent <NeedsAnimation> (ee);
 							}
-							
-							
 						}
 						_map[col][j] = NULL;
 					}

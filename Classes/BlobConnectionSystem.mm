@@ -40,9 +40,9 @@ namespace game
 			++it;
 			_current_gbe = _entityManager->getComponent<GameBoardElement>(_current_entity);
 			
-			if ((_current_gbe->landed) && ! _entityManager->getComponent <MarkOfDeath> (_current_entity) )
+			//only landed and alive blobs map you must
+			if ((_current_gbe->landed) && !_entityManager->getComponent <MarkOfDeath> (_current_entity) )
 			{
-				
 				_map[_current_gbe->col][_current_gbe->row] = _current_entity;
 			}
 		}

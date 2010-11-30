@@ -107,44 +107,297 @@ namespace game
 					
 					goto addshit;
 				}
-				
+#pragma mark (UP)
 				if (current_gbe->connection_state == (GBE_CONNECTED_TO_UP))
 				{
 					filename = blob_filenames[current_gbe->type];
-					src = rect_make(0*32, 16*32, 32, 32);
-					fa = new_animation(16);					
+					src = rect_make(15*32, 16*32, 32, 32);
+					
+					switch (prev_state)
+					{
+						///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							break;
+							
+							
+						////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+
+						///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+						/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+						//////// default ////////////
+						default:
+							src = rect_make(0*32, 16*32, 32, 32);
+							fa = new_animation(16);	
+							break;
+					}
+					
+					
 					printf("up\n");
 					goto addshit;
 				}
-
+#pragma mark (LEFT)
 				if (current_gbe->connection_state == (GBE_CONNECTED_TO_LEFT))
 				{
 					filename = blob_filenames[current_gbe->type];
-					src = rect_make(0*32, 8*32, 32, 32);
+					src = rect_make(15*32, 8*32, 32, 32);
 
-					
-					fa = new_animation(8);					
+					switch (prev_state)
+					{
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 8*32, 32, 32);
+							fa = new_animation(8);						
+							break;
+					}
 
 					printf("left\n");
 					goto addshit;
 				}
-
+#pragma mark (DOWN)
 				if (current_gbe->connection_state == (GBE_CONNECTED_TO_DOWN))
-				{
+				{	
 					filename = blob_filenames[current_gbe->type];
-					src = rect_make(0*32, 8*32+16*32, 32, 32);
-					fa = new_animation(8+16);					
+					src = rect_make(15*32, 8*32+16*32, 32, 32);
+
+					switch (prev_state)
+					{
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 8*32+16*32, 32, 32);
+							fa = new_animation(8+16);						
+							break;
+					}
+					
 
 					printf("down\n");
 					goto addshit;
 				}
-
+#pragma mark (RIGHT)
 				if (current_gbe->connection_state == (GBE_CONNECTED_TO_RIGHT))
 				{
 					filename = blob_filenames[current_gbe->type];
-					src = rect_make(0*32, 0*32, 32, 32);
+					src = rect_make(15*32, 0*32, 32, 32);
+					switch (prev_state)
+					{
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 0*32, 32, 32);
 
-					fa = new_animation(0);					
+							fa = new_animation(0);					
+							break;
+					}
+					
+					
 
 					printf("right\n");
 					goto addshit;
@@ -156,22 +409,73 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 4*32+16*32, 32, 32);
 
-					
-					if (prev_state == GBE_CONNECTED_TO_UP)
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						fa = new_animation(12+16);					
-						src = rect_make(0*32, 12*32+16*32, 32, 32);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							filename = blob_filenames[current_gbe->type];
+							fa = new_animation(12+16);					
+							src = rect_make(0*32, 12*32+16*32, 32, 32);
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 4*32+16*32, 32, 32);
+							fa = new_animation(4+16);					
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
-					if (prev_state == GBE_CONNECTED_TO_DOWN)
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 4*32+16*32, 32, 32);
-						fa = new_animation(4+16);					
-					}
-					
-	//				if (!fa)
-	//					fa = new_animation(4);
 					
 					printf("up and down\n");
 					goto addshit;
@@ -182,21 +486,75 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 1*32, 32, 32);
 					
-					
-					if (prev_state == GBE_CONNECTED_TO_LEFT)
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 1*32, 32, 32);
-						fa = new_animation(1);					
-					}
-					if (prev_state == GBE_CONNECTED_TO_RIGHT)
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 9*32, 32, 32);
-						fa = new_animation(9);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 1*32, 32, 32);
+							fa = new_animation(1);					
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 9*32, 32, 32);
+							fa = new_animation(9);
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
-
 					printf("left and right\n");
 					goto addshit;
 				}
@@ -205,24 +563,76 @@ namespace game
 				{
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 1*32+16*32, 32, 32);
+					switch (prev_state)
+					{
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 10*32, 32, 32);
+							fa = new_animation(10);					
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 1*32+16*32, 32, 32);
+							fa = new_animation(1+16);
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
+					}
 					
 					
-					if (prev_state == GBE_CONNECTED_TO_UP)
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 10*32, 32, 32);
-						fa = new_animation(10);					
-					}
-					if (prev_state == GBE_CONNECTED_TO_LEFT)
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 1*32+16*32, 32, 32);
-						fa = new_animation(1+16);
-					}
-
-	//				if (!fa)
-	//					fa = new_animation(1);
-
 					
 					printf("up and left\n");
 					goto addshit;
@@ -233,23 +643,76 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 2*32+16*32, 32, 32);
 					
-					
-					if (prev_state == GBE_CONNECTED_TO_UP)
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];	
-						src = rect_make(0*32, 2*32, 32, 32);
-						fa = new_animation(2);					
-					}
-
-					if (prev_state == GBE_CONNECTED_TO_RIGHT)
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 2*32+16*32, 32, 32);
-						fa = new_animation(2+16);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							filename = blob_filenames[current_gbe->type];	
+							src = rect_make(0*32, 2*32, 32, 32);
+							fa = new_animation(2);					
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 2*32+16*32, 32, 32);
+							fa = new_animation(2+16);
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
-	//				if (!fa)
-	//					fa = new_animation(2);
+					
 					
 					printf("up and right\n");
 					goto addshit;
@@ -260,23 +723,76 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 11*32, 32, 32);	
 					
-					
-					if (prev_state == GBE_CONNECTED_TO_DOWN)
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 11*32, 32, 32);	
-						fa = new_animation(11);
-					}
-
-					if (prev_state == GBE_CONNECTED_TO_LEFT)
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 9*32+16*32, 32, 32);	
-						fa = new_animation(9+16);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 9*32+16*32, 32, 32);	
+							fa = new_animation(9+16);
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 11*32, 32, 32);	
+							fa = new_animation(11);
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
-	//				if (!fa)
-	//					fa = new_animation(11);
+					
 					
 					printf("left and down\n");
 					goto addshit;
@@ -287,23 +803,75 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 3*32, 32, 32);
 					
-					
-					if (prev_state == GBE_CONNECTED_TO_DOWN)
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 3*32, 32, 32);
-						fa = new_animation(3);
-					}
-					if (prev_state == GBE_CONNECTED_TO_RIGHT)
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 10*32+16*32, 32, 32);
-						fa = new_animation(10+16);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 3*32, 32, 32);
+							fa = new_animation(3);
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 10*32+16*32, 32, 32);
+							fa = new_animation(10+16);
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
-	//				if (!fa)
-	//					fa = new_animation(3);
-
 					printf("up and right\n");
 					goto addshit;
 				}
@@ -313,30 +881,81 @@ namespace game
 				{
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 5*32+16*32, 32, 32);
-
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN))
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 14*32, 32, 32);
-						
-						fa = new_animation(14);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 14*32, 32, 32);
+							
+							fa = new_animation(14);
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 14*32+16*32, 32, 32);
+							
+							fa = new_animation(14+16);
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 5*32+16*32, 32, 32);
+							
+							fa = new_animation(5+16);				
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
-					if (prev_state == (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_DOWN))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 5*32+16*32, 32, 32);
-
-						fa = new_animation(5+16);				
-					}
-					
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 14*32+16*32, 32, 32);
-
-						fa = new_animation(14+16);
-					}
 					
 					printf("up, down, left\n");
 					goto addshit;
@@ -347,31 +966,81 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 6*32+16*32, 32, 32);
 
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN))
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 6*32, 32, 32);
-						
-						fa = new_animation(6);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 6*32, 32, 32);
+							
+							fa = new_animation(6);
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 13*32+16*32, 32, 32);
+							
+							fa = new_animation(13+16);
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 6*32+16*32, 32, 32);
+							
+							fa = new_animation(6+16);
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
-					if (prev_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 6*32+16*32, 32, 32);
-
-						fa = new_animation(6+16);
-					}
-
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 13*32+16*32, 32, 32);
-
-						fa = new_animation(13+16);
-					}
-					
-					printf("up, down, right\n");
 					goto addshit;
 				}
 
@@ -380,29 +1049,79 @@ namespace game
 				{
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 3*32+16*32, 32, 32);
-
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT))
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 4*32, 32, 32);
-						
-						fa = new_animation(4);
-					}
-					
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 12*32, 32, 32);
-
-						fa = new_animation(12);
-					}
-					
-					if (prev_state == (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 3*32+16*32, 32, 32);
-
-						fa = new_animation(3+16);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 4*32, 32, 32);
+							
+							fa = new_animation(4);
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 12*32, 32, 32);
+							
+							fa = new_animation(12);
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 3*32+16*32, 32, 32);
+							
+							fa = new_animation(3+16);
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
 					
@@ -414,31 +1133,82 @@ namespace game
 				{
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 11*32+16*32, 32, 32);
-
-					if (prev_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 5*32, 32, 32);
-
-						fa = new_animation(5);
-					}
 					
-					if (prev_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT))
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 13*32, 32, 32);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 13*32, 32, 32);
+							
+							fa = new_animation(13);
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 5*32, 32, 32);
+							
+							fa = new_animation(5);
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(0*32, 11*32+16*32, 32, 32);
+							
+							fa = new_animation(11+16);
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
+					}
 
-						fa = new_animation(13);
-					}
-					
-					if (prev_state == (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(0*32, 11*32+16*32, 32, 32);
-						
-						fa = new_animation(11+16);
-					}
-					
 					printf("down, left, right\n");
 					goto addshit;
 				}
@@ -448,37 +1218,87 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(15*32, 15*32+16*32, 32, 32);
 
-					if (prev_state == (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT))
+					
+					switch (prev_state)
 					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(15*32, 7*32+16*32, 32, 32);
-						
-						fa = new_animation(7+16);
+							///////////// 1er ///////////////
+						case (GBE_CONNECTED_TO_UP):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN):
+							
+							break;
+							
+						case (GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							
+							////////////// 2er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							
+							break;
+						case (GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							///////////// 3er ///////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(15*32, 7*32, 32, 32);
+							
+							fa = new_animation(7);
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(15*32, 15*32, 32, 32);
+							
+							fa = new_animation(15);
+							
+							break;
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(15*32, 15*32+16*32, 32, 32);
+							
+							fa = new_animation(15+16);
+							
+							break;
+						case (GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							filename = blob_filenames[current_gbe->type];
+							src = rect_make(15*32, 23*32, 32, 32);
+							
+							fa = new_animation(23);
+							
+							break;
+							
+							/////////// 4er //////////////
+						case (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT):
+							
+							break;
+							
+							//////// default ////////////
+						default:
+							
+							break;
 					}
 					
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_LEFT | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(15*32, 15*32+16*32, 32, 32);
-
-						fa = new_animation(15+16);
-					}
 					
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(15*32, 15*32, 32, 32);
-
-						fa = new_animation(15);
-					}
-					
-					if (prev_state == (GBE_CONNECTED_TO_UP | GBE_CONNECTED_TO_DOWN | GBE_CONNECTED_TO_RIGHT))
-					{
-						filename = blob_filenames[current_gbe->type];
-						src = rect_make(15*32, 7*32, 32, 32);
-
-						fa = new_animation(7);
-					}
 					
 					printf("ALL\n");
 					goto addshit;

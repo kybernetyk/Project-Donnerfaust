@@ -38,12 +38,8 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 
 }
 
-
 -(CGPoint)convertToGL:(CGPoint)uiPoint;
 - (void)startDrawing;
 - (void)endDrawing;
-
--(void) dispatchFirstTouchAtPoint:(CGPoint)touchPoint;
-
 
 @end

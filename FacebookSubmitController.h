@@ -10,7 +10,7 @@
 #import "Facebook.h"
 #import "FBConnect.h"
 
-@interface FacebookSubmitController : UIViewController 
+@interface FacebookSubmitController : UIViewController <FBSessionDelegate, FBRequestDelegate>
 {
 	Facebook *facebook;
 	id delegate;
@@ -28,5 +28,6 @@
 @property (readwrite, assign) id delegate;
 - (void) shareOverFarmville;
 - (BOOL) handleOpenURL: (NSURL *) url;
+
 
 @end

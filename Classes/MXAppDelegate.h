@@ -22,14 +22,13 @@
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-
--(void)renderScene;
--(void)LoadPrefs;
--(void)SavePrefs;
-
-
 - (void) startAnimation;
 - (void) stopAnimation;
 
+- (void)renderScene;
+
+- (void) saveGameState;
+
+- (void) initFBShare;
 @end
 

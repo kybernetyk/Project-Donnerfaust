@@ -24,7 +24,8 @@
 
 @synthesize window;
 
-
+#pragma mark -
+#pragma mark facebook 
 - (void) shareLevelOnFarmville
 {
 	NSLog(@"ok, let's see if we can submit to fb!");
@@ -113,12 +114,20 @@
 - (void) facebookSubmitControllerDidFinish: (id) controller
 {
 	NSLog(@"facebook controller finished");
-//	[controller autorelease];
+
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+	return [facebookController handleOpenURL: url];
+	
+	return YES;
 }
 
 
 #pragma mark -
-#pragma mark stuff
+#pragma mark application delegate
+
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
 	mainViewController = [[MainViewController alloc] initWithNibName: @"MainViewController" bundle: nil];
@@ -138,6 +147,70 @@
 	[self startAnimation];
 }
 
+- (void)applicationWillTerminate:(UIApplication *)application 
+{
+	[self saveGameState];
+	
+	theGame->terminate();
+}
+
+
+
+- (void)applicationWillResignActive:(UIApplication *)application 
+{
+	NSLog(@"will resign ...");
+	[self saveGameState];
+	game::paused = true;
+	//	[[CCDirector sharedDirector] pause];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application 
+{
+	NSLog(@"did become active resign ...");
+	//	[[CCDirector sharedDirector] resume];
+	game::paused = false;
+	game::next_game_tick = mx3::GetTickCount();
+	game::timer.update();
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application 
+{
+	NSLog(@" O M G MEMORY WARNING\n");
+	//	[[CCDirector sharedDirector] purgeCachedData];
+}
+
+-(void) applicationDidEnterBackground:(UIApplication*)application 
+{
+	[self stopAnimation];
+	
+	NSLog(@"did enter background!");
+	//	[[CCDirector sharedDirector] stopAnimation];
+	//game::paused = true;
+}
+
+-(void) applicationWillEnterForeground:(UIApplication*)application 
+{
+	[self startAnimation];
+	NSLog(@"did enter foreground!");
+	//	[[CCDirector sharedDirector] startAnimation];
+	/*	game::paused = false;
+	 game::next_game_tick = mx3::GetTickCount();
+	 game::timer.update();*/
+}
+
+
+- (void)applicationSignificantTimeChange:(UIApplication *)application 
+{
+	//[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+	game::next_game_tick = mx3::GetTickCount();
+	game::timer.update();
+	game::timer.update();
+	
+}
+
+
+#pragma mark -
+#pragma mark game
 - (void) startAnimation
 {
 	if (displayLink)
@@ -159,22 +232,6 @@
 	displayLink = nil;
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application 
-{
-	[self saveGameState];
-	
-	theGame->terminate();
-}
-
-- (void)dealloc 
-{
-	[[mainViewController view] removeFromSuperview];
-	[mainViewController release];
-	[window release];
-	[glView release];
-	[super dealloc];
-}
-
 
 - (void)renderScene
 {
@@ -183,97 +240,9 @@
 	[glView startDrawing];
 	theGame->render();
 	[glView endDrawing];
-
-	/*[glView startDrawing];
-	RenderDevice::sharedInstance()->beginRender();
-	scene->render(1.0);
-	scene->frameDone();
-	RenderDevice::sharedInstance()->endRender();
-	[glView endDrawing];
-	
-	
-	return;*/
-	//draw
-	
-
-//	glEnable(GL_ALPHA_TEST);
-	//glEnable(GL_BLEND);
-	
-	
-}
-
--(void)SavePrefs
-{
-}
-
--(void)LoadPrefs
-{
-}
-
-#pragma mark -
-#pragma mark delegate
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-	//[[facebookController facebook] handleOpenURL: url];
-	
-	return [facebookController handleOpenURL: url];
-	
-	return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application 
-{
-	NSLog(@"will resign ...");
-	[self saveGameState];
-	game::paused = true;
-	//	[[CCDirector sharedDirector] pause];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application 
-{
-	NSLog(@"did become active resign ...");
-//	[[CCDirector sharedDirector] resume];
-	game::paused = false;
-	game::next_game_tick = mx3::GetTickCount();
-	game::timer.update();
-}
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application 
-{
-	
-	NSLog(@" O M G MEMORY WARNING\n");
-//	[[CCDirector sharedDirector] purgeCachedData];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application 
-{
-	[self stopAnimation];
-	
-	NSLog(@"did enter background!");
-//	[[CCDirector sharedDirector] stopAnimation];
-//game::paused = true;
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application 
-{
-	[self startAnimation];
-	NSLog(@"did enter foreground!");
-//	[[CCDirector sharedDirector] startAnimation];
-/*	game::paused = false;
-	game::next_game_tick = mx3::GetTickCount();
-	game::timer.update();*/
 }
 
 
-- (void)applicationSignificantTimeChange:(UIApplication *)application 
-{
-	//[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-	game::next_game_tick = mx3::GetTickCount();
-	game::timer.update();
-	game::timer.update();
-
-}
 
 
 
@@ -313,5 +282,16 @@
 //	g_GameState.experience_needed_to_levelup =g_GameState.level*g_GameState.level*g_GameState.level+100;
 //	
 }
+
+
+- (void)dealloc 
+{
+	[[mainViewController view] removeFromSuperview];
+	[mainViewController release];
+	[window release];
+	[glView release];
+	[super dealloc];
+}
+
 
 @end

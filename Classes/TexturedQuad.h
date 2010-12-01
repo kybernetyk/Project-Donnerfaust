@@ -137,7 +137,8 @@ namespace mx3
 
 		bool loadFromFile (std::string filename)
 		{
-			NSString *nsfilename = [NSString stringWithCString: filename.c_str()];
+			NSString *nsfilename = [NSString stringWithCString: filename.c_str() 
+													  encoding: NSASCIIStringEncoding];
 			
 			pe = [[ParticleEmitter alloc] initParticleEmitterWithFile: nsfilename];
 			if (pe)

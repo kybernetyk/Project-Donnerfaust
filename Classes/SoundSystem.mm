@@ -71,7 +71,8 @@ namespace mx3
 		
 		for (int i = 0; i < 32; i++)
 		{
-			NSString *s = [NSString stringWithCString: sounds[i].c_str()];
+			NSString *s = [NSString stringWithCString: sounds[i].c_str() 
+											 encoding: NSASCIIStringEncoding];
 			if (!s || [s length] == 0)
 				continue;
 			
@@ -134,7 +135,7 @@ namespace mx3
 					if (sound_delays[sid] <= 0.0)
 					{	
 						
-						[[SimpleAudioEngine sharedEngine] playEffect: [NSString stringWithCString: sounds[sid].c_str()]];
+						[[SimpleAudioEngine sharedEngine] playEffect: [NSString stringWithCString: sounds[sid].c_str() encoding: NSASCIIStringEncoding]];
 						
 						sound_delays[sid] = 0.05;
 					}

@@ -1312,10 +1312,11 @@ namespace game
 				
 				current_gbe->prev_connection_state = current_gbe->connection_state;
 				
-				AtlasSprite *as = _entityManager->addComponent<AtlasSprite>(current_entity);
-				as->atlas_quad = g_RenderableManager.accquireTexturedAtlasQuad(filename);
+				//AtlasSprite *as = _entityManager->addComponent<AtlasSprite>(current_entity);
+				//as->atlas_quad = g_RenderableManager.accquireTexturedAtlasQuad(filename);
+				AtlasSprite *as = _entityManager->getComponent<AtlasSprite>(current_entity);
 				as->src = src; 
-				as->z = 3;
+				//as->z = 3;
 					
 				
 				if (fa)

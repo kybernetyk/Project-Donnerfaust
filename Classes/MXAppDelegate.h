@@ -27,5 +27,9 @@
 -(void)LoadPrefs;
 -(void)SavePrefs;
 
+
+- (void) startAnimation;
+- (void) stopAnimation;
+
 @end
 

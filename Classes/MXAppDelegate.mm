@@ -132,7 +132,16 @@
 	mx3::RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
 	mx3::RenderDevice::sharedInstance()->setRenderTargetScreen();
 #endif
+	theGame = new game::Game();
+	theGame->init();
 	
+	[self startAnimation];
+}
+
+- (void) startAnimation
+{
+	if (displayLink)
+		return;
 	
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	displayLink = [CADisplayLink displayLinkWithTarget: self selector:@selector(renderScene)];
@@ -142,14 +151,19 @@
 	//mac init
 #endif
 	
-	theGame = new game::Game();
-	theGame->init();
 }
 
+- (void) stopAnimation
+{
+	[displayLink invalidate];
+	displayLink = nil;
+}
 
 - (void)applicationWillTerminate:(UIApplication *)application 
 {
 	[self saveGameState];
+	
+	theGame->terminate();
 }
 
 - (void)dealloc 
@@ -210,6 +224,7 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application 
 {
+	NSLog(@"will resign ...");
 	[self saveGameState];
 	game::paused = true;
 	//	[[CCDirector sharedDirector] pause];
@@ -217,6 +232,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application 
 {
+	NSLog(@"did become active resign ...");
 //	[[CCDirector sharedDirector] resume];
 	game::paused = false;
 	game::next_game_tick = mx3::GetTickCount();
@@ -225,21 +241,28 @@
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application 
 {
+	
+	NSLog(@" O M G MEMORY WARNING\n");
 //	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application 
 {
+	[self stopAnimation];
+	
+	NSLog(@"did enter background!");
 //	[[CCDirector sharedDirector] stopAnimation];
-	game::paused = true;
+//game::paused = true;
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application 
 {
+	[self startAnimation];
+	NSLog(@"did enter foreground!");
 //	[[CCDirector sharedDirector] startAnimation];
-	game::paused = false;
+/*	game::paused = false;
 	game::next_game_tick = mx3::GetTickCount();
-	game::timer.update();
+	game::timer.update();*/
 }
 
 
@@ -248,41 +271,47 @@
 	//[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 	game::next_game_tick = mx3::GetTickCount();
 	game::timer.update();
+	game::timer.update();
+
 }
+
+
 
 #pragma mark -
 #pragma mark restoresave
 - (void) saveGameState
 {
-	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-	
-	if (g_GameState.level <= 0)
-	{
-		g_GameState.level = 1;
-		g_GameState.experience_needed_to_levelup = g_GameState.level*g_GameState.level*g_GameState.level+100;
-	}
-	
-	[defs setInteger: g_GameState.experience forKey: @"gs_experience"];
-	[defs setInteger: g_GameState.level forKey: @"gs_level"];
-	[defs setInteger: g_GameState.score forKey: @"gs_score"];
-	[defs synchronize];	
+	theGame->saveGameState();
+//	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+//	
+//	if (g_GameState.level <= 0)
+//	{
+//		g_GameState.level = 1;
+//		g_GameState.experience_needed_to_levelup = g_GameState.level*g_GameState.level*g_GameState.level+100;
+//	}
+//	
+//	[defs setInteger: g_GameState.experience forKey: @"gs_experience"];
+//	[defs setInteger: g_GameState.level forKey: @"gs_level"];
+//	[defs setInteger: g_GameState.score forKey: @"gs_score"];
+//	[defs synchronize];	
 }
 
 - (void) loadGameState
 {
-	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-	
-	NSInteger xp = [defs integerForKey: @"gs_experience"];
-	NSInteger level = [defs integerForKey: @"gs_level"];
-	NSInteger score = [defs integerForKey: @"gs_score"];
-	if (level <= 0)
-		level = 1;
-	
-	g_GameState.experience = xp;
-	g_GameState.level = level;
-	g_GameState.score = score;
-	g_GameState.experience_needed_to_levelup =g_GameState.level*g_GameState.level*g_GameState.level+100;
-	
+	theGame->restoreGameState();
+//	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+//	
+//	NSInteger xp = [defs integerForKey: @"gs_experience"];
+//	NSInteger level = [defs integerForKey: @"gs_level"];
+//	NSInteger score = [defs integerForKey: @"gs_score"];
+//	if (level <= 0)
+//		level = 1;
+//	
+//	g_GameState.experience = xp;
+//	g_GameState.level = level;
+//	g_GameState.score = score;
+//	g_GameState.experience_needed_to_levelup =g_GameState.level*g_GameState.level*g_GameState.level+100;
+//	
 }
 
 @end

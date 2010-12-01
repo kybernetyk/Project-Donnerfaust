@@ -19,11 +19,13 @@ namespace game
 	{
 	public:
 		bool init ();
-		
+		void terminate ();
+
 		void update ();
-		
 		void render (); 
 		
+		void saveGameState ();
+		void restoreGameState ();
 	protected:
 		game::Scene *scene;
 		

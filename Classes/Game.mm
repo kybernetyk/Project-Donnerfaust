@@ -172,8 +172,24 @@ namespace game
 			RenderDevice::sharedInstance()->renderBackingTextureToScreen();
 		}
 		RenderDevice::sharedInstance()->endRender();	
-		
-		
 	}
+	
+	void Game::terminate()
+	{
+		printf("terminating ...\n");
+	}
+	
+	
+	
+	void Game::saveGameState ()
+	{
+		printf("saving state ...\n");
+	}
+	
+	void Game::restoreGameState ()
+	{
+		printf("restoring state ...\n");
+	}
+
 
 }

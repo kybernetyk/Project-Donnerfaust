@@ -14,8 +14,19 @@
 #include <mach/mach_time.h>
 namespace mx3 
 {
+
+	/* returns the system time in milliseconds */
+	unsigned int GetTickCount()
+	{
+		timeval v;
+		gettimeofday(&v, 0);
+		//long millis = (v.tv_sec * 1000) + (v.tv_usec / 1000);
+		//return millis;
+		
+		return (v.tv_sec * 1000) + (v.tv_usec / 1000);
+	}
 	
-	double getDoubleTime(void)
+	double GetDoubleTime(void)
 	{
 		mach_timebase_info_data_t base;
 		mach_timebase_info(&base);
@@ -28,7 +39,7 @@ namespace mx3
 	void Timer::update (void)
 	{
 		m_ulLastTickCount = m_ulTickCount;
-		m_ulTickCount = getDoubleTime();
+		m_ulTickCount = GetDoubleTime();
 		
 		m_ulDelta = (m_ulTickCount - m_ulLastTickCount);
 	}

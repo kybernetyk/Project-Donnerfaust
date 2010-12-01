@@ -12,30 +12,7 @@
 #include "Timer.h"
 #include "globals.h"
 
-using namespace mx3;
-using namespace game;
 
-
-
-const int TICKS_PER_SECOND = 60;
-const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-const int MAX_FRAMESKIP = 5;
-const double FIXED_DELTA = (1.0/TICKS_PER_SECOND);
-unsigned int next_game_tick = 1;//SDL_GetTicks();
-int loops;
-float interpolation;
-bool paused = false;
-
-/* returns the system time in milliseconds */
-unsigned int My_SDL_GetTicks()
-{
-	timeval v;
-	gettimeofday(&v, 0);
-	//long millis = (v.tv_sec * 1000) + (v.tv_usec / 1000);
-	//return millis;
-	
-	return (v.tv_sec * 1000) + (v.tv_usec / 1000);
-}
 
 
 
@@ -148,11 +125,10 @@ unsigned int My_SDL_GetTicks()
 	
 	glView = [[mainViewController glView] retain];
 	
-	scene = new Scene();
-	scene->init();
 	
-	RenderDevice::sharedInstance()->init ();
-	next_game_tick = My_SDL_GetTicks();
+	theGame = new game::Game();
+	theGame->init();
+	
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	displayLink = [CADisplayLink displayLinkWithTarget: self selector:@selector(renderScene)];
 	[displayLink setFrameInterval: 1];
@@ -161,10 +137,6 @@ unsigned int My_SDL_GetTicks()
 	//mac init
 #endif
 	
-	paused = false;
-	//timer = new Timer();
-	//timer->update();
-	g_ActiveGFX = GFX_NONE;
 	
 }
 
@@ -186,27 +158,11 @@ unsigned int My_SDL_GetTicks()
 
 - (void)renderScene
 {
-	if (paused)
-		return;
-	static float r = 0;
-	timer.update();
-	g_FPS = timer.printFPS(false);
+	theGame->update();
 	
-#define FIXED_STEP_LOOP
-#ifdef FIXED_STEP_LOOP
-	loops = 0;
-	while( My_SDL_GetTicks() > next_game_tick && loops < MAX_FRAMESKIP) 
-	{
-		scene->update(FIXED_DELTA);
-		next_game_tick += SKIP_TICKS;
-		loops++;	
-		r += 32.0 * FIXED_DELTA;
-	}
-
-#else
-	r+=32.0*timer.fdelta();
-	scene->update(timer.fdelta());	//blob rotation doesn't work well with high dynamic delta! fix this before enabling dynamic delta
-#endif
+	[glView startDrawing];
+	theGame->render();
+	[glView endDrawing];
 
 	/*[glView startDrawing];
 	RenderDevice::sharedInstance()->beginRender();
@@ -218,110 +174,12 @@ unsigned int My_SDL_GetTicks()
 	
 	return;*/
 	//draw
-	[glView startDrawing];
+	
 
 //	glEnable(GL_ALPHA_TEST);
 	//glEnable(GL_BLEND);
 	
-	if (g_ActiveGFX == GFX_NONE)
-	{
-		RenderDevice::sharedInstance()->setRenderTargetScreen();
-
-		RenderDevice::sharedInstance()->beginRender();
-		scene->render(1.0);
-		scene->frameDone();
-		RenderDevice::sharedInstance()->endRender();
-		[glView endDrawing];
-		return;
-		
-	}
 	
-	
-	//gfxe
-	RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
-	RenderDevice::sharedInstance()->beginRender();
-	scene->render(1.0);
-	scene->frameDone();
-	RenderDevice::sharedInstance()->endRender();
-	
-	RenderDevice::sharedInstance()->setRenderTargetScreen();
-
-
-//	glDisable(GL_ALPHA_TEST);
-	//glDisable(GL_BLEND);
-	
-	RenderDevice::sharedInstance()->beginRender();	
-
-	//rotozoom
-	if (g_ActiveGFX == GFX_ROTOZOOM)
-	{
-		glLoadIdentity();
-
-		int _x = SCREEN_W; 		//= viewport size in meters
-		int _y = SCREEN_H;
-		
-		float xscale = fabs(sin (DEG2RAD (r))) + 0.2;
-//		float yscale = (cos (DEG2RAD (r))) * 2.0;
-		
-		glTranslatef( (0.5 * _x),  (0.5 * _y), 0);
-		glScalef(xscale, xscale, 1.0);
-		glRotatef(r, 0, 0, 1.0);
-		glTranslatef( -(0.5 * _x),  -(0.5 * _y), 0);
-		
-		glPushMatrix();
-		glTranslatef(-_x, -_y, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		
-		glPushMatrix();
-		glTranslatef(0, -_y, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		glPushMatrix();
-		glTranslatef(_x, -_y, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		glPushMatrix();
-		glTranslatef(-_x, 0, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		glPushMatrix();
-		glTranslatef(0, 0, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		glPushMatrix();
-		glTranslatef(_x, 0, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		glPushMatrix();
-		glTranslatef(-_x, _y, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		glPushMatrix();
-		glTranslatef(0, _y, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-		
-		glPushMatrix();
-		glTranslatef(_x, _y, 0);
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-		glPopMatrix();
-	}
-	else
-	{
-		glLoadIdentity();
-		RenderDevice::sharedInstance()->renderBackingTextureToScreen();
-	}
-	RenderDevice::sharedInstance()->endRender();	
-	
-	[glView endDrawing];
 }
 
 -(void)SavePrefs
@@ -347,16 +205,16 @@ unsigned int My_SDL_GetTicks()
 - (void)applicationWillResignActive:(UIApplication *)application 
 {
 	[self saveGameState];
-	paused = true;
+	game::paused = true;
 	//	[[CCDirector sharedDirector] pause];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application 
 {
 //	[[CCDirector sharedDirector] resume];
-		paused = false;
-	next_game_tick = My_SDL_GetTicks();
-	timer.update();
+	game::paused = false;
+	game::next_game_tick = mx3::GetTickCount();
+	game::timer.update();
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application 
@@ -367,23 +225,23 @@ unsigned int My_SDL_GetTicks()
 -(void) applicationDidEnterBackground:(UIApplication*)application 
 {
 //	[[CCDirector sharedDirector] stopAnimation];
-	paused = true;
+	game::paused = true;
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application 
 {
 //	[[CCDirector sharedDirector] startAnimation];
-	paused = false;
-	next_game_tick = My_SDL_GetTicks();
-	timer.update();
+	game::paused = false;
+	game::next_game_tick = mx3::GetTickCount();
+	game::timer.update();
 }
 
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application 
 {
 	//[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-	next_game_tick = My_SDL_GetTicks();
-	timer.update();
+	game::next_game_tick = mx3::GetTickCount();
+	game::timer.update();
 }
 
 #pragma mark -

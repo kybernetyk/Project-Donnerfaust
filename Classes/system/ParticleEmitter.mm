@@ -132,7 +132,7 @@
 
 //	printf("ficke %i partikel!\n", particleCount);
 	// Loop through all the particles updating their location and color
-	double d1 = mx3::getDoubleTime();
+	//double d1 = mx3::GetDoubleTime();
 	
 	
 	while(particleIndex < particleCount) 
@@ -279,7 +279,7 @@
 	}
 
 
-	double d2 = mx3::getDoubleTime();
+	//double d2 = mx3::GetDoubleTime();
 //	printf("delta: %f = %i\n", d2-d1, particleCount);
 
 }

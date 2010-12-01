@@ -182,9 +182,9 @@
     }
     
 	
-	RenderDevice::sharedInstance()->setupBackingTexture();
-	RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
-	RenderDevice::sharedInstance()->setRenderTargetScreen();
+	mx3::RenderDevice::sharedInstance()->setupBackingTexture();
+	mx3::RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
+	mx3::RenderDevice::sharedInstance()->setRenderTargetScreen();
 	
     return YES;
 }

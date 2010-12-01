@@ -5,7 +5,8 @@
 #include <stdio.h>
 namespace mx3 
 {
-	double getDoubleTime(void);
+	double GetDoubleTime(void);
+	unsigned int GetTickCount();
 	
 	class Timer
 	{

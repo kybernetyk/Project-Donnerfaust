@@ -3,8 +3,7 @@
 #import "MainViewController.h"
 #import "FacebookSubmitController.h"
 
-#include "Timer.h"
-#include "Scene.h"
+#include "Game.h"
 
 
 
@@ -13,10 +12,10 @@
     UIWindow *window;
 	NSTimer*			mTimer;   // Rendering Timer
 	CADisplayLink *displayLink;
-	mx3::Timer timer;
-	game::Scene *scene;
 
 	EAGLView *glView;
+	
+	game::Game *theGame;
 	
 	MainViewController *mainViewController;
 	FacebookSubmitController *facebookController;

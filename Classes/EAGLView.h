@@ -14,8 +14,6 @@
 
 #import "MXAppDelegate.h"
 
-extern int gTouched; // returns 1-5 for which button has just been touched
-extern int gMapX,gMapY; // returns offset from map (button 1) for navigation
 
 /*
 This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.

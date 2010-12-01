@@ -187,12 +187,12 @@ namespace game
 			spawn_one = false;
 			Entity *blob = make_blob(rand()%MAX_BLOB_TYPES, rand()%7, 11);
 			
-		//	Entity *pe = ParticleSystem::createParticleEmitter ("lolsterne.pex", 1.0, vector2D_make(320/2, 480/2));
-//			
-//			Attachment *a = _entityManager->addComponent <Attachment> (pe);
-//			a->targetEntityID = blob->_guid;
-//			a->entityChecksum = blob->checksum;
-//			
+			Entity *pe = ParticleSystem::createParticleEmitter ("lolsterne.pex", 1.0, vector2D_make(320/2, 480/2));
+			
+			Attachment *a = _entityManager->addComponent <Attachment> (pe);
+			a->targetEntityID = blob->_guid;
+			a->entityChecksum = blob->checksum;
+			
 			
 			
 		//	RenderDevice::sharedInstance()->setupViewportAndProjection ( 320, 480,320, 520);
@@ -200,11 +200,11 @@ namespace game
 		
 		if (spawn_player)
 		{
-		//	if (g_ActiveGFX)
-//				g_ActiveGFX = GFX_NONE;
-//			else
-//				g_ActiveGFX = GFX_ROTOZOOM;
-//			
+			if (g_ActiveGFX)
+				g_ActiveGFX = GFX_NONE;
+			else
+				g_ActiveGFX = GFX_ROTOZOOM;
+			
 			spawn_player = false;
 			
 			printf("spawning player ...\n");

@@ -18,8 +18,6 @@
 
 // global variables
 
-int gTouched; // gets set 1-5 when on screen buttons are pressed
-int gMapX,gMapY; // returns map offset for navigation
 
 // A class extension to declare private methods
 @interface EAGLView ()
@@ -142,7 +140,7 @@ int gMapX,gMapY; // returns map offset for navigation
 - (void)endDrawing 
 {
 	
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
+   // glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
 

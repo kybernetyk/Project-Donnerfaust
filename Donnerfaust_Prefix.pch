@@ -2,11 +2,6 @@
 // Prefix header for all source files of the 'SpaceHike' target in the 'SpaceHike' project
 //
 
-#define __RUNTIME_INFORMATION__
-#define ABORT_GUARDS
-//#define ORIENTATION_LANDSCAPE
-#define ORIENTATION_PORTRAIT
-
 #define CENTER 0
 #define AUX 1
 
@@ -17,6 +12,7 @@
 
 #define HORIZONTAL 8
 #define VERTICAL 12
+#include "SystemConfig.h"
 
 #include <stdint.h>
 #ifdef __OBJC__

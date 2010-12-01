@@ -6,6 +6,7 @@
  *  Copyright 2010 flux forge. All rights reserved.
  *
  */
+#include "SystemConfig.h"
 #import "Entity.h"
 #import "EntityManager.h"
 #import "Component.h"

@@ -138,7 +138,7 @@ namespace game
 			int xc = InputDevice::sharedInstance()->touchLocation().x;
 			int yc = InputDevice::sharedInstance()->touchLocation().y;
 			
-			yc = 480 - yc;
+			yc = SCREEN_H - yc;
 						
 			tq->alpha_draw_circle_fill( xc, yc, 24, 0x00);
 			

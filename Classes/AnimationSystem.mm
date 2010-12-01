@@ -6,7 +6,7 @@
  *  Copyright 2010 flux forge. All rights reserved.
  *
  */
-
+#include "SystemConfig.h"
 #include "AnimationSystem.h"
 #include "ActionSystem.h"
 namespace mx3 

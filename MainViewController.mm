@@ -5,7 +5,7 @@
 //  Created by jrk on 15/11/10.
 //  Copyright 2010 flux forge. All rights reserved.
 //
-
+#import "ComponentV3.h"
 #import "MainViewController.h"
 #import "EAGLView.h"
 

@@ -6,7 +6,7 @@
  *  Copyright 2010 flux forge. All rights reserved.
  *
  */
-
+#include "ComponentV3.h"
 #include "blob_factory.h"
 #include "globals.h"
 #include "Entity.h"

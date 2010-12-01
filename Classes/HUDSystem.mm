@@ -28,7 +28,7 @@ namespace game
 		_entityManager->addComponent<Name>(fps_label)->name = "fps_label";
 		_entityManager->addComponent<Position> (fps_label);
 		fps_label->get<Position>()->x = 0.0;
-		fps_label->get<Position>()->y = 480.0;
+		fps_label->get<Position>()->y = SCREEN_H;
 		fps_label->get<Position>()->scale_x = 		fps_label->get<Position>()->scale_y =  0.5;
 		TextLabel *label = _entityManager->addComponent<TextLabel> (fps_label);
 		label->ogl_font = font;
@@ -42,8 +42,8 @@ namespace game
 	{
 		MoveToAction *actn = new MoveToAction;
 		actn->duration = 0.3;
-		actn->x = 480/2-10;
-		actn->y = 320/2+20;
+		actn->x = SCREEN_W/2-10;
+		actn->y = SCREEN_H/2+20;
 		
 		Action *prev_actn = actn;
 		int max = 10;
@@ -69,8 +69,8 @@ namespace game
 	{
 		MoveToAction *actn = new MoveToAction;
 		actn->duration = 0.3;
-		actn->x = -400;
-		actn->y = 320/2+20;
+		actn->x = -SCREEN_W;
+		actn->y = SCREEN_H/2+20;
 		/*
 		MoveByAction *mb = new MoveByAction;
 		mb->x = 0.0;
@@ -79,15 +79,15 @@ namespace game
 		actn->next_action = mb;
 		
 		MoveByAction *mb2 = new MoveByAction;
-		mb2->x = 400+480+200;
+		mb2->x = 400+SCREEN_W+200;
 		mb2->y = 0;
 		mb2->duration = 0.0;
 		mb->next_action = mb2;
 		*/
 		
 		MoveToAction *mb3 = new MoveToAction;
-		mb3->x = 480+200;
-		mb3->y = 320/2+20;
+		mb3->x = SCREEN_W+200;
+		mb3->y = SCREEN_H/2+20;
 		mb3->duration = 0.0;
 		//mb2->next_action = mb3;
 		actn->on_complete_action = mb3;

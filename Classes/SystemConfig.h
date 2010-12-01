@@ -7,6 +7,18 @@
  *
  */
 
+//system
+#define __RUNTIME_INFORMATION__
+#define ABORT_GUARDS
+#define __ENTITY_MANAGER_WARNINGS__
+
+//graphics
+//#define ORIENTATION_LANDSCAPE
+#define ORIENTATION_PORTRAIT
+
+#define SCREEN_W 320.0
+#define SCREEN_H 480.0
+
 //Entity Manager
 #define MAX_ENTITIES 512
 #define MAX_COMPONENTS_PER_ENTITY 32

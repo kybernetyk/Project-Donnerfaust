@@ -1,3 +1,4 @@
+#include "SystemConfig.h"
 #include "RenderDevice.h"
 #include <memory.h>
 #include <stdlib.h>
@@ -49,20 +50,6 @@ namespace mx3
 
 	void RenderDevice::setupViewportAndProjection (int viewport_width_in_pixels, int viewport_height_in_pixels, float viewport_width_in_meters, float viewport_height_in_meters)
 	{
-		
-		/*glMatrixMode(GL_PROJECTION);
-		 glOrthof(-160,160,-240,240, -500, 500);
-		 glMatrixMode(GL_MODELVIEW);
-		 glViewport(0, 0, 320, 480);
-		 //Initialize OpenGL states
-		 glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-		 glEnable(GL_TEXTURE_2D);
-		 glEnable(GL_BLEND);
-		 glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-		 
-		 glEnableClientState(GL_VERTEX_ARRAY);
-		 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		 */
 		_xconv = (float)viewport_width_in_meters / (float)viewport_width_in_pixels;
 		_yconv = (float)viewport_height_in_meters / (float)viewport_height_in_pixels;
 
@@ -143,20 +130,22 @@ namespace mx3
 	{
 
 	#ifdef ORIENTATION_LANDSCAPE
-		float screen_size_x = 480.0;
-		float screen_size_y = 320.0;	//change to 280 for a 40px high empty strip [eg for an ad banner]
+		float screen_size_x = SCREEN_W;
+		float screen_size_y = SCREEN_H;	//change to 280 for a 40px high empty strip [eg for an ad banner]
 
-		float viewport_size_x = 480.0;// / pixeltometerratio;//viewport_size_x / xyratio;
-		float viewport_size_y = 320.0;	
+		float viewport_size_x = SCREEN_W;// / pixeltometerratio;//viewport_size_x / xyratio;
+		float viewport_size_y = SCREEN_H;	
 	#endif
 
 	#ifdef ORIENTATION_PORTRAIT
-		float screen_size_x = 320.0;
-		float screen_size_y = 480.0;
+		float screen_size_x = SCREEN_W;
+		float screen_size_y = SCREEN_H;	
 		
-		float viewport_size_x = 320.0;// / pixeltometerratio;//viewport_size_x / xyratio;
-		float viewport_size_y = 480.0;	
+		float viewport_size_x = SCREEN_W;// / pixeltometerratio;//viewport_size_x / xyratio;
+		float viewport_size_y = SCREEN_H;	
 	#endif	
+		
+		
 		current_render_target = RENDERTARGET_SCREEN;
 		cam_rot = 0.0;		
 		camera = vector2D_make(viewport_size_x/2, viewport_size_y/2);

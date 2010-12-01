@@ -7,6 +7,7 @@
  *
  */
 #pragma once
+#include "SystemConfig.h"
 #include <math.h>
 #import "types.h"
 #include <string>

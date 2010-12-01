@@ -257,8 +257,8 @@ unsigned int My_SDL_GetTicks()
 	{
 		glLoadIdentity();
 
-		int _x = 320; 		//= viewport size in meters
-		int _y = 480;
+		int _x = SCREEN_W; 		//= viewport size in meters
+		int _y = SCREEN_H;
 		
 		float xscale = fabs(sin (DEG2RAD (r))) + 0.2;
 //		float yscale = (cos (DEG2RAD (r))) * 2.0;

@@ -7,17 +7,21 @@
  *
  */
 
-//system
+//entity system checks and infos
 #define __RUNTIME_INFORMATION__
-#define ABORT_GUARDS
+#define __ABORT_GUARDS__
 #define __ENTITY_MANAGER_WARNINGS__
 
-//graphics
+//device orientation mode
 //#define ORIENTATION_LANDSCAPE
 #define ORIENTATION_PORTRAIT
 
+//screen size
 #define SCREEN_W 320.0
 #define SCREEN_H 480.0
+
+//allow offscreen texture rendertarget for the RenderDEvice
+#define __ALLOW_RENDER_TO_TEXTURE__
 
 //Entity Manager
 #define MAX_ENTITIES 512

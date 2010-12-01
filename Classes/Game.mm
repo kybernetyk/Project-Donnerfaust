@@ -41,10 +41,6 @@ namespace game
 
 	bool Game::init ()
 	{
-		RenderDevice::sharedInstance()->init ();
-		mx3::RenderDevice::sharedInstance()->setupBackingTexture();
-		mx3::RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
-		mx3::RenderDevice::sharedInstance()->setRenderTargetScreen();
 		
 		scene = new Scene();
 		scene->init();

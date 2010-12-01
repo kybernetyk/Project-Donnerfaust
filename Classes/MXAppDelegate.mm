@@ -1,4 +1,5 @@
 
+#include "SystemConfig.h"
 #import "MXAppDelegate.h"
 #import "EAGLView.h"
 #include <sys/time.h>
@@ -125,9 +126,13 @@
 	
 	glView = [[mainViewController glView] retain];
 	
+	RenderDevice::sharedInstance()->init ();
+#ifdef __ALLOW_RENDER_TO_TEXTURE__
+	mx3::RenderDevice::sharedInstance()->setupBackingTexture();
+	mx3::RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
+	mx3::RenderDevice::sharedInstance()->setRenderTargetScreen();
+#endif
 	
-	theGame = new game::Game();
-	theGame->init();
 	
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	displayLink = [CADisplayLink displayLinkWithTarget: self selector:@selector(renderScene)];
@@ -137,7 +142,8 @@
 	//mac init
 #endif
 	
-	
+	theGame = new game::Game();
+	theGame->init();
 }
 
 

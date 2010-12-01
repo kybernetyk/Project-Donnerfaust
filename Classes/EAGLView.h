@@ -6,7 +6,7 @@
 //  Copyright Strange Flavour Ltd 2008. All rights reserved.
 //
 
-
+#include "SystemConfig.h"
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES1/gl.h>

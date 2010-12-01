@@ -7,7 +7,7 @@
 //
 
 
-
+#include "SystemConfig.h"
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 #import "EAGLView.h"
@@ -64,7 +64,6 @@
 //		[EAGLContext setCurrentContext:context];
 		[self destroyFramebuffer];
 		[self createFramebuffer];
-		
 		
 		UISwipeGestureRecognizer *rec  = [[[UISwipeGestureRecognizer alloc] initWithTarget: self
 																					action: @selector(swipeHandler_left:)] autorelease];

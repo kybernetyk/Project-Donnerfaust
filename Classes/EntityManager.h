@@ -75,7 +75,7 @@ namespace mx3
 		{
 			is_dirty = true;
 
-	#ifdef ABORT_GUARDS			
+	#ifdef __ABORT_GUARDS__			
 			if (T::COMPONENT_ID >= MAX_COMPONENTS_PER_ENTITY)
 			{
 				printf("** Fast Entity Manager Error!\t[!] No more Entity slots free!\n\t\tMAX_SLOTS: %i | Component ID: %i\n",MAX_COMPONENTS_PER_ENTITY,T::COMPONENT_ID);
@@ -115,7 +115,7 @@ namespace mx3
 		{
 			is_dirty = true;
 
-	#ifdef ABORT_GUARDS
+	#ifdef __ABORT_GUARDS__
 			if (comp->_id >= MAX_COMPONENTS_PER_ENTITY)
 			{
 				printf("** Fast Entity Manager Error!\t[!] No more Entity slots free!\n\t\tMAX_SLOTS: %i | Component ID: %i\n",MAX_COMPONENTS_PER_ENTITY,comp->_id);

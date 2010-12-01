@@ -114,7 +114,7 @@ namespace mx3
 				textured_atlas_quad->alpha = atlas_sprite->alpha;
 				textured_atlas_quad->anchorPoint = atlas_sprite->anchorPoint;
 				
-	#ifdef ABORT_GUARDS			
+	#ifdef __ABORT_GUARDS__			
 				if (atlas_sprite->src.w == 0 || atlas_sprite->src.h == 0)
 				{
 					_entityManager->dumpEntity(current_entity);
@@ -205,7 +205,7 @@ namespace mx3
 				continue;
 			}
 
-	#ifdef ABORT_GUARDS			
+	#ifdef __ABORT_GUARDS__			
 			printf("unhandled render!\n");
 			_entityManager->dumpEntity(current_entity);
 			abort();

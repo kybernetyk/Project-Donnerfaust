@@ -69,7 +69,7 @@ namespace mx3
 
 			current_animation = _entityManager->getComponent<FrameAnimation>(current_entity);
 			current_sprite = _entityManager->getComponent<AtlasSprite>(current_entity);
-	#ifdef ABORT_GUARDS
+	#ifdef __ABORT_GUARDS__
 			if (!current_animation || !current_sprite)
 			{
 				printf("A animable entity has to have a FrameAnimation _AND_ an AtlasSprite!\n");

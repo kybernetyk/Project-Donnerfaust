@@ -1,4 +1,5 @@
 #pragma once
+#include "SystemConfig.h"
 #include "Util.h"
 #include <vector>
 #include "Timer.h"
@@ -212,6 +213,9 @@ namespace mx3
 		
 		void setupBackingTexture ()
 		{
+#ifndef __ALLOW_RENDER_TO_TEXTURE__
+			abort();
+#endif
 			renderTexture = make_empty_texture(512, 512);
 			
 			//Texture2D *rtx = new Texture2D("white.png");
@@ -256,6 +260,9 @@ namespace mx3
 
 		void setRenderTargetBackingTexture ()
 		{
+#ifndef __ALLOW_RENDER_TO_TEXTURE__
+			abort();
+#endif
 			if (current_render_target == RENDERTARGET_TEXTURE)
 				return;
 			current_render_target = RENDERTARGET_TEXTURE;
@@ -267,6 +274,10 @@ namespace mx3
 		
 		void setRenderTargetScreen ()
 		{
+#ifndef __ALLOW_RENDER_TO_TEXTURE__
+			abort();
+#endif
+			
 			if (current_render_target == RENDERTARGET_SCREEN)
 				return;
 			current_render_target = RENDERTARGET_SCREEN;
@@ -277,7 +288,9 @@ namespace mx3
 		
 		void renderBackingTextureToScreen ()
 		{
-			
+#ifndef __ALLOW_RENDER_TO_TEXTURE__
+			abort();
+#endif
 			//return;
 		//	setRenderTargetScreen();
 			
@@ -405,6 +418,9 @@ namespace mx3
 private:
 		GLuint make_empty_texture (int width, int height)
 		{
+#ifndef __ALLOW_RENDER_TO_TEXTURE__
+			abort();
+#endif
 			GLuint ret;
 			
 			glGenTextures(1, &ret);

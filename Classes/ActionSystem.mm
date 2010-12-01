@@ -84,7 +84,7 @@ namespace mx3
 	
 	void ActionSystem::handle_move_to_action (MoveToAction *action)
 	{
-#ifdef ABORT_GUARDS
+#ifdef __ABORT_GUARDS__
 		if (!_current_position)
 			abort();
 #endif
@@ -108,7 +108,7 @@ namespace mx3
 	
 	void ActionSystem::handle_move_by_action (MoveByAction *action)
 	{
-#ifdef ABORT_GUARDS
+#ifdef __ABORT_GUARDS__
 		if (!_current_position)
 			abort();
 #endif
@@ -127,7 +127,7 @@ namespace mx3
 	void ActionSystem::handle_add_component_action (AddComponentAction *action)
 	{
 		
-#ifdef ABORT_GUARDS						
+#ifdef __ABORT_GUARDS__						
 		if (!action->component_to_add)
 		{
 			printf("no component pointer set!\n");
@@ -322,7 +322,7 @@ namespace mx3
 			_current_container = _entityManager->getComponent <ActionContainer> (_current_entity);
 			_current_position = _entityManager->getComponent <Position> (_current_entity);
 
-#ifdef ABORT_GUARDS
+#ifdef __ABORT_GUARDS__
 			if (!_current_container)
 				abort();
 #endif

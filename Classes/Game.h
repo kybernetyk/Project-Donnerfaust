@@ -22,7 +22,7 @@ namespace game
 		
 		void update ();
 		
-		void render ();
+		void render (); 
 		
 	protected:
 		game::Scene *scene;

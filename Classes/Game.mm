@@ -42,6 +42,9 @@ namespace game
 	bool Game::init ()
 	{
 		RenderDevice::sharedInstance()->init ();
+		mx3::RenderDevice::sharedInstance()->setupBackingTexture();
+		mx3::RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
+		mx3::RenderDevice::sharedInstance()->setRenderTargetScreen();
 		
 		scene = new Scene();
 		scene->init();
@@ -103,11 +106,6 @@ namespace game
 		RenderDevice::sharedInstance()->endRender();
 		
 		RenderDevice::sharedInstance()->setRenderTargetScreen();
-		
-		
-		//	glDisable(GL_ALPHA_TEST);
-		//glDisable(GL_BLEND);
-		
 		RenderDevice::sharedInstance()->beginRender();	
 		
 		//rotozoom
@@ -174,7 +172,7 @@ namespace game
 		}
 		else
 		{
-			glLoadIdentity();
+			//glLoadIdentity();
 			RenderDevice::sharedInstance()->renderBackingTextureToScreen();
 		}
 		RenderDevice::sharedInstance()->endRender();	

@@ -96,7 +96,7 @@ namespace mx3
 		
 		
 		if (music_id == MUSIC_GAME)
-			filename = nil;
+			filename = @"music.mp3";
 		
 		if (!filename)
 			return;

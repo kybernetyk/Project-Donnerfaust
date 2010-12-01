@@ -61,6 +61,10 @@
             return nil;
         }
         
+//		[EAGLContext setCurrentContext:context];
+		[self destroyFramebuffer];
+		[self createFramebuffer];
+		
 		
 		UISwipeGestureRecognizer *rec  = [[[UISwipeGestureRecognizer alloc] initWithTarget: self
 																					action: @selector(swipeHandler_left:)] autorelease];
@@ -180,11 +184,6 @@
         NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
         return NO;
     }
-    
-	
-	mx3::RenderDevice::sharedInstance()->setupBackingTexture();
-	mx3::RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
-	mx3::RenderDevice::sharedInstance()->setRenderTargetScreen();
 	
     return YES;
 }

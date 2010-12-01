@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		030F1F471298196E00093ABC /* GameActionSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 030F1F461298196E00093ABC /* GameActionSystem.mm */; };
 		0320271712A6D5B700225F92 /* Game.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0320271612A6D5B700225F92 /* Game.mm */; };
+		0320275912A6DD3500225F92 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0320275812A6DD3500225F92 /* music.mp3 */; };
 		03208BF712942AF0009E8AAD /* mockup.png in Resources */ = {isa = PBXBuildFile; fileRef = 03208BF612942AF0009E8AAD /* mockup.png */; };
 		03208C3B12942DC8009E8AAD /* game_board.png in Resources */ = {isa = PBXBuildFile; fileRef = 03208C3A12942DC8009E8AAD /* game_board.png */; };
 		03208C4A12942E68009E8AAD /* red_blob_anims.png in Resources */ = {isa = PBXBuildFile; fileRef = 03208C4912942E68009E8AAD /* red_blob_anims.png */; };
@@ -122,6 +123,7 @@
 		030F1FB712981F7500093ABC /* Actions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actions.h; sourceTree = "<group>"; };
 		0320271512A6D5B700225F92 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		0320271612A6D5B700225F92 /* Game.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Game.mm; sourceTree = "<group>"; };
+		0320275812A6DD3500225F92 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		03208BF612942AF0009E8AAD /* mockup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mockup.png; sourceTree = "<group>"; };
 		03208C3A12942DC8009E8AAD /* game_board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game_board.png; sourceTree = "<group>"; };
 		03208C4912942E68009E8AAD /* red_blob_anims.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_blob_anims.png; sourceTree = "<group>"; };
@@ -818,6 +820,7 @@
 		03EDF865128D81B50086763A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0320275812A6DD3500225F92 /* music.mp3 */,
 				03B1870D12A5324B0026F38B /* blue.png */,
 				03B1870E12A5324B0026F38B /* cyan.png */,
 				03B1870F12A5324B0026F38B /* green.png */,
@@ -1005,6 +1008,7 @@
 				03B1871012A5324B0026F38B /* blue.png in Resources */,
 				03B1871112A5324B0026F38B /* cyan.png in Resources */,
 				03B1871212A5324B0026F38B /* green.png in Resources */,
+				0320275912A6DD3500225F92 /* music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

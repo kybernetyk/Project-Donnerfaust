@@ -1,0 +1,3 @@
+[submodule "FrameworkV3"]
+	path = FrameworkV3
+	url = git@github.com:jsz/FrameworkV3.git

@@ -6,8 +6,17 @@
  *  Copyright 2010 flux forge. All rights reserved.
  *
  */
-
+#pragma once
 //entity system checks and infos
+#define __VERBOSE__
+
+#ifdef __VERBOSE__
+	#define CV3Log printf
+#else
+	#define CV3Log //
+	#define NSLog(...)
+#endif
+
 #define __RUNTIME_INFORMATION__
 #define __ABORT_GUARDS__
 #define __ENTITY_MANAGER_WARNINGS__
@@ -20,7 +29,7 @@
 #define SCREEN_W 320.0
 #define SCREEN_H 480.0
 
-//allow offscreen texture rendertarget for the RenderDEvice
+//allow offscreen texture rendertarget for the RenderDevice
 #define __ALLOW_RENDER_TO_TEXTURE__
 
 //Entity Manager

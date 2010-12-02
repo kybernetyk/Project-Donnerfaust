@@ -369,8 +369,8 @@
 		033DCB68128D7C9700C66D74 /* ComponentV3 */ = {
 			isa = PBXGroup;
 			children = (
-				03C101C612A6CD34005615D4 /* ComponentV3.h */,
 				033DCB72128D7C9700C66D74 /* SystemConfig.h */,
+				03C101C612A6CD34005615D4 /* ComponentV3.h */,
 				033DCB73128D7C9700C66D74 /* types.h */,
 				033DCB8F128D7C9700C66D74 /* Base System */,
 				034F38611292DBB800F54ABA /* Systems */,

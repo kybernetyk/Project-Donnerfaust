@@ -206,7 +206,7 @@ namespace mx3
 			}
 
 	#ifdef __ABORT_GUARDS__			
-			printf("unhandled render!\n");
+			CV3Log ("unhandled render!\n");
 			_entityManager->dumpEntity(current_entity);
 			abort();
 	#endif

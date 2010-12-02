@@ -176,19 +176,19 @@ namespace game
 	
 	void Game::terminate()
 	{
-		printf("terminating ...\n");
+		CV3Log ("terminating ...\n");
 	}
 	
 	
 	
 	void Game::saveGameState ()
 	{
-		printf("saving state ...\n");
+		CV3Log ("saving state ...\n");
 	}
 	
 	void Game::restoreGameState ()
 	{
-		printf("restoring state ...\n");
+		CV3Log ("restoring state ...\n");
 	}
 
 

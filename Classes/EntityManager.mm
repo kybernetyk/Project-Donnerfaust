@@ -18,11 +18,11 @@ namespace mx3
 		
 	EntityManager::EntityManager ()
 	{
-		printf("EntityManager startup:\n{\n");
-		printf("\t[*] Entity Slots: %i\n", MAX_ENTITIES);
-		printf("\t[*] Component Slots per Entity: %i\n", MAX_COMPONENTS_PER_ENTITY);
-		printf("\t[!] don't exceed these limits without adjusting the #defines!\n");
-		printf("\t[!] no checks/asserts will be made for this! you will crash and burn!\n}\n");
+		CV3Log ("EntityManager startup:\n{\n");
+		CV3Log ("\t[*] Entity Slots: %i\n", MAX_ENTITIES);
+		CV3Log ("\t[*] Component Slots per Entity: %i\n", MAX_COMPONENTS_PER_ENTITY);
+		CV3Log ("\t[!] don't exceed these limits without adjusting the #defines!\n");
+		CV3Log ("\t[!] no checks/asserts will be made for this! you will crash and burn!\n}\n");
 		
 		Entity::entityManager = this;
 		is_dirty = true;
@@ -44,7 +44,7 @@ namespace mx3
 			if (_entities[i] == 0)
 				return i;
 
-		printf("** Fast Entity Manager error:\n\t[!] NO ENTITY SLOTS FREE! MAX_ENTITIES: %i\n", MAX_ENTITIES);
+		CV3Log ("** Fast Entity Manager error:\n\t[!] NO ENTITY SLOTS FREE! MAX_ENTITIES: %i\n", MAX_ENTITIES);
 		abort();
 		return -1; //oh oh we fucked up
 	}
@@ -105,11 +105,11 @@ namespace mx3
 			if (_entities[i])
 				count ++;
 		}
-		printf("** EntityManager entity count: %i\n", count);
+		CV3Log ("** EntityManager entity count: %i\n", count);
 		
 		if ((MAX_ENTITIES-count) < 20)
 		{
-			printf("\t[!] MAX_ENTITES is %i - you are reaching the limit!\n", MAX_ENTITIES);
+			CV3Log ("\t[!] MAX_ENTITES is %i - you are reaching the limit!\n", MAX_ENTITIES);
 		}
 	}
 
@@ -118,36 +118,36 @@ namespace mx3
 		//std::map<EntityGUID, Entity *>::const_iterator it = _entities.begin();
 		//std::map<EntityGUID, Entity *>::const_iterator end = _entities.end();
 		
-		printf("\n\n************** DUMP *************\n");
-		printf("entity ID: %i, checksum: %i, address: %p (%s)\n{\n", e->_guid,e->checksum, e, typeid(e).name());
+		CV3Log ("\n\n************** DUMP *************\n");
+		CV3Log ("entity ID: %i, checksum: %i, address: %p (%s)\n{\n", e->_guid,e->checksum, e, typeid(e).name());
 		dumpComponents(e);	
-		printf("}\n************** DUMP END *************\n");
+		CV3Log ("}\n************** DUMP END *************\n");
 	}
 
 
 	void EntityManager::dumpEntities(void)
 	{
 		Entity *e = NULL;
-		printf("\n\n************** DUMP *************\n");
+		CV3Log ("\n\n************** DUMP *************\n");
 		for (int i = 0; i < MAX_ENTITIES; i++)
 		{
 			e = _entities[i];
 			if (e)
 			{		
-				printf("entity ID: %i, checksum: %i, address: %p (%s)\n{\n", e->_guid,e->checksum, e, typeid(e).name());			
+				CV3Log ("entity ID: %i, checksum: %i, address: %p (%s)\n{\n", e->_guid,e->checksum, e, typeid(e).name());			
 				dumpComponents(e);
-				printf("}\n");
+				CV3Log ("}\n");
 			}
 		}
-		printf("************** DUMP END *************\n");	
+		CV3Log ("************** DUMP END *************\n");	
 	}
 
 	void EntityManager::dumpComponent (Entity *e, Component *c)
 	{
 	#ifdef __RUNTIME_INFORMATION__
-		printf("\t+[%i] %p (%s)\n",c->_id,c,c->toString().c_str() );
+		CV3Log ("\t+[%i] %p (%s)\n",c->_id,c,c->toString().c_str() );
 	#else
-		printf("\t+ %p\n",c);
+		CV3Log ("\t+ %p\n",c);
 	#endif
 	}
 
@@ -161,9 +161,9 @@ namespace mx3
 			if (c)
 			{
 	#ifdef __RUNTIME_INFORMATION__
-				printf("\t+[%i] %p (%s)\n",c->_id,c,c->toString().c_str() );
+				CV3Log ("\t+[%i] %p (%s)\n",c->_id,c,c->toString().c_str() );
 	#else
-				printf("\t+ %p\n",c);
+				CV3Log ("\t+ %p\n",c);
 	#endif
 				
 			}
@@ -187,15 +187,6 @@ namespace mx3
 			++count;
 		}
 		va_end(listPointer);
-		
-		
-		//int count = i;
-		/*	printf("count: %i\n",count);
-		 for (int i = 0; i < count; i++)
-		 {
-		 printf("argument(%i): %i\n",i,ids[i]);
-		 }
-		 */	
 		
 		Entity *current_entity = NULL;
 		bool is_entity_valid = true;

@@ -224,9 +224,6 @@ namespace mx3
 			
 			prev = 100;
 			glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &prev);
-			printf("prev: %i\n",prev);
-			
-			printf("tex: %i\n", 			renderTexture);
 			
 			glGenFramebuffersOES(1, &textureFrameBuffer);
 			glBindFramebufferOES(GL_FRAMEBUFFER_OES, textureFrameBuffer);
@@ -244,8 +241,6 @@ namespace mx3
 				// attach depth buffer
 				glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
 				glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
-				
-				printf("w: %i h: %i\n",backingWidth, backingHeight);
 				
 				glGenRenderbuffersOES(1, &depthRenderbuffer);
 				glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);

@@ -22,10 +22,6 @@ namespace game
 		fa->loop = false;
 		fa->frames_per_second = 24;
 		fa->start_frame = 16 * row;
-		
-		if (row == 11)
-			printf("row 11! start frame: %i\n", fa->start_frame);
-		
 		fa->end_frame = 16 * row + 16;
 		fa->current_frame = fa->start_frame;		
 		fa->frame_size = rect_make(0.0, 0.0, 32.0, 32.0);
@@ -101,9 +97,6 @@ namespace game
 					filename = blob_filenames[current_gbe->type];
 					src = rect_make(0*32, 0, 32, 32);
 
-					printf("********************************************** none          ********************\n");
-					printf("prev is: %i\n", prev_state);
-					printf("********************************************\n");
 					
 					goto addshit;
 				}
@@ -175,9 +168,6 @@ namespace game
 							fa = new_animation(16);	
 							break;
 					}
-					
-					
-					printf("up\n");
 					goto addshit;
 				}
 #pragma mark (LEFT)
@@ -249,8 +239,6 @@ namespace game
 							fa = new_animation(8);						
 							break;
 					}
-
-					printf("left\n");
 					goto addshit;
 				}
 #pragma mark (DOWN)
@@ -322,9 +310,6 @@ namespace game
 							fa = new_animation(8+16);						
 							break;
 					}
-					
-
-					printf("down\n");
 					goto addshit;
 				}
 #pragma mark (RIGHT)
@@ -396,10 +381,6 @@ namespace game
 							fa = new_animation(0);					
 							break;
 					}
-					
-					
-
-					printf("right\n");
 					goto addshit;
 				}
 				
@@ -477,7 +458,7 @@ namespace game
 							break;
 					}
 					
-					printf("up and down\n");
+					CV3Log ("up and down\n");
 					goto addshit;
 				}
 				
@@ -555,7 +536,7 @@ namespace game
 							break;
 					}
 					
-					printf("left and right\n");
+					CV3Log ("left and right\n");
 					goto addshit;
 				}
 				
@@ -634,7 +615,7 @@ namespace game
 					
 					
 					
-					printf("up and left\n");
+					CV3Log ("up and left\n");
 					goto addshit;
 				}
 				
@@ -714,7 +695,7 @@ namespace game
 					
 					
 					
-					printf("up and right\n");
+					CV3Log ("up and right\n");
 					goto addshit;
 				}
 				
@@ -794,7 +775,7 @@ namespace game
 					
 					
 					
-					printf("left and down\n");
+					CV3Log ("left and down\n");
 					goto addshit;
 				}
 
@@ -872,7 +853,7 @@ namespace game
 							break;
 					}
 					
-					printf("up and right\n");
+					CV3Log ("up and right\n");
 					goto addshit;
 				}
 				
@@ -957,7 +938,7 @@ namespace game
 					}
 					
 					
-					printf("up, down, left\n");
+					CV3Log ("up, down, left\n");
 					goto addshit;
 				}
 				
@@ -1125,7 +1106,7 @@ namespace game
 					}
 					
 					
-					printf("up, left, right\n");
+					CV3Log ("up, left, right\n");
 					goto addshit;
 				}
 				
@@ -1209,7 +1190,7 @@ namespace game
 							break;
 					}
 
-					printf("down, left, right\n");
+					CV3Log ("down, left, right\n");
 					goto addshit;
 				}
 
@@ -1300,7 +1281,7 @@ namespace game
 					
 					
 					
-					printf("ALL\n");
+					CV3Log ("ALL\n");
 					goto addshit;
 				}
 

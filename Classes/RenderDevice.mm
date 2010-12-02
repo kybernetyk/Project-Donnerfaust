@@ -104,7 +104,6 @@ namespace mx3
 		
 				glEnable( GL_TEXTURE_2D);
 
-	//	printf("OMFG");
 
 	/*	_pixelViewportSize.x = viewport_width_in_pixels;
 		_pixelViewportSize.y = viewport_height_in_pixels;
@@ -145,6 +144,8 @@ namespace mx3
 		float viewport_size_y = SCREEN_H;	
 	#endif	
 		
+		
+		CV3Log ("RenderDevice init:\n{\n\tscreen_size_x: %f\n\tscreen_size_y: %f\n}\n", screen_size_x, screen_size_y);
 		
 		current_render_target = RENDERTARGET_SCREEN;
 		cam_rot = 0.0;		

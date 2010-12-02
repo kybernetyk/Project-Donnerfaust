@@ -31,7 +31,7 @@ void preload_blob_textures ()
 {
 	for (int i = 0; i < MAX_BLOB_TYPES; i++)
 	{	
-		printf("loading blob type %i ...\n",i);
+		CV3Log ("loading blob type %i ...\n",i);
 		g_RenderableManager.accquireTexturedAtlasQuad(blob_filenames[i]);
 	}
 	

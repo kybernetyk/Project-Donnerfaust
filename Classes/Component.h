@@ -226,7 +226,7 @@ namespace mx3
 		}
 		virtual ~Renderable()
 		{
-			printf("renderable sagt bai!\n");
+			
 		}
 		//WARNING: Don't forget to set the entity manager to dirty when you change the z value of an existing component! (Which shouldn't happen too often anyways)
 
@@ -270,7 +270,7 @@ namespace mx3
 		}
 		~PEmitter()
 		{
-			printf("PEmitter SAGT BAI!\n");
+			
 //			g_RenderableManager.release(quad);		//hmm - each PE is unique because it has a unique state :[ what to do?
 			delete pe;
 		}
@@ -379,14 +379,12 @@ namespace mx3
 		
 		~ActionContainer()
 		{
-			printf("LOL ACTION CONTAINER SAGT BAI!\n");
+			
 			for (int i = 0; i < NUM_OF_ACTIONS_PER_CONTAINER; i++)
 			{
 				if (actions[i])
 				{	
 					Action *a = actions[i];
-					
-					printf("a: %p\n",a);
 					
 					delete a;
 					

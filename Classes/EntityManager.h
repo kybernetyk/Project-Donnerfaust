@@ -78,14 +78,14 @@ namespace mx3
 	#ifdef __ABORT_GUARDS__			
 			if (T::COMPONENT_ID >= MAX_COMPONENTS_PER_ENTITY)
 			{
-				printf("** Fast Entity Manager Error!\t[!] No more Entity slots free!\n\t\tMAX_SLOTS: %i | Component ID: %i\n",MAX_COMPONENTS_PER_ENTITY,T::COMPONENT_ID);
+				CV3Log ("** Entity Manager Error!\t[!] No more Entity slots free!\n\t\tMAX_SLOTS: %i | Component ID: %i\n",MAX_COMPONENTS_PER_ENTITY,T::COMPONENT_ID);
 				abort();
 				return NULL;
 			}
 
 			if (T::COMPONENT_ID == 0)
 			{
-				printf("** Fast Entity Manager Error!\t[!] Component ID 0 is reserved! You may not use that!\n");
+				CV3Log ("** Entity Manager Error!\t[!] Component ID 0 is reserved! You may not use that!\n");
 				abort();
 				return NULL;
 			}
@@ -97,10 +97,10 @@ namespace mx3
 			{
 				//printf("warning: replacing component (%p / %i) on Entity (%p) without cleanup!\n", _components[e->_guid][T::COMPONENT_ID],T::COMPONENT_ID, e);
 	#ifdef __ENTITY_MANAGER_WARNINGS__
-				printf("this slot is already used by a component. you want to replace the component @ slot %i which is: [%s]\n", T::COMPONENT_ID,_components[e->_guid][T::COMPONENT_ID]->toString().c_str());
-				printf("the component's parent entity:");
+				CV3Log ("this slot is already used by a component. you want to replace the component @ slot %i which is: [%s]\n", T::COMPONENT_ID,_components[e->_guid][T::COMPONENT_ID]->toString().c_str());
+				CV3Log ("the component's parent entity:");
 				dumpEntity(e);
-				printf("I am now removing this component and adding the new one!\n");
+				CV3Log ("I am now removing this component and adding the new one!\n");
 	#endif
 				removeComponent <T> (e);
 				
@@ -118,14 +118,14 @@ namespace mx3
 	#ifdef __ABORT_GUARDS__
 			if (comp->_id >= MAX_COMPONENTS_PER_ENTITY)
 			{
-				printf("** Fast Entity Manager Error!\t[!] No more Entity slots free!\n\t\tMAX_SLOTS: %i | Component ID: %i\n",MAX_COMPONENTS_PER_ENTITY,comp->_id);
+				CV3Log ("** Fast Entity Manager Error!\t[!] No more Entity slots free!\n\t\tMAX_SLOTS: %i | Component ID: %i\n",MAX_COMPONENTS_PER_ENTITY,comp->_id);
 				abort();
 				return NULL;
 			}
 			
 			if (comp->_id == 0)
 			{
-				printf("** Fast Entity Manager Error!\t[!] Component ID 0 is reserved! You may not use that!\n");
+				CV3Log ("** Fast Entity Manager Error!\t[!] Component ID 0 is reserved! You may not use that!\n");
 				abort();
 				return NULL;
 			}
@@ -136,11 +136,11 @@ namespace mx3
 				//printf("warning: replacing component (%p / %i) on Entity (%p) without cleanup!\n", _components[e->_guid][T::COMPONENT_ID],T::COMPONENT_ID, e);
 	#ifdef __ENTITY_MANAGER_WARNINGS__
 
-				printf("this slot is already used by a component. you want to replace the component @ slot %i which is: [%s]\n", comp->_id,_components[e->_guid][comp->_id]->toString().c_str());
-				printf("the component's parent entity:");
+				CV3Log ("this slot is already used by a component. you want to replace the component @ slot %i which is: [%s]\n", comp->_id,_components[e->_guid][comp->_id]->toString().c_str());
+				CV3Log ("the component's parent entity:");
 				dumpEntity(e);
 				
-				printf("I am now removing this component and adding the new one!\n");
+				CV3Log ("I am now removing this component and adding the new one!\n");
 	#endif
 	//			removeComponent <T> (e);
 				removeComponent(e, _components[e->_guid][comp->_id]);

@@ -41,13 +41,10 @@ namespace mx3
 			_timestamp = duration = 0.0;
 			may_be_aborted = true;
 			finished = false;
-			
-			printf("I action: %p\n", this);
 		}
 		
 		virtual ~Action ()
 		{
-			printf("virtual action bai ...\n");
 		}
 
 		
@@ -73,8 +70,6 @@ namespace mx3
 		
 		~MoveToAction()
 		{
-			printf(" MOVE TO ACTION SAGT BAI!\n");
-			
 		}
 		
 		//DEBUGINFO ("Move To: x=%f, y=%f duration: %f timestamp: %f",x,y,duration, _timestamp)

@@ -15,7 +15,6 @@ namespace mx3
 		
 		Timer ()
 		{
-			printf("BAM");
 			m_ulDelta = 0;
 			m_ulLastTickCount = 0;
 			m_ulTickCount = 0;
@@ -49,7 +48,7 @@ namespace mx3
 			if (temp >= 0.5f)
 			{
 				if (printout)
-					printf ("fps: %f\n", frames / temp);
+					CV3Log  ("fps: %f\n", frames / temp);
 				
 				fps = frames / temp;
 				

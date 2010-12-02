@@ -72,7 +72,7 @@ namespace mx3
 	#ifdef __ABORT_GUARDS__
 			if (!current_animation || !current_sprite)
 			{
-				printf("A animable entity has to have a FrameAnimation _AND_ an AtlasSprite!\n");
+				printf("An animable entity has to have a FrameAnimation _AND_ an AtlasSprite!\n");
 				_entityManager->dumpEntity(current_entity);
 				abort();
 			}

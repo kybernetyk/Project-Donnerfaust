@@ -13,15 +13,7 @@
 #include "Timer.h"
 #include "globals.h"
 
-
-
-
-
-
 @implementation MXAppDelegate
-
-
-
 @synthesize window;
 
 #pragma mark -
@@ -130,6 +122,8 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
+	CV3Log ("Component V3 Engine. Version %s starting up ...\n", CV3_VERSION);
+		
 	mainViewController = [[MainViewController alloc] initWithNibName: @"MainViewController" bundle: nil];
 	[window addSubview: [mainViewController view]];
 	

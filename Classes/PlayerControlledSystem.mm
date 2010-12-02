@@ -220,8 +220,6 @@ namespace game
 				if (aux_pc->rotation_angle >= 360)
 					aux_pc->rotation_angle = 0;
 				
-				printf("angle: %f\n", aux_pc->rotation_angle);
-				
 				float a = cos(DEG2RAD(aux_pc->rotation_angle));
 				aux_position->y = center_position->y - (32.0 * a);
 				
@@ -256,8 +254,6 @@ namespace game
 
 						
 						center_pc->rotation_angle = aux_pc->rotation_angle = 180-90;
-						
-						printf("90->180\n");
 						//aux_position->x = center_position->x;
 						
 					//	float a = cos(DEG2RAD(aux_pc->rotation_angle));
@@ -287,7 +283,6 @@ namespace game
 						if ((aux_pc->state & PC_STATE_ROTATING))
 							return;
 
-						printf("270->360\n");
 
 						center_pc->rotation_angle = aux_pc->rotation_angle = 270;
 					//	aux_position->x = center_position->x;
@@ -324,8 +319,6 @@ namespace game
 						if ((aux_pc->state & PC_STATE_ROTATING))
 							return;
 	
-						printf("0->90\n");
-
 						
 						center_pc->rotation_angle = aux_pc->rotation_angle = 0;
 				//		float a = sin(DEG2RAD(aux_pc->rotation_angle));
@@ -354,7 +347,6 @@ namespace game
 						
 //						aux_position->x = center_position->x + 32;
 //						aux_position->y = center_position->y;
-						printf("180->270\n");
 
 						center_pc->rotation_angle = aux_pc->rotation_angle = 180;
 					//	float a = sin(DEG2RAD(aux_pc->rotation_angle));

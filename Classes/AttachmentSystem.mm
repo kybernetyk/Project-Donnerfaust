@@ -38,34 +38,43 @@ namespace mx3
 			if (!attached_to_entity)
 			{
 				++it;
-
-				printf("\n\n** couldn't find entity referenced by attachment: %s\n", current_attachment->toString().c_str());
-				printf("removing the errornous attachment ...\n");
+#ifdef __ENTITY_MANAGER_WARNINGS__
+				CV3Log ("\n\n** couldn't find entity referenced by attachment: %s\n", current_attachment->toString().c_str());
+				CV3Log ("removing the errornous attachment ...\n");
 				
-				printf("current_entity:");
+				CV3Log ("current_entity:");
 				_entityManager->dumpEntity(current_entity);
-				printf("removing the errornous attachment ...\n");
+				CV3Log ("removing the errornous attachment ...\n");
+#endif
+	
 				_entityManager->removeComponent <Attachment> (current_entity);
-				printf("current_entity looks now like:");
-				_entityManager->dumpEntity(current_entity);
 				
+#ifdef __ENTITY_MANAGER_WARNINGS__
+				CV3Log ("current_entity looks now like:");
+				_entityManager->dumpEntity(current_entity);
+#endif				
 				
 				continue;
 			}
 			if (attached_to_entity->checksum != current_attachment->entityChecksum)
 			{
 				++it;
-				
-				printf("\n\n ** attachment's checksum != presented entitie's checksum. (AttachmentSystem.cpp update())\n");
-				printf("current_entity:");
+
+#ifdef __ENTITY_MANAGER_WARNINGS__				
+				CV3Log ("\n\n ** attachment's checksum != presented entitie's checksum. (AttachmentSystem.cpp update())\n");
+				CV3Log ("current_entity:");
 				_entityManager->dumpEntity(current_entity);
-				printf("\n\n(wrongfully!) attached_to_entity:");
+				CV3Log ("\n\n(wrongfully!) attached_to_entity:");
 				_entityManager->dumpEntity(attached_to_entity);
-				printf("removing the errornous attachment ...\n");
-				_entityManager->removeComponent <Attachment> (current_entity);
-				printf("current_entity looks now like:");
-				_entityManager->dumpEntity(current_entity);
+				CV3Log ("removing the errornous attachment ...\n");
+#endif
 				
+				_entityManager->removeComponent <Attachment> (current_entity);
+
+#ifdef __ENTITY_MANAGER_WARNINGS__
+				CV3Log ("current_entity looks now like:");
+				_entityManager->dumpEntity(current_entity);
+#endif				
 				continue;
 			}
 			

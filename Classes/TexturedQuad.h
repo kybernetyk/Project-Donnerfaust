@@ -44,13 +44,12 @@ namespace mx3
 		
 		virtual ~IRenderable()
 		{
-			printf("IRenderable sagt bai!\n");
 		}
 		
-		virtual void renderContent()
+		virtual void renderContent() 
 		{
-			//no op
-		};
+			
+		}
 		
 		float x;
 		float y;
@@ -84,7 +83,6 @@ namespace mx3
 				texture = NULL;
 			}
 			
-			printf("OGL FONT SAGT BAI!\n");
 		}
 		void init()
 		{
@@ -156,8 +154,6 @@ namespace mx3
 		
 		~PE_Proxy ()
 		{
-			printf("%p: PE_Proxy::~PE_Proxy()\n",this);
-			
 			if (pe)
 			{
 				//g_TextureManager.releaseTexture(texture);

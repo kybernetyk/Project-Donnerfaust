@@ -39,7 +39,6 @@ namespace game
 	
 	void Scene::init ()
 	{
-		_isRunning = true;
 		srand(time(0));
 
 		g_GameState.game_state = GAMESTATE_WAITING_FOR_WAVE;
@@ -207,7 +206,7 @@ namespace game
 			
 			spawn_player = false;
 			
-			printf("spawning player ...\n");
+			CV3Log ("spawning player ...\n");
 			
 			make_player_blob(CENTER, BLOB_COLOR_RED, 3,11);
 			Entity *blob = make_player_blob(AUX, BLOB_COLOR_RED, 4,11);

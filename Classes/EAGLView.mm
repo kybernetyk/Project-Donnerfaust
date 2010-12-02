@@ -165,9 +165,9 @@
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(CAEAGLLayer*)self.layer];
     glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, viewRenderbuffer);
-    
-	printf("frameb: %i\n", viewFramebuffer);
-	printf("renderb: %i\n", viewRenderbuffer);
+
+	CV3Log ("frame buffer ID: %i\n", viewFramebuffer);
+	CV3Log ("render buffer ID: %i\n", viewRenderbuffer);
 	
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);

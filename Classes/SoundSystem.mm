@@ -141,12 +141,7 @@ namespace mx3
 					}
 				}
 			}
-			
-			
-			//printf("playing audio effetc ...\n");
 			_entityManager->addComponent<MarkOfDeath>(current_entity);
-			
-			//_entityManager->removeEntity(current_entity->_guid);
 		}
 	}
 

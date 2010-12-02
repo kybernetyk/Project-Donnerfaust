@@ -68,7 +68,7 @@ namespace game
 			fall_duration = 0.1;
 		}
 		
-		DEBUGINFO ("Game Board Element. connection state = %i\n prev con = %i\nstate = %i\nlanded = %i\n", connection_state, prev_connection_state, state, landed)
+		DEBUGINFO ("Game Board Element. connection state = %i, prev con = %i, state = %i, landed = %i\n", connection_state, prev_connection_state, state, landed)
 	};
 	
 	

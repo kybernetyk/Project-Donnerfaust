@@ -45,8 +45,6 @@ namespace mx3
 
 	TexturedQuad::~TexturedQuad ()
 	{
-		printf("%p: TexturedQuad::~TexturedQuad()\n",this);
-		
 		if (texture)
 		{
 			g_TextureManager.releaseTexture(texture);
@@ -149,8 +147,6 @@ namespace mx3
 	
 	TexturedBufferQuad::~TexturedBufferQuad ()
 	{
-		printf("%p: TexturedQuad::~TexturedQuad()\n",this);
-		
 		if (texture)
 		{
 			//g_TextureManager.releaseTexture(texture);
@@ -187,7 +183,6 @@ namespace mx3
 		size_t size = w * h;
 		alpha_mask = new unsigned char[size];
 		memset(alpha_mask,0x00, size);
-		printf("load\n");
 		
 		unsigned char *buf = texture->buffer;
 		
@@ -438,8 +433,6 @@ namespace mx3
 
 	TexturedAtlasQuad::~TexturedAtlasQuad ()
 	{
-		printf("%p: TexturedQuad::~TexturedQuad()\n",this);
-		
 		if (texture)
 		{
 			g_TextureManager.releaseTexture(texture);
@@ -558,7 +551,6 @@ namespace mx3
 		char buff[512];
 		memset(buff,0x00,512);
 		fgets(buff, 512, f_in);
-		//printf("buff: %s\n",buff);
 		
 		int packed;
 		
@@ -566,10 +558,6 @@ namespace mx3
 		int br = fscanf(f_in, "common lineHeight=%d base=%d scaleW=%d scaleH=%d pages=%d packed=%d\n",
 						&font->line_h, &font->base, &font->w, &font->h, &font->pages,&packed
 						);
-		
-		//printf("br: %i\n", br);
-		
-		
 		//page skip
 		
 		memset(buff,0x00,512);
@@ -584,7 +572,6 @@ namespace mx3
 		//char count
 		memset(buff,0x00,512);
 		fgets(buff, 512, f_in);
-	//	printf("buff: %s\n",buff);
 		int chars_count = 0;
 		br = sscanf(buff, "chars%[ ]count=%d%[ ]\n",spaces,&chars_count,spaces);
 		
@@ -599,7 +586,6 @@ namespace mx3
 			
 			memset(buff,0x00,512);
 			fgets(buff, 512, f_in);
-		//	printf("buff: %s\n",buff);
 			
 			
 			br = sscanf(buff, "char id=%d%[ ]x=%d%[ ]y=%d%[ ]width=%d%[ ]height=%d%[ ]xoffset=%d%[ ]yoffset=%d%[ ]xadvance=%d%[ ]page=%d%[ ]chnl=%d%[ ]\n",
@@ -623,7 +609,6 @@ namespace mx3
 			{
 				abort();
 			}
-			//printf("i: %i - br: %i\n",i, br);
 			
 		}
 		
@@ -705,7 +690,6 @@ namespace mx3
 
 	void OGLFont::renderContent()
 	{
-		//printf("rendering %s @ %f,%f,%f\n",text, x,y,z);
 		
 		if (texture)
 		{	

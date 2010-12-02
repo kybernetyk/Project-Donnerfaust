@@ -51,8 +51,6 @@ namespace game
 			{
 				Position *pos = _entityManager->getComponent<Position>(current_entity);
 				
-			//	printf("touch: %f,%f <-> pos: %f,%f\n", v.x,v.y,pos->x,pos->y);
-				
 				if (v.x+16 >= pos->x && v.y+16 >= pos->y &&
 					v.x+16 < pos->x+32 && v.y+16 < pos->y + 32)
 				{

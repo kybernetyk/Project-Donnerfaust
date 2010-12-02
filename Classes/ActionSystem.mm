@@ -130,14 +130,14 @@ namespace mx3
 #ifdef __ABORT_GUARDS__						
 		if (!action->component_to_add)
 		{
-			printf("no component pointer set!\n");
+			CV3Log ("no component pointer set!\n");
 			_entityManager->dumpEntity(_current_entity);
 			_entityManager->dumpComponent(_current_entity,_current_container);
 			abort();
 		}
 		if (action->component_to_add->_id == ActionContainer::COMPONENT_ID)
 		{
-			printf("you may not add action containers components with the AddComponentAction!\n");
+			CV3Log ("you may not add action containers components with the AddComponentAction!\n");
 			_entityManager->dumpEntity(_current_entity);
 			_entityManager->dumpComponent(_current_entity,_current_container);
 			abort();

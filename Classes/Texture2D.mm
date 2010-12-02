@@ -53,15 +53,13 @@ namespace mx3
 		w = h = 0;
 		if (!this->loadFromFile(filename))
 		{
-			printf("could not load texture: %s!\n",filename.c_str());
+			CV3Log ("could not load texture: %s!\n",filename.c_str());
 			abort();
 		}
 	}
 
 	Texture2D::~Texture2D ()
 	{
-		printf("%p: Texture2D::~Texture2D()\n",this);
-		
 		glDeleteTextures (1, &_openGlTextureID);
 	}
 
@@ -87,7 +85,7 @@ namespace mx3
 		/* check for an error during the load process */
 		if( 0 == tex_2d )
 		{
-			printf( "SOIL loading error: '%s' - %s\n", SOIL_last_result(),filename.c_str());
+			CV3Log ( "SOIL loading error: '%s' - %s\n", SOIL_last_result(),filename.c_str());
 			
 			abort();
 		}
@@ -144,7 +142,7 @@ namespace mx3
 		buffer = 0;
 		if (!this->loadFromFile(filename))
 		{
-			printf("could not load texture: %s!\n",filename.c_str());
+			CV3Log ("could not load texture: %s!\n",filename.c_str());
 			abort();
 		}
 		
@@ -183,12 +181,10 @@ namespace mx3
 		/* check for an error during the load process */
 		if( 0 == tex_2d )
 		{
-			printf( "SOIL loading error: '%s' - %s\n", SOIL_last_result(),filename.c_str());
+			CV3Log ( "SOIL loading error: '%s' - %s\n", SOIL_last_result(),filename.c_str());
 			
 			abort();
 		}
-		
-		printf("buffer: %p\n",buffer);
 		_openGlTextureID = tex_2d;
 		
 		_filename = filename;

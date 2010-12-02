@@ -44,8 +44,6 @@ namespace game
 		virtual void frameDone ();
 		
 	protected:
-		bool _isRunning;
-		
 		EntityManager *_entityManager;
 		RenderSystem *_renderSystem;
 		MovementSystem *_movementSystem;
@@ -63,15 +61,6 @@ namespace game
 		BlobConnectionSystem *_blobConnectionSystem;
 		BlobAnimationSystem *_blobAnimationSystem;
 
-		
-		Entity *red_blob;
-		Entity *green_blob;
-		Entity *blue_blob;
-		
-		Entity *player;
-
-//		TexturedBufferQuad *tq;
-	
 	};
 
 }

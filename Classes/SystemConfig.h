@@ -26,8 +26,15 @@
 #define ORIENTATION_PORTRAIT
 
 //screen size
-#define SCREEN_W 320.0
-#define SCREEN_H 480.0
+//screen size
+#ifdef ORIENTATION_PORTRAIT
+	#define SCREEN_W 320.0
+	#define SCREEN_H 480.0
+#endif
+#ifdef ORIENTATION_LANDSCAPE
+	#define SCREEN_W 480.0
+	#define SCREEN_H 320.0
+#endif
 
 //allow offscreen texture rendertarget for the RenderDevice
 #define __ALLOW_RENDER_TO_TEXTURE__

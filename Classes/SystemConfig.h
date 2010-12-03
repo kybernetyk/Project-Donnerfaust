@@ -39,6 +39,9 @@
 //allow offscreen texture rendertarget for the RenderDevice
 #define __ALLOW_RENDER_TO_TEXTURE__
 
+//swipe
+#define __ENABLE_GESTURE_RECOGNIZERS__
+
 //Entity Manager
 #define MAX_ENTITIES 512
 #define MAX_COMPONENTS_PER_ENTITY 32

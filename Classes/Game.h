@@ -27,7 +27,7 @@ namespace game
 		void saveGameState ();
 		void restoreGameState ();
 	protected:
-		game::Scene *scene;
+		mx3::Scene *scene;
 		
 		float r;
 	};
@@ -35,4 +35,6 @@ namespace game
 	extern bool paused;
 	extern mx3::Timer timer;
 	extern unsigned int next_game_tick;
+	
+	extern Game *g_pGame;
 }

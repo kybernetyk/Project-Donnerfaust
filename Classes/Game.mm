@@ -8,6 +8,7 @@
  */
 
 #include "Game.h"
+#include "GameScene.h"
 #include <sys/time.h>
 #include "Entity.h"
 #include "EntityManager.h"
@@ -35,14 +36,14 @@ namespace game
 	float interpolation;
 	bool paused = false;
 	mx3::Timer timer;
-		
+	Game *g_pGame;
 	
 	
 
 	bool Game::init ()
 	{
-		
-		scene = new Scene();
+		g_pGame = this;
+		scene = new GameScene();
 		scene->init();
 		
 		next_game_tick = mx3::GetTickCount();
@@ -86,7 +87,7 @@ namespace game
 			RenderDevice::sharedInstance()->setRenderTargetScreen();
 			
 			RenderDevice::sharedInstance()->beginRender();
-			scene->render(1.0);
+			scene->render();
 			scene->frameDone();
 			RenderDevice::sharedInstance()->endRender();
 			return;
@@ -97,7 +98,7 @@ namespace game
 		//gfxe
 		RenderDevice::sharedInstance()->setRenderTargetBackingTexture();
 		RenderDevice::sharedInstance()->beginRender();
-		scene->render(1.0);
+		scene->render();
 		scene->frameDone();
 		RenderDevice::sharedInstance()->endRender();
 		

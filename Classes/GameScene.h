@@ -7,6 +7,7 @@
  *
  */
 #pragma once
+#include "Scene.h"
 #include "Texture2D.h"
 #include "TexturedQuad.h"
 #include "EntityManager.h"
@@ -31,7 +32,7 @@ using namespace mx3;
 namespace game 
 {
 
-	class Scene
+	class GameScene : public mx3::Scene
 	{
 	public:
 		virtual void preload ();
@@ -39,7 +40,7 @@ namespace game
 		virtual void end ();
 		
 		virtual void update (float delta);
-		virtual void render (float interpolation);
+		virtual void render ();
 		
 		virtual void frameDone ();
 		

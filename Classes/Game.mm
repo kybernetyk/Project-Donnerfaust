@@ -110,12 +110,13 @@ namespace game
 		{
 			current_scene->update(FIXED_DELTA);
 			next_game_tick += SKIP_TICKS;
-			loops++;
-			r+=1.0;
+			loops++;	
+			r += 32.0 * FIXED_DELTA;
 		}
 		
 #else
-		current_scene->update(timer.fdelta());	//blob rotation doesn't work well with high dynamic delta! fix this before enabling dynamic delta
+		r+=32.0*timer.fdelta();
+		scene->update(timer.fdelta());	//blob rotation doesn't work well with high dynamic delta! fix this before enabling dynamic delta
 #endif
 		
 	}

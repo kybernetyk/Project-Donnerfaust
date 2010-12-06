@@ -7,6 +7,7 @@
  *
  */
 #pragma once
+#include "Scene.h"
 #include "Texture2D.h"
 #include "TexturedQuad.h"
 #include "EntityManager.h"

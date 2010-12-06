@@ -14,6 +14,6 @@
 
 }
 
-- (NSString *) mainViewNibName;
+
 
 @end

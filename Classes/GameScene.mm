@@ -7,7 +7,7 @@
  *
  */
 
-#include "Scene.h"
+#include "GameScene.h"
 #include "InputDevice.h"
 #include "Entity.h"
 
@@ -32,12 +32,12 @@ extern int g_ActiveGFX;
 
 namespace game 
 {
-	void Scene::preload ()
+	void GameScene::preload ()
 	{
 		preload_blob_textures ();	
 	}
 	
-	void Scene::init ()
+	void GameScene::init ()
 	{
 		srand(time(0));
 
@@ -67,9 +67,10 @@ namespace game
 		
 		
 		preload();
+		 
+		_soundSystem->play_background_music ("music.mp3");
 		
-		
-		_soundSystem->playMusic(MUSIC_GAME);
+		//_soundSystem->playMusic(MUSIC_GAME);
 
 		/* create background */	
 		Entity *bg = _entityManager->createNewEntity();
@@ -117,13 +118,13 @@ namespace game
 		
 	}
 
-	void Scene::end ()
+	void GameScene::end ()
 	{
 
 	}
 
 	
-	void Scene::update (float delta)
+	void GameScene::update (float delta)
 	{
 
 		//tex->updateTextureWithBufferData();
@@ -224,19 +225,20 @@ namespace game
 			}
 			
 		}*/
-
-		
+	}
 	
+	GameScene::~GameScene ()
+	{
 		
 	}
 
-	void Scene::render (float interpolation)
+	void GameScene::render ()
 	{
 		_renderSystem->render();
 
 	}
 
-	void Scene::frameDone ()
+	void GameScene::frameDone ()
 	{
 		_entityManager->setIsDirty (false);
 	}

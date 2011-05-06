@@ -6,3 +6,6 @@ how to clone:
   git submodule init
   git submodule update
 
+LICENSE:
+code: GPL3
+artwork: Proprietary
